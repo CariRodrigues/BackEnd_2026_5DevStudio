@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h2 Detalle producto
+
+  p
+    strong ID:
+    | #{producto.id}
+
+  p
+    strong Nombre:
+    | #{producto.nombre}
+
+  p
+    strong Precio:
+    | #{producto.precio}
+
+    
+  p
+    strong Stock:
+    | #{producto.stock}
+
+  a(href="/productos/vista") Volver

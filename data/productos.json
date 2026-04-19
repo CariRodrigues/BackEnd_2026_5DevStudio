@@ -10,5 +10,17 @@
     "nombre": "Detergente",
     "precio": 1900,
     "stock": 33
+  },
+  {
+    "id": 3,
+    "nombre": "test",
+    "precio": "200",
+    "stock": "22"
+  },
+  {
+    "id": 4,
+    "nombre": "hdhgfhf",
+    "precio": "76576",
+    "stock": "76"
   }
 ]

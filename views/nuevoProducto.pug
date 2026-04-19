@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  h2 Nueva producto
+
+  form(method="POST", action="/productos")
+
+
+    label Nombre: 
+    input(type="text", name="nombre")
+
+    br
+    br
+
+    label Precio: 
+    input(type="number", name="precio")
+
+    br
+    br
+    
+    label Stock: 
+    input(type="number", name="stock")
+
+    br
+    br
+
+    button(type="submit") Guardar   
+
+
+    |
+    |     
+
+    a(href="/productos/vista") Volver

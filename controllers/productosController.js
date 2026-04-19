@@ -17,18 +17,25 @@ function getProductos(req, res) {
   res.json(productos);
 }
 
+function getProducto(id) {
+  const productos = leerProductos();
+  const producto = productos.find((p) => p.id === id);
+  if (!producto) {
+    return res.status(404).json({
+      mensaje: "Producto inexistente",
+    });
+  }
+  return producto;
+}
+
 function verProducto(req, res) {
-    const productos = leerProductos();
-    const id = parseInt(req.params.id);
-    console.log(id)
-    const producto = productos.find((p) => p.id === id);
-    if (!producto) {
-        return res.status(404).json({
-            mensaje: "Producto inexistente"
-        });
-    }
-    res.json(producto);
-};
+  const productos = leerProductos();
+  const id = parseInt(req.params.id);
+  console.log(id)
+  producto = getProducto(id);
+  console.log(producto);
+  res.json(producto);
+}
 
 function crearProducto(req, res) {
   const { nombre, precio, stock } = req.body;
@@ -107,10 +114,31 @@ function actualizarProducto(req, res) {
   });
 }
 
+
+function vistaProductos(req,res) {
+  const productos = leerProductos();
+  res.render("indexProductos", { productos });
+}
+
+function vistaProducto(req,res) {
+  const productos = leerProductos();
+  const id = parseInt(req.params.id);
+  producto = getProducto(id);
+  res.render("detailProducto", { producto: producto });
+
+}
+
+function formularioNuevoProducto(req, res) {
+  res.render("nuevoProducto");
+}
+
 module.exports = {
   getProductos,
   verProducto,
   crearProducto,
   eliminarProducto,
   actualizarProducto,
+  vistaProductos,
+  vistaProducto,
+  formularioNuevoProducto
 };

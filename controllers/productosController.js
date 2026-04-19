@@ -1,65 +1,116 @@
-const Productos = require("../models/productos.js");
+const fs = require("fs");
+const path = require("path");
+const Producto = require("../models/Producto");
+const rutaArchivo = path.join(__dirname, "../data/productos.json");
 
-function getProductos(req, res) { 
-    const productos = Productos.leerProductos();
-    res.json(productos);
- }
+const leerProductos = () => {
+  const data = fs.readFileSync(rutaArchivo, "utf-8");
+  return JSON.parse(data);
+};
 
- function crearProducto(req, res) {
-    const productos = Productos.leerProductos();
-    const nuevoProducto = {
-    id: productos.length + 1,
-    nombre: req.body.nombre,
-    precio: req.body.precio,
-    stock: req.body.stock
-    };
-    productos.push(nuevoProducto);
-    Productos.guardarProductos(productos);
+const guardarProductos = (productos) => {
+  fs.writeFileSync(rutaArchivo, JSON.stringify(productos, null, 2));
+};
 
-    res.json(nuevoProducto);
- }
+function getProductos(req, res) {
+  const productos = leerProductos();
+  res.json(productos);
+}
 
- function eliminarProducto(req, res) {
-  const id = Number(req.params.id);
-  const productos = Productos.leerProductos();
+function verProducto(req, res) {
+    const productos = leerProductos();
+    const id = parseInt(req.params.id);
+    console.log(id)
+    const producto = productos.find((p) => p.id === id);
+    if (!producto) {
+        return res.status(404).json({
+            mensaje: "Producto inexistente"
+        });
+    }
+    res.json(producto);
+};
 
-  const nuevosProductos = productos.filter(p => p.id !== id);
+function crearProducto(req, res) {
+  const { nombre, precio, stock } = req.body;
 
-  Productos.guardarProductos(nuevosProductos);
+  if (!nombre || !precio || !stock) {
+    return res.json({ error: "Faltan datos" });
+  }
 
-  res.json(nuevosProductos);
+  const productos = leerProductos();
+
+  const nuevoProducto = new Producto(
+    productos.length + 1,
+    nombre,
+    precio,
+    stock,
+  );
+
+  productos.push(nuevoProducto);
+
+  guardarProductos(productos);
+
+  res.status(201).json({
+    mensaje: "Producto creado correctamente",
+    producto: nuevoProducto,
+  });
+}
+
+function eliminarProducto(req, res) {
+  const id = parseInt(req.params.id);
+  const productos = leerProductos();
+
+  const nuevosProductos = productos.filter((p) => p.id !== id);
+  if (productos.length === nuevosProductos.length) {
+    return res.status(404).json({
+      mensaje: "Producto inexistente",
+    });
+  }
+
+  guardarProductos(nuevosProductos);
+
+  res.json({
+    mensaje: "Producto eliminado",
+  });
 }
 
 function actualizarProducto(req, res) {
-  const id = Number(req.params.id);
-  const productos = Productos.leerProductos();
+  const id = parseInt(req.params.id);
+  const { nombre, precio, stock } = req.body;
+  const productos = leerProductos();
 
-  const producto = productos.find(p => p.id === id);
+  const producto = productos.find((p) => p.id === id);
 
   if (!producto) {
-    return res.json({ error: "Producto no encontrado" });
+    return res.status(404).json({
+      mensaje: "Producto inexistente",
+    });
   }
 
-  if (req.body.nombre !== undefined) {
-    producto.nombre = req.body.nombre;
+  if (nombre !== undefined) {
+    producto.nombre = nombre;
   }
 
-  if (req.body.precio !== undefined) {
-    producto.precio = req.body.precio;
+  if (precio !== undefined) {
+    producto.precio = precio;
   }
 
-  if (req.body.stock !== undefined) {
-    producto.stock = req.body.stock;
+  if (stock !== undefined) {
+    producto.stock = stock;
   }
 
-  Productos.guardarProductos(productos);
+  guardarProductos(productos);
 
-  res.json(producto);
+  res.json({
+    mensaje: "Producto actualizado",
+    producto: producto,
+  });
 }
 
- module.exports = {
+module.exports = {
   getProductos,
+  verProducto,
   crearProducto,
   eliminarProducto,
-  actualizarProducto
+  actualizarProducto,
 };

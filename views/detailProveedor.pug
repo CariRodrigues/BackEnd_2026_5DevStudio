@@ -1,0 +1,49 @@
+extends layout
+
+block content
+
+  h2 Detalle del Proveedor
+
+  p
+    strong ID: 
+    = proveedor.id
+
+  p
+    strong CUIT: 
+    = proveedor.cuit
+
+  p
+    strong Nombre: 
+    = proveedor.nombre
+
+  p
+    strong Domicilio: 
+    = proveedor.domicilio
+
+  p
+    strong Telofono: 
+    = proveedor.telefono
+
+  p
+    strong Email: 
+    = proveedor.email
+
+  p
+    strong Rubro: 
+    = proveedor.rubro
+
+  p
+    strong Plazo de Entrega: 
+    = proveedor.plazoEntrega + " dias"
+
+  p
+    strong Activo: 
+    = proveedor.activo ? "Si" : "No"
+
+  p
+    strong Observaciones: 
+    = proveedor.observaciones || "Sin observaciones"
+
+  br
+
+  a(href="/proveedores/vista") Volver al listado

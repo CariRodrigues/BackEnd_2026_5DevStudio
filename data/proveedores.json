@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "cuit": "12345678-9",
+    "nombre": "Distribuidora Quimica XYZ S.A.",
+    "domicilio": "Calle 1, Cordoba",
+    "telefono": "+1234567890",
+    "email": "ventas@quimica-xyz.com.ar",
+    "rubro": "Quimicos",
+    "plazoEntrega": 5,
+    "activo": true,
+    "fechaRegistro": "2025-04-15",
+    "observaciones": "Descuento por volumen: 5% en pedidos mayores a 100 unidades"
+  },
+  {
+    "id": 2,
+    "cuit": "98765432-1",
+    "nombre": "Alimentos Premium S.R.L.",
+    "domicilio": "Calle 2, Buenos Aires",
+    "telefono": "+9876543210",
+    "email": "contacto@alimentos-premium.com.ar",
+    "rubro": "Alimentos",
+    "plazoEntrega": 3,
+    "activo": true,
+    "fechaRegistro": "2025-04-20",
+    "observaciones": "Especial en productos congelados. Requiere camion refrigerado"
+  }
+]

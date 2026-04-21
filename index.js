@@ -5,6 +5,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const productosRoutes = require('./routes/productosRoutes.js');
+const proveedoresRoutes = require('./routes/proveedoresRoutes.js');
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
@@ -15,6 +16,7 @@ app.set("views", "./views");
 app.use(express.static("public"));
 
 app.use("/productos", productosRoutes);
+app.use("/proveedores", proveedoresRoutes);
 
 app.listen(PORT, () => {
   console.log("Servidor corriendo en puerto " + PORT);

@@ -1,0 +1,32 @@
+extends layout
+
+block content
+
+  h2 Lista de proveedores
+
+  table(border='1')
+    tr
+      th ID
+      th CUIT
+      th Nombre
+      th Domicilio
+      th Telofono
+      th Email
+      th Rubro
+      th Plazo Entrega
+      th Activo
+      th Acciones
+
+    each proveedor in proveedores
+      tr
+        td= proveedor.id
+        td= proveedor.cuit
+        td= proveedor.nombre
+        td= proveedor.domicilio
+        td= proveedor.telefono
+        td= proveedor.email
+        td= proveedor.rubro
+        td= proveedor.plazoEntrega + ' dias'
+        td= proveedor.activo ? 'Si' : 'No'
+        td
+          a(href=`/proveedores/vista/${proveedor.id}`) Ver

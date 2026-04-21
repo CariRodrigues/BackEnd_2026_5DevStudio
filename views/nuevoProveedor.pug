@@ -1,0 +1,67 @@
+extends layout
+
+block content
+  h2 Nuevo proveedor
+
+  form(method="POST", action="/proveedores")
+
+    label CUIT: 
+    input(type="text", name="cuit", required)
+
+    br
+    br
+
+    label Nombre: 
+    input(type="text", name="nombre", required)
+
+    br
+    br
+
+    label Domicilio: 
+    input(type="text", name="domicilio", required)
+
+    br
+    br
+
+    label Telofono: 
+    input(type="text", name="telefono", required)
+
+    br
+    br
+
+    label Email: 
+    input(type="email", name="email", required)
+
+    br
+    br
+
+    label Rubro: 
+    input(type="text", name="rubro", required)
+
+    br
+    br
+
+    label Plazo de Entrega (dias): 
+    input(type="number", name="plazoEntrega", required)
+
+    br
+    br
+
+    label Activo: 
+    input(type="checkbox", name="activo", value="true", checked)
+
+    br
+    br
+
+    label Observaciones: 
+    textarea(name="observaciones", rows="3")
+
+    br
+    br
+
+    button(type="submit") Guardar   
+
+    |
+    |     
+
+    a(href="/proveedores/vista") Volver

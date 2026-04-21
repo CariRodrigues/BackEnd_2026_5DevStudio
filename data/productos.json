@@ -22,5 +22,11 @@
     "nombre": "hdhgfhf",
     "precio": "76576",
     "stock": "76"
+  },
+  {
+    "id": 5,
+    "nombre": "esaaa",
+    "precio": "12345",
+    "stock": "123"
   }
 ]

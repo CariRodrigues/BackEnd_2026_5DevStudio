@@ -1,31 +1,44 @@
 extends layout
 
 block content
-  h2 Nueva producto
+  h2 Nuevo Producto
 
   form(method="POST", action="/productos")
 
-
     label Nombre: 
-    input(type="text", name="nombre")
+    input(type="text", name="nombre", required)
+
+    br
+    br
+
+    label Marca: 
+    input(type="text", name="marca", required)
 
     br
     br
 
     label Precio: 
-    input(type="number", name="precio")
+    input(type="number", name="precio", required)
 
     br
     br
     
     label Stock: 
-    input(type="number", name="stock")
+    input(type="number", name="stock", required)
+
+    br
+    br
+
+    label Proveedor: 
+    select(name="proveedorId", required)
+      option(value="") - Seleccionar Proveedor -
+      each proveedor in proveedores
+        option(value=proveedor.id)= proveedor.nombre
 
     br
     br
 
     button(type="submit") Guardar   
-
 
     |
     |     

@@ -3,30 +3,40 @@
     "id": 1,
     "nombre": "Lavandina",
     "precio": 2950,
-    "stock": 33
+    "stock": 33,
+    "marca": "Lysoform",
+    "proveedorId": 1
   },
   {
     "id": 2,
     "nombre": "Detergente",
     "precio": 1900,
-    "stock": 33
+    "stock": 33,
+    "marca": "OMO",
+    "proveedorId": 1
   },
   {
     "id": 3,
     "nombre": "test",
     "precio": "200",
-    "stock": "22"
+    "stock": "22",
+    "marca": "Test",
+    "proveedorId": 2
   },
   {
     "id": 4,
     "nombre": "hdhgfhf",
     "precio": "76576",
-    "stock": "76"
+    "stock": "76",
+    "marca": "Test",
+    "proveedorId": 1
   },
   {
     "id": 5,
     "nombre": "esaaa",
     "precio": "12345",
-    "stock": "123"
+    "stock": "123",
+    "marca": "Test",
+    "proveedorId": 2
   }
 ]

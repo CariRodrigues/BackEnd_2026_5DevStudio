@@ -8,15 +8,19 @@ block content
     tr
       th ID
       th Nombre
+      th Marca
       th Precio
       th Stock
+      th Proveedor
       th Acciones
 
     each producto in productos
       tr
         td= producto.id
         td= producto.nombre
+        td= producto.marca
         td= producto.precio
         td= producto.stock
+        td= producto.nombreProveedor
         td
           a(href=`/productos/vista/${producto.id}`) Ver

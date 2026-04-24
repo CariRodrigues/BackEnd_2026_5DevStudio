@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Esta aplicación backend está construida con Node.js y Express, desarrollado con Node.js y Express, siguiendo un patrón de arquitectura MVC (Modelo-Vista-Controlador) utilizando Pug como motor de plantillas para las vistas. 
+Esta aplicación backend está desarrollada con Node.js y Express, siguiendo un patrón de arquitectura MVC (Modelo-Vista-Controlador) utilizando Pug como motor de plantillas para las vistas. 
 El proyecto forma parte de un trabajo práctico para la materia de Desarrollo Web Backend.
 
 ## Estructura del Proyecto

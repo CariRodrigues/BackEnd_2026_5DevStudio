@@ -54,12 +54,14 @@ O si agregas un script de inicio en `package.json`:
 npm start
 ```
 
-## Uso
+## Rutas Disponibles
 
-Una vez que la aplicación esté corriendo, accede a:
+Una vez que el servidor esté en funcionamiento, se puede acceder a las siguientes rutas:
 
-- Productos: `http://localhost:3000/productos`
-- Proveedores: `http://localhost:3000/proveedores`
+### Tablas de Datos
+- **Tabla de Productos**: `http://localhost:3000/productos/vista`
+- **Tabla de Proveedores**: `http://localhost:3000/proveedores/vista`
+
 
 ## Dependencias
 

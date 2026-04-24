@@ -46,7 +46,7 @@ Si no se especifica, la aplicación usará el puerto 3000 por defecto.
 ## Ejecución
 
 ```
-npm run dev
+node index.js
 ```
 
 O si agregas un script de inicio en `package.json`:

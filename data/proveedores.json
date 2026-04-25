@@ -34,5 +34,29 @@
     "plazoEntrega": 10,
     "activo": true,
     "observaciones": "Proveedor Test"
+  },
+  {
+    "id": 4,
+    "cuit": "65653",
+    "nombre": "hghgfd",
+    "domicilio": "hgfdhf",
+    "telefono": "665",
+    "email": "ggfds@gg",
+    "rubro": "geg",
+    "plazoEntrega": 33,
+    "activo": true,
+    "observaciones": "hfgshgh"
+  },
+  {
+    "id": 5,
+    "cuit": "543543",
+    "nombre": "fgfdg",
+    "domicilio": "gdfg",
+    "telefono": "5435",
+    "email": "gf@gg",
+    "rubro": "fds",
+    "plazoEntrega": 3,
+    "activo": true,
+    "observaciones": "rt"
   }
 ]

@@ -17,6 +17,9 @@ app.use(express.static("public"));
 
 app.use("/productos", productosRoutes);
 app.use("/proveedores", proveedoresRoutes);
+app.use((req, res) => {
+  res.redirect('/productos/vista');
+});
 
 app.listen(PORT, () => {
   console.log("Servidor corriendo en puerto " + PORT);

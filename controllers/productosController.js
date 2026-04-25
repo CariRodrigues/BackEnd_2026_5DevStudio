@@ -1,15 +1,18 @@
 const fs = require("fs");
 const path = require("path");
 const Producto = require("../models/Producto");
-const rutaArchivo = path.join(__dirname, "../data/productos.json");
+const rutaArchivoProductos = path.join(__dirname, "../data/productos.json");
+const Proveedor = require("../models/Proveedor");
+const proveedores = require("./proveedoresController");
+
 
 const leerProductos = () => {
-  const data = fs.readFileSync(rutaArchivo, "utf-8");
+  const data = fs.readFileSync(rutaArchivoProductos, "utf-8");
   return JSON.parse(data);
 };
 
 const guardarProductos = (productos) => {
-  fs.writeFileSync(rutaArchivo, JSON.stringify(productos, null, 2));
+  fs.writeFileSync(rutaArchivoProductos, JSON.stringify(productos, null, 2));
 };
 
 function getProductos(req, res) {
@@ -31,9 +34,7 @@ function getProducto(id) {
 function verProducto(req, res) {
   const productos = leerProductos();
   const id = parseInt(req.params.id);
-  console.log(id)
   producto = getProducto(id);
-  console.log(producto);
   res.json(producto);
 }
 
@@ -126,7 +127,6 @@ function actualizarProducto(req, res) {
 
 
 function obtenerNombreProveedor(proveedorId) {
-  const proveedores = require('../models/proveedores');
   const listaProveedores = proveedores.leerProveedores();
   const proveedor = listaProveedores.find((p) => p.id === proveedorId);
   return proveedor ? proveedor.nombre : "Proveedor no encontrado";
@@ -151,7 +151,6 @@ function vistaProducto(req,res) {
 }
 
 function formularioNuevoProducto(req, res) {
-  const proveedores = require('../models/proveedores');
   const listaProveedores = proveedores.leerProveedores();
   res.render("nuevoProducto", { proveedores: listaProveedores });
 }

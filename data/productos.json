@@ -38,5 +38,21 @@
     "stock": "123",
     "marca": "Test",
     "proveedorId": 2
+  },
+  {
+    "id": 6,
+    "nombre": "utreuyr",
+    "precio": "8",
+    "stock": "544",
+    "marca": "yteu",
+    "proveedorId": 2
+  },
+  {
+    "id": 7,
+    "nombre": "gfdg",
+    "precio": "3",
+    "stock": "4",
+    "marca": "gdf",
+    "proveedorId": 5
   }
 ]

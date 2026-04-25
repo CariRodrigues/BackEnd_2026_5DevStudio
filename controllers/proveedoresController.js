@@ -168,5 +168,6 @@ module.exports = {
   actualizarProveedor,
   vistaProveedores,
   vistaProveedor,
-  formularioNuevoProveedor
+  formularioNuevoProveedor,
+  leerProveedores
 };

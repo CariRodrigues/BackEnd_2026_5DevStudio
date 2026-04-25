@@ -56,7 +56,6 @@ function crearProveedor(req, res) {
     rubro,
     parseInt(plazoEntrega),
     activo === "true" || activo === true,
-    new Date().toISOString().split("T")[0], // fecha actual YYYY-MM-DD
     observaciones || ""
   );
 

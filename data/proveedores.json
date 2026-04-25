@@ -9,7 +9,6 @@
     "rubro": "Quimicos",
     "plazoEntrega": 5,
     "activo": true,
-    "fechaRegistro": "2025-04-15",
     "observaciones": "Descuento por volumen: 5% en pedidos mayores a 100 unidades"
   },
   {
@@ -22,7 +21,18 @@
     "rubro": "Alimentos",
     "plazoEntrega": 3,
     "activo": true,
-    "fechaRegistro": "2025-04-20",
     "observaciones": "Especial en productos congelados. Requiere camion refrigerado"
+  },
+  {
+    "id": 3,
+    "cuit": "1234",
+    "nombre": "Proveedor Test",
+    "domicilio": "Calle test",
+    "telefono": "12345",
+    "email": "test.provedor@proveedor.com",
+    "rubro": "Test",
+    "plazoEntrega": 10,
+    "activo": true,
+    "observaciones": "Proveedor Test"
   }
 ]

@@ -38,9 +38,9 @@ function verProducto(req, res) {
 }
 
 function crearProducto(req, res) {
-  const { nombre, precio, stock } = req.body;
+  const { nombre, precio, stock, marca, proveedorId } = req.body;
 
-  if (!nombre || !precio || !stock) {
+  if (!nombre || !precio || !stock || !marca || !proveedorId) {
     return res.json({ error: "Faltan datos" });
   }
 
@@ -51,6 +51,8 @@ function crearProducto(req, res) {
     nombre,
     precio,
     stock,
+    marca,
+    parseInt(proveedorId)
   );
 
   productos.push(nuevoProducto);
@@ -83,7 +85,7 @@ function eliminarProducto(req, res) {
 
 function actualizarProducto(req, res) {
   const id = parseInt(req.params.id);
-  const { nombre, precio, stock } = req.body;
+  const { nombre, precio, stock, marca, proveedorId } = req.body;
   const productos = leerProductos();
 
   const producto = productos.find((p) => p.id === id);
@@ -106,6 +108,14 @@ function actualizarProducto(req, res) {
     producto.stock = stock;
   }
 
+  if (marca !== undefined) {
+    producto.marca = marca;
+  }
+
+  if (proveedorId !== undefined) {
+    producto.proveedorId = parseInt(proveedorId);
+  }
+
   guardarProductos(productos);
 
   res.json({
@@ -115,21 +125,35 @@ function actualizarProducto(req, res) {
 }
 
 
+function obtenerNombreProveedor(proveedorId) {
+  const proveedores = require('../models/proveedores');
+  const listaProveedores = proveedores.leerProveedores();
+  const proveedor = listaProveedores.find((p) => p.id === proveedorId);
+  return proveedor ? proveedor.nombre : "Proveedor no encontrado";
+}
+
 function vistaProductos(req,res) {
   const productos = leerProductos();
-  res.render("indexProductos", { productos });
+  const productosConProveedor = productos.map((producto) => ({
+    ...producto,
+    nombreProveedor: obtenerNombreProveedor(producto.proveedorId)
+  }));
+  res.render("indexProductos", { productos: productosConProveedor });
 }
 
 function vistaProducto(req,res) {
   const productos = leerProductos();
   const id = parseInt(req.params.id);
   producto = getProducto(id);
-  res.render("detailProducto", { producto: producto });
+  const nombreProveedor = obtenerNombreProveedor(producto.proveedorId);
+  res.render("detailProducto", { producto: producto, nombreProveedor: nombreProveedor });
 
 }
 
 function formularioNuevoProducto(req, res) {
-  res.render("nuevoProducto");
+  const proveedores = require('../models/proveedores');
+  const listaProveedores = proveedores.leerProveedores();
+  res.render("nuevoProducto", { proveedores: listaProveedores });
 }
 
 module.exports = {

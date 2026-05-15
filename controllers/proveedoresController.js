@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const Proveedor = require("../models/proveedor");
 const rutaArchivo = path.join(__dirname, "../data/proveedores.json");
+const productosController = require("./productosController");
 
 const leerProveedores = () => {
   const data = fs.readFileSync(rutaArchivo, "utf-8");
@@ -19,23 +20,35 @@ function getProveedores(req, res) {
 
 function getProveedor(id) {
   const proveedores = leerProveedores();
-  const proveedor = proveedores.find((p) => p.id === id);
-  if (!proveedor) {
-    return res.status(404).json({
-      mensaje: "Proveedor inexistente",
-    });
+  return proveedores.find((p) => p.id === id) || null;
   }
-  return proveedor;
-}
 
 function verProveedor(req, res) {
   const proveedores = leerProveedores();
   const id = parseInt(req.params.id);
   console.log(id);
-  proveedor = getProveedor(id);
+  const proveedor = getProveedor(id);
+  if (!proveedor) {
+  return res.status(404).json({ error: "Proveedor no encontrado" });
+  }
   console.log(proveedor);
   res.json(proveedor);
 }
+
+function getProductosDeProveedor (req, res){
+  const id = parseInt(req.params.id);
+  const proveedor = getProveedor(id);
+  if (!proveedor) {
+  return res.status(404).json({ error: "Proveedor no encontrado" });
+  }
+  const productos = productosController.leerProductos();
+  const productosDelProveedor = productos.filter((p) => p.proveedorId === id);
+  res.json({
+    proveedor: proveedor,
+    productos: productosDelProveedor
+  });
+}
+
 
 function crearProveedor(req, res) {
   const { cuit, nombre, domicilio, telefono, email, rubro, plazoEntrega, activo, observaciones } = req.body;
@@ -169,5 +182,6 @@ module.exports = {
   vistaProveedores,
   vistaProveedor,
   formularioNuevoProveedor,
-  leerProveedores
+  leerProveedores,
+  getProductosDeProveedor
 };

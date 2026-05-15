@@ -12,10 +12,10 @@ const {
   formularioNuevoProducto
 } = require("../controllers/productosController");
 
-router.get("/", getProductos);
 router.get("/vista", vistaProductos);
 router.get("/vista/:id", vistaProducto);
 router.get("/nuevo", formularioNuevoProducto);
+router.get("/", getProductos);
 router.get("/:id", verProducto);
 router.post("/", crearProducto);
 router.put("/:id", actualizarProducto);

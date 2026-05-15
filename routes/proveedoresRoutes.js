@@ -9,13 +9,15 @@ const {
   actualizarProveedor,
   vistaProveedores,
   vistaProveedor,
-  formularioNuevoProveedor
+  formularioNuevoProveedor,
+  getProductosDeProveedor
 } = require("../controllers/proveedoresController");
 
 router.get("/", getProveedores);
 router.get("/vista", vistaProveedores);
 router.get("/vista/:id", vistaProveedor);
 router.get("/nuevo", formularioNuevoProveedor);
+router.get("/:id/productos", getProductosDeProveedor);
 router.get("/:id", verProveedor);
 router.post("/", crearProveedor);
 router.put("/:id", actualizarProveedor);

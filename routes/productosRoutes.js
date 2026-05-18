@@ -1,24 +1,14 @@
-const express = require("express");
+import express from "express";
+import * as productosController from "../controllers/productosController.js";
 const router = express.Router();
 
-const {
-  getProductos,
-  verProducto,
-  crearProducto,
-  eliminarProducto,
-  actualizarProducto,
-  vistaProductos,
-  vistaProducto,
-  formularioNuevoProducto
-} = require("../controllers/productosController");
+router.get("/vista", productosController.vistaProductos);
+router.get("/vista/:id", productosController.vistaProducto);
+router.get("/nuevo", productosController.formularioNuevoProducto);
+router.get("/", productosController.getProductos);
+router.get("/:id", productosController.verProducto);
+router.post("/", productosController.crearProducto);
+router.put("/:id", productosController.actualizarProducto);
+router.delete("/:id", productosController.eliminarProducto);
 
-router.get("/vista", vistaProductos);
-router.get("/vista/:id", vistaProducto);
-router.get("/nuevo", formularioNuevoProducto);
-router.get("/", getProductos);
-router.get("/:id", verProducto);
-router.post("/", crearProducto);
-router.put("/:id", actualizarProducto);
-router.delete("/:id", eliminarProducto);
-
-module.exports = router;
+export default router;

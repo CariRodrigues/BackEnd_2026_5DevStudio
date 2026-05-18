@@ -1,26 +1,15 @@
-const express = require("express");
+import express from "express";
+import * as proveedoresController from "../controllers/proveedoresController.js";
 const router = express.Router();
 
-const {
-  getProveedores,
-  verProveedor,
-  crearProveedor,
-  eliminarProveedor,
-  actualizarProveedor,
-  vistaProveedores,
-  vistaProveedor,
-  formularioNuevoProveedor,
-  getProductosDeProveedor
-} = require("../controllers/proveedoresController");
 
-router.get("/", getProveedores);
-router.get("/vista", vistaProveedores);
-router.get("/vista/:id", vistaProveedor);
-router.get("/nuevo", formularioNuevoProveedor);
-router.get("/:id/productos", getProductosDeProveedor);
-router.get("/:id", verProveedor);
-router.post("/", crearProveedor);
-router.put("/:id", actualizarProveedor);
-router.delete("/:id", eliminarProveedor);
+router.get("/", proveedoresController.getProveedores);
+router.get("/vista", proveedoresController.vistaProveedores);
+router.get("/vista/:id", proveedoresController.vistaProveedor);
+router.get("/nuevo", proveedoresController.formularioNuevoProveedor);
+router.get("/:id", proveedoresController.verProveedor);
+router.post("/", proveedoresController.crearProveedor);
+router.put("/:id", proveedoresController.actualizarProveedor);
+router.delete("/:id", proveedoresController.eliminarProveedor);
 
-module.exports = router;
+export default router;

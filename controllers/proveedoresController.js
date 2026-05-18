@@ -1,179 +1,131 @@
-const fs = require("fs");
-const path = require("path");
-const Proveedor = require("../models/proveedor");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const rutaArchivo = path.join(__dirname, "../data/proveedores.json");
-const productosController = require("./productosController");
+import Proveedor from "../models/proveedorModel.js";
 
-const leerProveedores = () => {
-  const data = fs.readFileSync(rutaArchivo, "utf-8");
-  return JSON.parse(data);
-};
-
-const guardarProveedores = (proveedores) => {
-  fs.writeFileSync(rutaArchivo, JSON.stringify(proveedores, null, 2));
-};
-
-function getProveedores(req, res) {
-  const proveedores = leerProveedores();
-  res.json(proveedores);
+async function getProveedores(req, res) {
+  try {
+    const proveedores =  await Proveedor.find();
+    res.json(proveedores);
+  } catch (error) {
+    res.status(500).json({
+      error:"Error al obtener proveedores"
+    });
+  }
 }
 
-function getProveedor(id) {
-  const proveedores = leerProveedores();
-  return proveedores.find((p) => p.id === id) || null;
-  }
-
-function verProveedor(req, res) {
-  const proveedores = leerProveedores();
-  const id = parseInt(req.params.id);
-  console.log(id);
-  const proveedor = getProveedor(id);
-  if (!proveedor) {
-  return res.status(404).json({ error: "Proveedor no encontrado" });
-  }
-  console.log(proveedor);
-  res.json(proveedor);
+async function getProveedor(id) {
+  return await Proveedor.findById(id);
 }
 
-function getProductosDeProveedor (req, res){
-  const id = parseInt(req.params.id);
-  const proveedor = getProveedor(id);
-  if (!proveedor) {
-  return res.status(404).json({ error: "Proveedor no encontrado" });
-  }
-  const productos = productosController.leerProductos();
-  const productosDelProveedor = productos.filter((p) => p.proveedorId === id);
-  res.json({
-    proveedor: proveedor,
-    productos: productosDelProveedor
-  });
+async function verProveedor(req, res) {
+  const id = req.params.id;
+  try{
+    const proveedor = await Proveedor.findById(id);
+
+    if (!proveedor) {
+      return res.status(404).json({ error: "Proveedor no encontrado" });
+    }
+    res.json(proveedor);
+  } catch (error) {
+    res.status(500).json({
+      error: "Error al buscar proveedor"
+    });
+  }  
 }
 
-
-function crearProveedor(req, res) {
+async function crearProveedor(req, res) {
   const { cuit, nombre, domicilio, telefono, email, rubro, plazoEntrega, activo, observaciones } = req.body;
 
   if (!cuit || !nombre || !domicilio || !telefono || !email || !rubro || !plazoEntrega || activo === undefined) {
     return res.json({ error: "Faltan datos" });
   }
-
-  const proveedores = leerProveedores();
-
-  const nuevoProveedor = new Proveedor(
-    proveedores.length + 1,
+  const nuevoProveedor = await Proveedor.create({
     cuit,
     nombre,
     domicilio,
     telefono,
     email,
     rubro,
-    parseInt(plazoEntrega),
-    activo === "true" || activo === true,
-    observaciones || ""
-  );
-
-  proveedores.push(nuevoProveedor);
-
-  guardarProveedores(proveedores);
-
+    plazoEntrega,
+    activo,
+    observaciones
+  });
+  
   res.status(201).json({
     mensaje: "Proveedor creado correctamente",
     proveedor: nuevoProveedor,
   });
 }
 
-function eliminarProveedor(req, res) {
-  const id = parseInt(req.params.id);
-  const proveedores = leerProveedores();
 
-  const nuevosProveedores = proveedores.filter((p) => p.id !== id);
-  if (proveedores.length === nuevosProveedores.length) {
-    return res.status(404).json({
-      mensaje: "Proveedor inexistente",
-    });
-  }
-
-  guardarProveedores(nuevosProveedores);
-
-  res.json({
-    mensaje: "Proveedor eliminado",
-  });
+async function eliminarProveedor(req, res) {
+  try{
+    const {id} = req.params;
+    const proveedorEliminado = await Proveedor.findByIdAndDelete(id);
+    if(!proveedorEliminado){
+      return res.status(404).json({mensaje: "El proveedor que intenta eliminar no existe."})
+    };
+    res.status(200).json(proveedorEliminado);
+  } catch(error){
+    res.status(500).json({mensaje: "Error al eliminar", error});
+  } 
 }
 
-function actualizarProveedor(req, res) {
-  const id = parseInt(req.params.id);
-  const { cuit, nombre, domicilio, telefono, email, rubro, plazoEntrega, activo, observaciones } = req.body;
-  const proveedores = leerProveedores();
 
-  const proveedor = proveedores.find((p) => p.id === id);
-
-  if (!proveedor) {
-    return res.status(404).json({
-      mensaje: "Proveedor inexistente",
-    });
+async function actualizarProveedor(req, res) {
+  try{
+    const {id} = req.params;
+    const nuevosDatos = req.body;
+    
+    const proveedorActualizado = await Proveedor.findByIdAndUpdate(
+      id,
+      { $set: nuevosDatos },
+      { new: true, runValidators: true }
+    );
+    if (!proveedorActualizado) {
+        return res.status(404).json({
+        mensaje: "Proveedor inexistente",
+      });
+    }
+    res.status(200).json(proveedorActualizado);
+  } catch (error) {
+    res.status(500).json({mensaje: "Error al actualizar", error});
   }
+} 
 
-  if (cuit !== undefined) {
-    proveedor.cuit = cuit;
-  }
 
-  if (nombre !== undefined) {
-    proveedor.nombre = nombre;
-  }
-
-  if (domicilio !== undefined) {
-    proveedor.domicilio = domicilio;
-  }
-
-  if (telefono !== undefined) {
-    proveedor.telefono = telefono;
-  }
-
-  if (email !== undefined) {
-    proveedor.email = email;
-  }
-
-  if (rubro !== undefined) {
-    proveedor.rubro = rubro;
-  }
-
-  if (plazoEntrega !== undefined) {
-    proveedor.plazoEntrega = parseInt(plazoEntrega);
-  }
-
-  if (activo !== undefined) {
-    proveedor.activo = activo === "true" || activo === true;
-  }
-
-  if (observaciones !== undefined) {
-    proveedor.observaciones = observaciones;
-  }
-
-  guardarProveedores(proveedores);
-
-  res.json({
-    mensaje: "Proveedor actualizado",
-    proveedor: proveedor,
-  });
-}
-
-function vistaProveedores(req, res) {
-  const proveedores = leerProveedores();
+async function vistaProveedores(req, res) {
+  const proveedores = await Proveedor.find()
   res.render("indexProveedores", { proveedores });
 }
 
-function vistaProveedor(req, res) {
-  const proveedores = leerProveedores();
-  const id = parseInt(req.params.id);
-  proveedor = getProveedor(id);
-  res.render("detailProveedor", { proveedor: proveedor });
+async function vistaProveedor(req, res) {
+  const id = req.params.id;
+  try{
+    const proveedor = await Proveedor.findById(id);
+    if (!proveedor) {
+      return res.status(404).json({ error: "Proveedor no encontrado" });
+    }
+    res.render("detailProveedor", { proveedor: proveedor });
+  } catch (error) {
+    res.status(500).json({
+      error: "Error al buscar proveedor"
+    });
+  }   
 }
 
 function formularioNuevoProveedor(req, res) {
   res.render("nuevoProveedor");
 }
 
-module.exports = {
+export {
   getProveedores,
   verProveedor,
   crearProveedor,
@@ -182,6 +134,4 @@ module.exports = {
   vistaProveedores,
   vistaProveedor,
   formularioNuevoProveedor,
-  leerProveedores,
-  getProductosDeProveedor
 };

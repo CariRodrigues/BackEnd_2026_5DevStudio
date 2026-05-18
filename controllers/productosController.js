@@ -1,9 +1,17 @@
-const fs = require("fs");
-const path = require("path");
-const Producto = require("../models/Producto");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+import Producto from "../models/producto.js";
+import Proveedor from "../models/proveedorModel.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const rutaArchivoProductos = path.join(__dirname, "../data/productos.json");
-const Proveedor = require("../models/Proveedor");
-const proveedores = require("./proveedoresController");
+
+import * as proveedores from "../controllers/proveedoresController.js";
 
 
 const leerProductos = () => {
@@ -22,19 +30,16 @@ function getProductos(req, res) {
 
 function getProducto(id) {
   const productos = leerProductos();
-  const producto = productos.find((p) => p.id === id);
-  if (!producto) {
-    return res.status(404).json({
-      mensaje: "Producto inexistente",
-    });
-  }
-  return producto;
+  return productos.find((p) => p.id === id) || null;
 }
-
+ 
 function verProducto(req, res) {
   const productos = leerProductos();
   const id = parseInt(req.params.id);
-  producto = getProducto(id);
+  const producto = getProducto(id);
+  if (!producto) {
+    return res.status(404).json({ error: "Producto no encontrado" });
+  }
   res.json(producto);
 }
 
@@ -144,10 +149,12 @@ function vistaProductos(req,res) {
 function vistaProducto(req,res) {
   const productos = leerProductos();
   const id = parseInt(req.params.id);
-  producto = getProducto(id);
+  const producto = getProducto(id);
+  if (!producto) {
+    return res.status(404).send("Producto no encontrado");
+  }
   const nombreProveedor = obtenerNombreProveedor(producto.proveedorId);
   res.render("detailProducto", { producto: producto, nombreProveedor: nombreProveedor });
-
 }
 
 function formularioNuevoProducto(req, res) {
@@ -155,7 +162,8 @@ function formularioNuevoProducto(req, res) {
   res.render("nuevoProducto", { proveedores: listaProveedores });
 }
 
-module.exports = {
+export {
+  leerProductos,
   getProductos,
   verProducto,
   crearProducto,

@@ -1,13 +1,21 @@
-require("dotenv").config();
-const express = require("express");
+import dotenv from "dotenv";
+dotenv.config();
+
+import express from "express";
+
+import { conectarDB } from "./config/db.js";
+
+import productosRoutes from "./routes/productosRoutes.js";
+import proveedoresRoutes from "./routes/proveedoresRoutes.js";
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-const productosRoutes = require('./routes/productosRoutes.js');
-const proveedoresRoutes = require('./routes/proveedoresRoutes.js');
+conectarDB();
+console.log(productosRoutes);
+console.log(proveedoresRoutes);
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "pug");
@@ -17,8 +25,9 @@ app.use(express.static("public"));
 
 app.use("/productos", productosRoutes);
 app.use("/proveedores", proveedoresRoutes);
+
 app.use((req, res) => {
-  res.redirect('/productos/vista');
+  res.redirect("/productos/vista");
 });
 
 app.listen(PORT, () => {

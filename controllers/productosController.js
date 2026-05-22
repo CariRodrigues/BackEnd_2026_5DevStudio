@@ -1,69 +1,52 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-
-import Producto from "../models/producto.js";
+import Producto from "../models/productoModel.js";
 import Proveedor from "../models/proveedorModel.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const rutaArchivoProductos = path.join(__dirname, "../data/productos.json");
-
 import * as proveedores from "../controllers/proveedoresController.js";
 
 
-const leerProductos = () => {
-  const data = fs.readFileSync(rutaArchivoProductos, "utf-8");
-  return JSON.parse(data);
-};
-
-const guardarProductos = (productos) => {
-  fs.writeFileSync(rutaArchivoProductos, JSON.stringify(productos, null, 2));
-};
-
-function getProductos(req, res) {
-  const productos = leerProductos();
-  res.json(productos);
+async function getProductos(req, res) {
+  try{
+    const productos = await Producto.find();
+    res.json(productos);
+  }catch(error){
+    res.status(500).json({
+      error: "Error al obtener Productos"
+    });
+  }
 }
 
-function getProducto(id) {
-  const productos = leerProductos();
-  return productos.find((p) => p.id === id) || null;
+async function getProducto(id) {
+  return await Producto.findById(id);
 }
  
-function verProducto(req, res) {
-  const productos = leerProductos();
-  const id = parseInt(req.params.id);
-  const producto = getProducto(id);
-  if (!producto) {
-    return res.status(404).json({ error: "Producto no encontrado" });
+async function verProducto(req, res) {
+  const id = req.params.id;
+  try{
+    const producto = await Producto.findById(id);
+    if(!producto){
+      return res.status(404).json({error: "Producto no encontrado"})
+    }
+    res.json(producto);
+  }catch(error){
+    res.status(500).json({
+        error: "Error al buscar Producto"
+    });
   }
-  res.json(producto);
 }
 
-function crearProducto(req, res) {
+async function crearProducto(req, res) {
   const { nombre, precio, stock, marca, proveedorId } = req.body;
 
   if (!nombre || !precio || !stock || !marca || !proveedorId) {
     return res.json({ error: "Faltan datos" });
   }
 
-  const productos = leerProductos();
-
-  const nuevoProducto = new Producto(
-    productos.length + 1,
+  const nuevoProducto = await Producto.create({
     nombre,
     precio,
     stock,
     marca,
-    parseInt(proveedorId)
-  );
-
-  productos.push(nuevoProducto);
-
-  guardarProductos(productos);
+    proveedorId
+  });
 
   res.status(201).json({
     mensaje: "Producto creado correctamente",
@@ -71,99 +54,73 @@ function crearProducto(req, res) {
   });
 }
 
-function eliminarProducto(req, res) {
-  const id = parseInt(req.params.id);
-  const productos = leerProductos();
+async function eliminarProducto(req, res) {
+  try{
+    const id = req.params.id;
+    const productoEliminado = await Producto.findByIdAndDelete(id);
+    if(!productoEliminado){
+      return res.status(404).json({mensaje: "El producto que intenta eliminar no existe"})
+    };
+    res.status(200).json(productoEliminado);
+  }catch(error){
+    res.status(500).json({mensaje: "Error al eliminar", error});
+  }
+}
 
-  const nuevosProductos = productos.filter((p) => p.id !== id);
-  if (productos.length === nuevosProductos.length) {
-    return res.status(404).json({
-      mensaje: "Producto inexistente",
+async function actualizarProducto(req, res) {
+  try{
+    const id = req.params.id;
+    const nuevosDatos = req.body;
+
+    const productoActualizado = await Producto.findByIdAndUpdate(
+      id,
+      { $set: nuevosDatos },
+      { new: true, runValidators: true}
+    );
+    if(!productoActualizado){
+      return res.status(404).json({
+        mensaje: "Producto inexistente",
+      });
+    }
+    res.status(200).json(productoActualizado);
+  }catch(error){
+    res.status(500).json({mensaje: "Error al actualizar producto", error});
+  }
+}
+
+async function vistaProductos(req,res) {
+  
+  try{
+    const productos = await Producto.find().populate('proveedorId');    
+    res.render("indexProductos", { productos });
+  }catch(error){
+    res.status(500).json({
+      error: "Error al buscar productos"
     });
   }
-
-  guardarProductos(nuevosProductos);
-
-  res.json({
-    mensaje: "Producto eliminado",
-  });
 }
 
-function actualizarProducto(req, res) {
-  const id = parseInt(req.params.id);
-  const { nombre, precio, stock, marca, proveedorId } = req.body;
-  const productos = leerProductos();
-
-  const producto = productos.find((p) => p.id === id);
-
-  if (!producto) {
-    return res.status(404).json({
-      mensaje: "Producto inexistente",
+async function vistaProducto(req,res) {
+  const id = req.params.id;
+  try{
+    const producto = await Producto.findById(id).populate('proveedorId');
+    if(!producto){
+      return res.status(404).json({mensaje: "Producto no encontrado"})
+    };
+    res.render("detailProducto", { producto: producto });
+  }catch(error){
+    res.status(500).json({
+      error: "Error al buscar producto"
     });
   }
-
-  if (nombre !== undefined) {
-    producto.nombre = nombre;
-  }
-
-  if (precio !== undefined) {
-    producto.precio = precio;
-  }
-
-  if (stock !== undefined) {
-    producto.stock = stock;
-  }
-
-  if (marca !== undefined) {
-    producto.marca = marca;
-  }
-
-  if (proveedorId !== undefined) {
-    producto.proveedorId = parseInt(proveedorId);
-  }
-
-  guardarProductos(productos);
-
-  res.json({
-    mensaje: "Producto actualizado",
-    producto: producto,
-  });
 }
 
-
-function obtenerNombreProveedor(proveedorId) {
-  const listaProveedores = proveedores.leerProveedores();
-  const proveedor = listaProveedores.find((p) => p.id === proveedorId);
-  return proveedor ? proveedor.nombre : "Proveedor no encontrado";
-}
-
-function vistaProductos(req,res) {
-  const productos = leerProductos();
-  const productosConProveedor = productos.map((producto) => ({
-    ...producto,
-    nombreProveedor: obtenerNombreProveedor(producto.proveedorId)
-  }));
-  res.render("indexProductos", { productos: productosConProveedor });
-}
-
-function vistaProducto(req,res) {
-  const productos = leerProductos();
-  const id = parseInt(req.params.id);
-  const producto = getProducto(id);
-  if (!producto) {
-    return res.status(404).send("Producto no encontrado");
-  }
-  const nombreProveedor = obtenerNombreProveedor(producto.proveedorId);
-  res.render("detailProducto", { producto: producto, nombreProveedor: nombreProveedor });
-}
-
-function formularioNuevoProducto(req, res) {
-  const listaProveedores = proveedores.leerProveedores();
+async function formularioNuevoProducto(req, res) {
+  const listaProveedores = await Proveedor.find();
   res.render("nuevoProducto", { proveedores: listaProveedores });
 }
 
 export {
-  leerProductos,
   getProductos,
   verProducto,
   crearProducto,

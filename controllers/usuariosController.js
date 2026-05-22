@@ -29,7 +29,7 @@ async function buscarUsuario(req, res) {
         }if(usuario.password !== password){
             return res.status(401).json({error: "Contraseña incorrecta"});
         }if(usuario.rol === 'admin'){
-                return res.redirect('/proveedores/vista'); 
+                return res.redirect('/usuarios/admin'); 
         }if(usuario.rol === 'user'){
                 return res.redirect('/productos/vista'); //queda pendiente cambiar URL según el rol, en este caso no quiero entrar a login
         }
@@ -43,9 +43,17 @@ async function buscarUsuario(req, res) {
 function formularioLogin(req, res){
     res.render("login");
 }
+function vistaAdmin(req, res){
+    res.render("adminDashboard")
+}
+function formularioNuevoUsuario(req,res){
+    res.render("nuevoUsuario")
+}
 
 export {
     crearUsuario,
     buscarUsuario, 
-    formularioLogin
+    formularioLogin,
+    formularioNuevoUsuario,
+    vistaAdmin
 }

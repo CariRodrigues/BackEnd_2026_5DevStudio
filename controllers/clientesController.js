@@ -1,138 +1,123 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-import mongoose from "mongoose";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 import Cliente from "../models/clienteModel.js";
+import Movimiento from "../models/movimientoModel.js";
 
 async function getClientes(req, res) {
   try {
-    const clientes =  await Cliente.find();
+    const clientes = await Cliente.find();
     res.json(clientes);
   } catch (error) {
-    res.status(500).json({
-      error:"Error al obtener clientes"
-    });
+    res.status(500).json({ error: "Error al obtener clientes" });
   }
 }
 
-async function getCliente(id) {
-  return await Cliente.findById(new mongoose.Types.UUID(id));
-}
-
-async function verCliente(req, res) {
-  const id = req.params.id;
-  try{
-    const cliente = await Cliente.findById(new mongoose.Types.UUID(id));
-
-    if (!cliente) {
-      return res.status(404).json({ error: "Cliente no encontrado" });
-    }
+async function getCliente(req, res) {
+  try {
+    const cliente = await Cliente.findById(req.params.id);
+    if (!cliente) return res.status(404).json({ error: "Cliente no encontrado" });
     res.json(cliente);
-
   } catch (error) {
-    res.status(500).json({
-      error: "Error al buscar cliente"
-    });
-  }  
+    res.status(500).json({ error: "Error al buscar cliente" });
+  }
 }
 
 async function crearCliente(req, res) {
-  const { cuit, nombre, apellido, domicilio, telefono, email, observaciones, condicionIVA } = req.body;
-
-  if (!cuit || !nombre || !apellido || !domicilio || !telefono || !email || !observaciones) {
-    return res.json({ error: "Faltan datos" });
+  const { nombre, email, telefono, direccion, notas } = req.body;
+  if (!nombre || !email) return res.json({ error: "Faltan datos" });
+  try {
+    const cliente = await Cliente.create({ nombre, email, telefono, direccion, notas, saldoCuentaCorriente: 0 });
+    res.status(201).json({ mensaje: "Cliente creado correctamente", cliente });
+  } catch (error) {
+    res.status(500).json({ error: "Error al crear cliente" });
   }
-  const nuevoCliente = await Cliente.create({
-    cuit,
-    nombre,
-    apellido,
-    domicilio,
-    telefono,
-    email,
-    observaciones,
-    condicionIVA,
-  });
-  
-  res.redirect("/clientes/vista");
 }
-
-
-async function eliminarCliente(req, res) {
-  try{
-    const {id} = req.params;
-    const clienteEliminado = await Cliente.findByIdAndDelete(new mongoose.Types.UUID(id));
-    if(!clienteEliminado){
-      return res.status(404).json({mensaje: "El cliente que intenta eliminar no existe."})
-    };
-    res.status(200).json(clienteEliminado);
-    
-    res.redirect("/clientes/vista");  
-  } catch(error){
-    res.status(500).json({mensaje: "Error al eliminar", error});
-  } 
-}
-
 
 async function actualizarCliente(req, res) {
-  try{
-    const {id} = req.params;
-    const nuevosDatos = req.body;
-    
-    const clienteActualizado = await Cliente.findByIdAndUpdate(
-      new mongoose.Types.UUID(id),
-      { $set: nuevosDatos },
+  try {
+    const cliente = await Cliente.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
       { new: true, runValidators: true }
     );
-    if (!clienteActualizado) {
-        return res.status(404).json({
-        mensaje: "Cliente inexistente",
-      });
-    }
-    res.status(200).json(clienteActualizado);
+    if (!cliente) return res.status(404).json({ error: "Cliente no encontrado" });
+    res.json(cliente);
   } catch (error) {
-    res.status(500).json({mensaje: "Error al actualizar", error});
+    res.status(500).json({ error: "Error al actualizar cliente" });
   }
-} 
+}
 
+async function eliminarCliente(req, res) {
+  try {
+    const cliente = await Cliente.findByIdAndDelete(req.params.id);
+    if (!cliente) return res.status(404).json({ error: "Cliente no encontrado" });
+    res.json(cliente);
+  } catch (error) {
+    res.status(500).json({ error: "Error al eliminar cliente" });
+  }
+}
+
+async function getMovimientosCliente(req, res) {
+  try {
+    const movimientos = await Movimiento.find({ cliente: req.params.id }).populate("producto").populate("lote");
+    res.json(movimientos);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener movimientos del cliente" });
+  }
+}
 
 async function vistaClientes(req, res) {
-  const clientes = await Cliente.find()
-  res.render("clientes/indexClientes", { clientes });
+  try {
+    const clientes = await Cliente.find();
+    res.render("indexClientes", { clientes });
+  } catch (error) {
+    res.status(500).json({ error: "Error al buscar clientes" });
+  }
 }
 
 async function vistaCliente(req, res) {
-  const id = req.params.id;
-  console.log("ID recibido:", id); // Agregado para depuración
-  try{
-    const cliente = await Cliente.findById(new mongoose.Types.UUID(id));
-    console.log("Cliente encontrado:", cliente); // Agregado para depuración
-    if (!cliente) {
-      return res.status(404).json({ error: "Cliente no encontrado" });
-    }
-    res.render("clientes/detailCliente", { cliente: cliente });
+  try {
+    const cliente = await Cliente.findById(req.params.id);
+    if (!cliente) return res.status(404).render("404", { url: req.originalUrl });
+    res.render("detailCliente", { cliente });
   } catch (error) {
-    res.status(500).json({
-      error: "Error al buscar cliente"
-    });
-  }   
+    res.status(500).json({ error: "Error al buscar cliente" });
+  }
+}
+
+async function vistaMovimientosCliente(req, res) {
+  try {
+    const cliente = await Cliente.findById(req.params.id);
+    if (!cliente) return res.status(404).render("404", { url: req.originalUrl });
+    const movimientos = await Movimiento.find({ cliente: req.params.id }).populate("producto").populate("lote");
+    res.render("clienteMovimientos", { cliente, movimientos });
+  } catch (error) {
+    res.status(500).json({ error: "Error al buscar movimientos" });
+  }
 }
 
 function formularioNuevoCliente(req, res) {
-  res.render("clientes/nuevoCliente");
+  res.render("nuevoCliente");
+}
+
+async function formularioEditarCliente(req, res) {
+  try {
+    const cliente = await Cliente.findById(req.params.id);
+    if (!cliente) return res.status(404).render("404", { url: req.originalUrl });
+    res.render("editarCliente", { cliente });
+  } catch (error) {
+    res.status(500).json({ error: "Error al buscar cliente" });
+  }
 }
 
 export {
   getClientes,
-  verCliente,
+  getCliente,
   crearCliente,
-  eliminarCliente,
   actualizarCliente,
+  eliminarCliente,
+  getMovimientosCliente,
   vistaClientes,
   vistaCliente,
+  vistaMovimientosCliente,
   formularioNuevoCliente,
+  formularioEditarCliente,
 };

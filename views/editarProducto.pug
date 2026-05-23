@@ -29,14 +29,11 @@ block content
     br
     br
 
-    label Proveedor:
-    select(name="proveedorId", required)
+    label Proveedor: 
+    select(name="proveedorId" id="proveedorId" required)
       option(value="") - Seleccionar Proveedor -
       each proveedor in proveedores
-        if proveedor.id == producto.proveedorId.toString()
-          option(value=proveedor.id, selected)= proveedor.nombre
-        else
-          option(value=proveedor.id)= proveedor.nombre
+        option(value=proveedor._id selected=(proveedor._id.toString() === proveedorSeleccionado))= proveedor.nombre
 
     br
     br

@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h2 Detalle del lote
+
+  p
+    strong ID:
+    | #{lote.id}
+  p
+    strong Código de lote:
+    | #{lote.codigoLote}
+  p
+    strong Producto:
+    | #{lote.producto ? lote.producto.nombre : ""}
+  p
+    strong Proveedor:
+    | #{lote.proveedor ? lote.proveedor.nombre : ""}
+  p
+    strong Fecha de ingreso:
+    | #{new Date(lote.fechaIngreso).toLocaleDateString()}
+  p
+    strong Fecha de vencimiento:
+    | #{new Date(lote.fechaVencimiento).toLocaleDateString()}
+  p
+    strong Cantidad disponible:
+    | #{lote.cantidadDisponible}
+  p
+    strong Cantidad inicial:
+    | #{lote.cantidadInicial}
+  p
+    strong Estado:
+    | #{lote.estado}
+
+  a(href="/lotes/vista") Volver al listado de lotes

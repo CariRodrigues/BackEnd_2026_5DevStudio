@@ -60,8 +60,37 @@ block content
     br
 
     button(type="submit") Guardar cambios
-
     |
     |
+    a(href="/proveedores/vista") Volver
 
-    a(href="/proveedores/vista") Volver al listado
+  script.
+    const proveedorId = "#{proveedor.id}";
+    const form = document.getElementById('editProveedorForm');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = {
+        cuit: form.cuit.value,
+        nombre: form.nombre.value,
+        domicilio: form.domicilio.value,
+        telefono: form.telefono.value,
+        email: form.email.value,
+        categoria: form.categoria.value,
+        plazoEntrega: Number(form.plazoEntrega.value),
+        activo: form.activo.checked,
+        observaciones: form.observaciones.value,
+      };
+
+      const response = await fetch(`/proveedores/${proveedorId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        window.location.href = '/proveedores/vista';
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        alert(errorData.message || 'Error al actualizar proveedor');
+      }
+    });

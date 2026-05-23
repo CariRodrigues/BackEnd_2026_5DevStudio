@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  h2 Nuevo Cliente
+
+  form(action="/clientes" method="post")
+
+      label(for="nombre") Nombre: 
+      input(type="text" name="nombre" id="nombre" required)
+
+      br
+      br
+
+      label(for="email") Email: 
+      input(type="email" name="email" id="email" required)
+
+      br
+      br
+
+      label(for="telefono") Teléfono: 
+      input(type="text" name="telefono" id="telefono")
+
+      br
+      br
+
+      label(for="direccion") Dirección: 
+      input(type="text" name="direccion" id="direccion")
+
+      br
+      br
+
+      label(for="notas") Notas: 
+      textarea(name="notas" id="notas")
+      
+      br
+      br
+
+      button(type="submit") Crear cliente

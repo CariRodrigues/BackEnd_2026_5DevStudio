@@ -9,10 +9,13 @@ const proveedorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    categoria: {
+      type: String,
+      required: true,
+    },
     domicilio: String,
     telefono: String,
     email: String,
-    rubro: String,
     plazoEntrega: Number,
     activo: Boolean,
     observaciones: String

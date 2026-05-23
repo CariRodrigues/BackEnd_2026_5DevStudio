@@ -7,9 +7,12 @@ import { conectarDB } from "./config/db.js";
 
 import productosRoutes from "./routes/productosRoutes.js";
 import proveedoresRoutes from "./routes/proveedoresRoutes.js";
-import usuariosRoutes from "./routes/usuariosRoutes.js"
+import usuariosRoutes from "./routes/usuariosRoutes.js";
+import lotesRoutes from "./routes/lotesRoutes.js";
+import movimientosRoutes from "./routes/movimientosRoutes.js";
 import clientesRoutes from "./routes/clientesRoutes.js";
-
+import comprasRoutes from "./routes/comprasRoutes.js";
+import ventasRoutes from "./routes/ventasRoutes.js";
 
 const app = express();
 
@@ -33,6 +36,11 @@ app.use("/productos", productosRoutes);
 app.use("/proveedores", proveedoresRoutes);
 app.use("/clientes", clientesRoutes);
 app.use("/usuarios", usuariosRoutes);
+app.use("/lotes", lotesRoutes);
+app.use("/movimientos", movimientosRoutes);
+app.use("/clientes", clientesRoutes);
+app.use("/compras", comprasRoutes);
+app.use("/ventas", ventasRoutes);
 
 app.use((req, res) => {
   res.redirect("/usuarios/login");

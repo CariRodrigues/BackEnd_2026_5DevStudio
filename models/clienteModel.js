@@ -1,43 +1,49 @@
 import mongoose from "mongoose";
 
-const clienteSchema = new mongoose.Schema(
-  {
-    _id: {
-      type: mongoose.Schema.Types.UUID,
-      default: () => new mongoose.Types.UUID(),
-    },
-    cuit: {
-      type: String,
-      required: true,
-    },
-    condicionIVA: {
-      type: String,
-      enum: [
-        "Consumidor Final",
-        "Responsable Inscripto",
-        "Monotributista",
-        "Exento",
-      ],
-      default: "Consumidor Final",
-    },
-    nombre: {
-      type: String,
-      required: true,
-    },
-    apellido: {
-      type: String,
-      required: true,
-    },
-    domicilio: String,
-    telefono: String,
-    email: String,
-    condicionIVA: String,
-    observaciones: String,
+const clienteSchema = new mongoose.Schema({
+  nombre: {
+    type: String,
+    required: true,
+    trim: true,
   },
-  {
-    timestamps: true,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
   },
-);
+  telefono: String,
+  direccion: String,
+  activo: {
+    type: Boolean,
+    default: true,
+  },
+  fechaRegistro: {
+    type: Date,
+    default: Date.now,
+  },
+  ultimaCompra: Date,
+  saldoCuentaCorriente: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
+  notas: String,
+}, { timestamps: true });
+
+clienteSchema.virtual("deudaActual").get(function () {
+  return this.saldoCuentaCorriente;
+});
+
+clienteSchema.virtual("movimientos", {
+  ref: "Movimiento",
+  localField: "_id",
+  foreignField: "cliente",
+});
+
+clienteSchema.set("toObject", { virtuals: true });
+clienteSchema.set("toJSON", { virtuals: true });
 
 const Cliente = mongoose.model("Cliente", clienteSchema);
 

@@ -54,6 +54,25 @@ body {
   box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.15);
 }
 
+.card-container {
+  background: var(--glass-bg);
+  padding: 0rem 1rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 480px;
+}
+
+.card-header {
+  text-align: center;
+}
+
+.card-header h1 {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
 .login-header {
   text-align: center;
   margin-bottom: 2rem;
@@ -69,7 +88,7 @@ body {
   font-size: 0.875rem;
 }
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .form-group label {
@@ -82,7 +101,7 @@ body {
 
 .form-group input {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.5rem;
   border: 1px solid var(--input-border);
   border-radius: 0.5rem;
   font-size: 1rem;
@@ -338,9 +357,28 @@ tr:hover td {
 .btn-action:active {
   transform: translateY(0);
 }
-/* space between consecutive action buttons in table cells */
 .btn-action + .btn-action {
   margin-left: 8px;
+}
+.btn-action.btn-danger,
+button.btn-danger {
+  background-color: #dc2626;
+}
+.btn-action.btn-danger:hover,
+button.btn-danger:hover {
+  background-color: #b91c1c;
+}
+.btn-action.btn-success,
+a.btn-success,
+button.btn-success {
+  background-color: #16a34a;
+  color: #ffffff;
+}
+.btn-action.btn-success:hover,
+a.btn-success:hover,
+button.btn-success:hover {
+  background-color: #15803d;
+  color: #ffffff;
 }
 /*NUEVO*/
 /* CONTENEDOR PRINCIPAL SUPERIOR */
@@ -502,4 +540,34 @@ tr:hover td {
 
 .btn:hover {
   opacity: 0.9;
+}
+
+/* Overrides para btn-success y btn-danger dentro de toolbar y form-actions */
+.toolbar .button.btn-success,
+.form-actions .button.btn-success,
+a.button.btn-success,
+button.button.btn-success {
+  background-color: #16a34a;
+  color: #ffffff;
+}
+.toolbar .button.btn-success:hover,
+.form-actions .button.btn-success:hover,
+a.button.btn-success:hover,
+button.button.btn-success:hover {
+  background-color: #15803d;
+  color: #ffffff;
+}
+.toolbar .button.btn-danger,
+.form-actions .button.btn-danger,
+a.button.btn-danger,
+button.button.btn-danger {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+.toolbar .button.btn-danger:hover,
+.form-actions .button.btn-danger:hover,
+a.button.btn-danger:hover,
+button.button.btn-danger:hover {
+  background-color: #b91c1c;
+  color: #ffffff;
 }

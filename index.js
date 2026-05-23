@@ -38,7 +38,6 @@ app.use("/clientes", clientesRoutes);
 app.use("/usuarios", usuariosRoutes);
 app.use("/lotes", lotesRoutes);
 app.use("/movimientos", movimientosRoutes);
-app.use("/clientes", clientesRoutes);
 app.use("/compras", comprasRoutes);
 app.use("/ventas", ventasRoutes);
 

@@ -1,40 +1,39 @@
-extends layout
+extends ./layout
 
 block content
-  h2 Detalle del cliente
+  .card-container
+    .card-header
+      h1 Detalle del Cliente
 
-  p
-    strong ID:
-    | #{cliente.id}
-  p
-    strong Nombre:
-    | #{cliente.nombre}
-  p
-    strong Email:
-    | #{cliente.email}
-  p
-    strong Teléfono:
-    | #{cliente.telefono}
-  p
-    strong Dirección:
-    | #{cliente.direccion}
-  p
-    strong Activo:
-    | #{cliente.activo ? "Sí" : "No"}
-  p
-    strong Fecha de registro:
-    | #{new Date(cliente.fechaRegistro).toLocaleDateString()}
-  p
-    strong Última compra:
-    | #{cliente.ultimaCompra ? new Date(cliente.ultimaCompra).toLocaleDateString() : "Sin compras"}
-  p
-    strong Deuda actual:
-    | $#{cliente.deudaActual.toFixed(2)}
-  p
-    strong Notas:
-    | #{cliente.notas}
+    .form-group
+      strong Nombre:
+      |  #{cliente.nombre}
+    .form-group
+      strong Email:
+      |  #{cliente.email}
+    .form-group
+      strong Teléfono:
+      |  #{cliente.telefono || "-"}
+    .form-group
+      strong Dirección:
+      |  #{cliente.direccion || "-"}
+    .form-group
+      strong Activo:
+      |  #{cliente.activo ? "Sí" : "No"}
+    .form-group
+      strong Fecha de registro:
+      |  #{new Date(cliente.fechaRegistro).toLocaleDateString()}
+    .form-group
+      strong Última compra:
+      |  #{cliente.ultimaCompra ? new Date(cliente.ultimaCompra).toLocaleDateString() : "Sin compras"}
+    .form-group
+      strong Saldo cuenta corriente:
+      |  $#{cliente.saldoCuentaCorriente.toFixed(2)}
+    .form-group
+      strong Notas:
+      |  #{cliente.notas || "-"}
 
-
-  br
-  br
-  a(href="/clientes/vista") Volver al listado de clientes
+    .form-actions
+      a.button(href=`/clientes/vista/${cliente.id}/movimientos`) Movimientos
+      a.button(href=`/clientes/editar/${cliente.id}`) Editar
+      a.button(href="/clientes/vista") Volver

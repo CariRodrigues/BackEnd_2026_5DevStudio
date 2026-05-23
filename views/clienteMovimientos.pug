@@ -1,27 +1,28 @@
-extends layout
+extends ./layout
 
 block content
-  h2 Historial de movimientos de #{cliente.nombre}
+  .toolbar
+    h2 Movimientos de #{cliente.nombre}
+    a.button(href=`/clientes/vista/${cliente.id}`) Volver al cliente
 
-  if movimientos.length === 0
-    p No hay movimientos registrados para este cliente.
-  else
-    table(border="1")
-      tr
-        th Fecha
-        th Tipo
-        th Producto
-        th Lote
-        th Cantidad
-        th Observación
-
-      each movimiento in movimientos
+  .table-container
+    if movimientos.length === 0
+      p No hay movimientos registrados para este cliente.
+    else
+      table
         tr
-          td= new Date(movimiento.fecha).toLocaleDateString()
-          td= movimiento.tipo
-          td= movimiento.producto ? movimiento.producto.nombre : "-"
-          td= movimiento.lote ? movimiento.lote.codigoLote : "-"
-          td= movimiento.cantidad
-          td= movimiento.observacion || "-"
+          th Fecha
+          th Tipo
+          th Producto
+          th Lote
+          th Cantidad
+          th Observación
 
-  a(href=`/clientes/vista/${cliente.id}`) Volver al cliente
+        each movimiento in movimientos
+          tr
+            td= new Date(movimiento.fecha).toLocaleDateString()
+            td= movimiento.tipo
+            td= movimiento.producto ? movimiento.producto.nombre : "-"
+            td= movimiento.lote ? movimiento.lote.codigoLote : "-"
+            td= movimiento.cantidad
+            td= movimiento.observacion || "-"

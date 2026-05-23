@@ -1,34 +1,34 @@
-extends layout
+extends ./layout
 
 block content
-  h2 Detalle del lote
+  .card-container
+    .card-header
+      h1 Detalle del Lote
 
-  p
-    strong ID:
-    | #{lote.id}
-  p
-    strong Código de lote:
-    | #{lote.codigoLote}
-  p
-    strong Producto:
-    | #{lote.producto ? lote.producto.nombre : ""}
-  p
-    strong Proveedor:
-    | #{lote.proveedor ? lote.proveedor.nombre : ""}
-  p
-    strong Fecha de ingreso:
-    | #{new Date(lote.fechaIngreso).toLocaleDateString()}
-  p
-    strong Fecha de vencimiento:
-    | #{new Date(lote.fechaVencimiento).toLocaleDateString()}
-  p
-    strong Cantidad disponible:
-    | #{lote.cantidadDisponible}
-  p
-    strong Cantidad inicial:
-    | #{lote.cantidadInicial}
-  p
-    strong Estado:
-    | #{lote.estado}
+    .form-group
+      strong Código:
+      |  #{lote.codigoLote}
+    .form-group
+      strong Producto:
+      |  #{lote.producto ? lote.producto.nombre : "-"}
+    .form-group
+      strong Proveedor:
+      |  #{lote.proveedor ? lote.proveedor.nombre : "-"}
+    .form-group
+      strong Fecha de ingreso:
+      |  #{new Date(lote.fechaIngreso).toLocaleDateString()}
+    .form-group
+      strong Fecha de vencimiento:
+      |  #{new Date(lote.fechaVencimiento).toLocaleDateString()}
+    .form-group
+      strong Cantidad disponible:
+      |  #{lote.cantidadDisponible}
+    .form-group
+      strong Cantidad inicial:
+      |  #{lote.cantidadInicial}
+    .form-group
+      strong Estado:
+      |  #{lote.estado}
 
-  a(href="/lotes/vista") Volver al listado de lotes
+    .form-actions
+      a.button(href="/lotes/vista") Volver

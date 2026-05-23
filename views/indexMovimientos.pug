@@ -1,27 +1,29 @@
 extends layout
 
 block content
-  h2 Historial de movimientos
+  .toolbar
+    h2 Historial de Movimientos
 
-  if movimientos.length === 0
-    p No hay movimientos registrados.
-  else
-    table(border="1")
-      tr
-        th Fecha
-        th Tipo
-        th Producto
-        th Lote
-        th Cliente
-        th Cantidad
-        th Observación
-
-      each movimiento in movimientos
+  .table-container
+    if movimientos.length === 0
+      p No hay movimientos registrados.
+    else
+      table
         tr
-          td= new Date(movimiento.fecha).toLocaleDateString()
-          td= movimiento.tipo
-          td= movimiento.producto ? movimiento.producto.nombre : "-"
-          td= movimiento.lote ? movimiento.lote.codigoLote : (movimiento.detalles && movimiento.detalles.codigoLote ? movimiento.detalles.codigoLote : "-")
-          td= movimiento.cliente ? movimiento.cliente.nombre : (movimiento.detalles && movimiento.detalles.clienteNombre ? movimiento.detalles.clienteNombre : "-")
-          td= movimiento.cantidad
-          td= movimiento.observacion || "-"
+          th Fecha
+          th Tipo
+          th Producto
+          th Lote
+          th Cliente
+          th Cantidad
+          th Observación
+
+        each movimiento in movimientos
+          tr
+            td= new Date(movimiento.fecha).toLocaleDateString()
+            td= movimiento.tipo
+            td= movimiento.producto ? movimiento.producto.nombre : "-"
+            td= movimiento.lote ? movimiento.lote.codigoLote : (movimiento.detalles && movimiento.detalles.codigoLote ? movimiento.detalles.codigoLote : "-")
+            td= movimiento.cliente ? movimiento.cliente.nombre : (movimiento.detalles && movimiento.detalles.clienteNombre ? movimiento.detalles.clienteNombre : "-")
+            td= movimiento.cantidad
+            td= movimiento.observacion || "-"

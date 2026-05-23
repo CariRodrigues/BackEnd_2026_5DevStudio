@@ -1,0 +1,67 @@
+extends layout
+
+block content
+  h2 Editar Proveedor
+
+  form(method="POST", action=`/proveedores/${proveedor.id}/editar`)
+
+    label CUIT:
+    input(type="text", name="cuit", value=proveedor.cuit, required)
+
+    br
+    br
+
+    label Nombre:
+    input(type="text", name="nombre", value=proveedor.nombre, required)
+
+    br
+    br
+
+    label Domicilio:
+    input(type="text", name="domicilio", value=proveedor.domicilio)
+
+    br
+    br
+
+    label Teléfono:
+    input(type="text", name="telefono", value=proveedor.telefono)
+
+    br
+    br
+
+    label Email:
+    input(type="email", name="email", value=proveedor.email)
+
+    br
+    br
+
+    label Rubro:
+    input(type="text", name="rubro", value=proveedor.rubro)
+
+    br
+    br
+
+    label Plazo Entrega (días):
+    input(type="number", name="plazoEntrega", value=proveedor.plazoEntrega)
+
+    br
+    br
+
+    label Activo:
+    input(type="checkbox", name="activo", checked=proveedor.activo)
+
+    br
+    br
+
+    label Observaciones:
+    textarea(name="observaciones")= proveedor.observaciones
+
+    br
+    br
+
+    button(type="submit") Guardar cambios
+
+    |
+    |
+
+    a(href="/proveedores/vista") Volver al listado

@@ -4,6 +4,16 @@ block content
 
   h2 Lista de proveedores
 
+  if mensaje
+    script.
+      (function () {
+        var msg = !{JSON.stringify(mensaje)};
+        alert(msg);
+        var url = new URL(window.location);
+        url.searchParams.delete('mensaje');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      })();
+
   table(border='1')
     tr
       th ID
@@ -16,6 +26,7 @@ block content
       th Plazo Entrega
       th Activo
       th Acciones
+      th Editar
 
     each proveedor in proveedores
       tr
@@ -30,3 +41,5 @@ block content
         td= proveedor.activo ? 'Si' : 'No'
         td
           a(href=`/proveedores/vista/${proveedor.id}`) Ver
+        td
+          a(href=`/proveedores/editar/${proveedor.id}`) Editar

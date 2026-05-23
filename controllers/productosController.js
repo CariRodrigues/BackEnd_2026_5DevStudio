@@ -48,10 +48,8 @@ async function crearProducto(req, res) {
     proveedorId
   });
 
-  res.status(201).json({
-    mensaje: "Producto creado correctamente",
-    producto: nuevoProducto,
-  });
+
+  res.redirect("/productos/vista");
 }
 
 async function eliminarProducto(req, res) {

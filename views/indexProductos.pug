@@ -1,53 +1,39 @@
-doctype html
-html(lang="es")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Lista de Productos
-    link(rel="stylesheet", href="/styles.css")
-  body.listas
-      .header-top
-        h2 Lista de productos
-        .actions-group
-          a.button(href="/productos/vista") Ver productos
-          a.button(href="/proveedores/vista") Ver proveedores
-          a.button(href="/productos/nuevo") Nuevo producto
-          a.button(href="/proveedores/nuevo") Nuevo proveedor
-      if mensaje
-        script.
-          (function () {
-            alert(!{JSON.stringify(mensaje)});
-            var url = new URL(window.location);
-            url.searchParams.delete('mensaje');
-            window.history.replaceState({}, document.title, url.pathname + url.search);
-          })();
+extends ./layout
 
-      .table-container
-        table
+block content
+  .toolbar
+    h2 Lista de Productos
+    a.button(href="/productos/nuevo") Agregar Producto
 
-          tr
-            th ID
-            th Nombre
-            th Marca
-            th Precio
-            th Stock
-            th Proveedor
-            th Acciones
-            th Editar
+  if mensaje
+    script.
+      (function () {
+        alert(!{JSON.stringify(mensaje)});
+        var url = new URL(window.location);
+        url.searchParams.delete('mensaje');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      })();
 
-          each producto in productos
-            tr
-              td= producto.id
-              td= producto.nombre
-              td= producto.marca
-              td= producto.precio
-              td= producto.stock
-              td= producto.proveedorId ? producto.proveedorId.nombre : "Proveedor no encontrado"
-              td
-                a.btn-action(href=`/productos/vista/${producto.id}`) Ver
-  
-              td
-                a(href=`/productos/editar/${producto.id}`) Editar
-  actions-group
-    a.button(href="/usuarios/login") Cerrar Sesión
+  .table-container
+    table
+      tr
+        th Nombre
+        th Marca
+        th Precio
+        th Stock
+        th Proveedor
+        th Acciones
+
+      each producto in productos
+        tr
+          td= producto.nombre
+          td= producto.marca
+          td= producto.precio
+          td= producto.stock
+          td= producto.proveedorId ? producto.proveedorId.nombre : "Proveedor no encontrado"
+          td
+            a.btn-action(href=`/productos/vista/${producto.id}`) Ver
+            |
+            a.btn-action(href=`/productos/editar/${producto.id}`) Editar
+
   

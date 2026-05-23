@@ -1,18 +1,11 @@
-html 
-    head 
-        title Nuevo Proveedor
-        link(rel="stylesheet" href="/styles.css")
-    body
+extends ./layout
+
+block content
         .login-container
           .login-header
               h1 Nuevo Proveedor
 
           form(method="POST", action="/proveedores")
-              .form-group-proveed
-                div
-                    label CUIT: 
-                    input(type="text", name="cuit", required)
-                br
               .form-group-proveed
                 div
                     label CUIT: 
@@ -30,7 +23,7 @@ html
                 br
               .form-group-proveed
                 div
-                    label Telofono: 
+                    label Teléfono: 
                     input(type="text", name="telefono", required)
                 br
               .form-group-proveed
@@ -59,5 +52,5 @@ html
                     textarea(name="observaciones", rows="3")
                 br
               .form-actions
-                a.button(type="submit") Guardar   
-                a.button(href="/productos/vista") Volver
+                button.button(type="submit") Guardar   
+                a.button(href="/proveedores/vista") Volver

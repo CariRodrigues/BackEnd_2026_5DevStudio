@@ -32,9 +32,11 @@ async function verProveedor(req, res) {
 }
 
 async function crearProveedor(req, res) {
+  console.log("crearproveedor");
   const { cuit, nombre, domicilio, telefono, email, rubro, plazoEntrega, activo, observaciones } = req.body;
   const activoBool = activo === "on" || activo === true || activo === "true";
 
+  console.log("Datos recibidos para nuevo proveedor:", req.body);
   if (!cuit || !nombre || !domicilio || !telefono || !email || !rubro || !plazoEntrega || activo === undefined) {
     return res.json({ error: "Faltan datos" });
   }
@@ -50,10 +52,7 @@ async function crearProveedor(req, res) {
     observaciones
   });
   
-  res.status(201).json({
-    mensaje: "Proveedor creado correctamente",
-    proveedor: nuevoProveedor,
-  });
+  res.redirect("/proveedores/vista");
 }
 
 

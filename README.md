@@ -62,6 +62,7 @@ Una vez que el servidor esté en funcionamiento, se puede acceder a las siguient
 - **Tabla de Productos**: `http://localhost:3000/productos/vista`
 - **Tabla de Proveedores**: `http://localhost:3000/proveedores/vista`
 
+<<<<<<< HEAD
 ### Productos
 - `GET /productos` — devuelve todos los productos en JSON
 - `GET /productos/:id` — devuelve un producto por ID en JSON
@@ -90,6 +91,8 @@ Una vez que el servidor esté en funcionamiento, se puede acceder a las siguient
 ### TODO
 - Implementar rutas `PUT` para actualización de productos y proveedores.
 - Agregar `delete` lógico en lugar de borrado físico para productos y proveedores.
+=======
+>>>>>>> f234d1b66e6ef3b1db557268f192410ec5c79859
 
 ## Dependencias
 

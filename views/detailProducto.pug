@@ -1,30 +1,42 @@
-extends layout
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Dettale del Producto
+    link(rel="stylesheet", href="/styles.css")
+  body
+    .header-top
+        h1 Todo Stock
+        .actions-group
+          a.button(href="/productos/vista") Ver productos
+          a.button(href="/proveedores/vista") Ver proveedores
+          a.button(href="/productos/nuevo") Nuevo producto
+          a.button(href="/proveedores/nuevo") Nuevo proveedor
+        h2 Detalle del Producto
 
-block content
-  h2 Detalle del Producto
+        p
+          strong ID:
+          | #{producto.id}
 
-  p
-    strong ID:
-    | #{producto.id}
+        p
+          strong Nombre:
+          | #{producto.nombre}
 
-  p
-    strong Nombre:
-    | #{producto.nombre}
+        p
+          strong Marca:
+          | #{producto.marca}
 
-  p
-    strong Marca:
-    | #{producto.marca}
+        p
+          strong Precio:
+          | #{producto.precio}
 
-  p
-    strong Precio:
-    | #{producto.precio}
+        p
+          strong Stock:
+          | #{producto.stock}
 
-  p
-    strong Stock:
-    | #{producto.stock}
-
-  p
-    strong Proveedor:
-    | #{nombreProveedor}
-
-  a(href="/productos/vista") Volver
+        p
+          strong Proveedor:
+          | #{nombreProveedor}
+        .form-actions
+          a.button(href="/productos/vista") Volver

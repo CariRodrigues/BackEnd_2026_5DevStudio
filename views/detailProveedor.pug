@@ -1,49 +1,60 @@
-extends layout
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Dettale del Producto
+    link(rel="stylesheet", href="/styles.css")
+  body
+    .header-top
+        h1 Todo Stock
+        .actions-group
+          a.button(href="/productos/vista") Ver productos
+          a.button(href="/proveedores/vista") Ver proveedores
+          a.button(href="/productos/nuevo") Nuevo producto
+          a.button(href="/proveedores/nuevo") Nuevo proveedor
 
-block content
+        h2 Detalle del Proveedor
 
-  h2 Detalle del Proveedor
+        p
+          strong ID: 
+          = proveedor.id
 
-  p
-    strong ID: 
-    = proveedor.id
+        p
+          strong CUIT: 
+          = proveedor.cuit
 
-  p
-    strong CUIT: 
-    = proveedor.cuit
+        p
+          strong Nombre: 
+          = proveedor.nombre
 
-  p
-    strong Nombre: 
-    = proveedor.nombre
+        p
+          strong Domicilio: 
+          = proveedor.domicilio
 
-  p
-    strong Domicilio: 
-    = proveedor.domicilio
+        p
+          strong Telofono: 
+          = proveedor.telefono
 
-  p
-    strong Telofono: 
-    = proveedor.telefono
+        p
+          strong Email: 
+          = proveedor.email
 
-  p
-    strong Email: 
-    = proveedor.email
+        p
+          strong Rubro: 
+          = proveedor.rubro
 
-  p
-    strong Rubro: 
-    = proveedor.rubro
+        p
+          strong Plazo de Entrega: 
+          = proveedor.plazoEntrega + " dias"
 
-  p
-    strong Plazo de Entrega: 
-    = proveedor.plazoEntrega + " dias"
+        p
+          strong Activo: 
+          = proveedor.activo ? "Si" : "No"
 
-  p
-    strong Activo: 
-    = proveedor.activo ? "Si" : "No"
+        p
+          strong Observaciones: 
+          = proveedor.observaciones || "Sin observaciones"
 
-  p
-    strong Observaciones: 
-    = proveedor.observaciones || "Sin observaciones"
-
-  br
-
-  a(href="/proveedores/vista") Volver al listado
+        .form-actions
+            a.button(href="/proveedores/vista") Volver al listado

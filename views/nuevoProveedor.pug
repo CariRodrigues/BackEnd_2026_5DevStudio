@@ -1,67 +1,63 @@
-extends layout
+html 
+    head 
+        title Nuevo Proveedor
+        link(rel="stylesheet" href="/styles.css")
+    body
+        .login-container
+          .login-header
+              h1 Nuevo Proveedor
 
-block content
-  h2 Nuevo proveedor
-
-  form(method="POST", action="/proveedores")
-
-    label CUIT: 
-    input(type="text", name="cuit", required)
-
-    br
-    br
-
-    label Nombre: 
-    input(type="text", name="nombre", required)
-
-    br
-    br
-
-    label Domicilio: 
-    input(type="text", name="domicilio", required)
-
-    br
-    br
-
-    label Telofono: 
-    input(type="text", name="telefono", required)
-
-    br
-    br
-
-    label Email: 
-    input(type="email", name="email", required)
-
-    br
-    br
-
-    label Rubro: 
-    input(type="text", name="rubro", required)
-
-    br
-    br
-
-    label Plazo de Entrega (dias): 
-    input(type="number", name="plazoEntrega", required)
-
-    br
-    br
-
-    label Activo: 
-    input(type="checkbox", name="activo", value="true", checked)
-
-    br
-    br
-
-    label Observaciones: 
-    textarea(name="observaciones", rows="3")
-
-    br
-    br
-
-    button(type="submit") Guardar   
-
-    |
-    |     
-
-    a(href="/proveedores/vista") Volver
+          form(method="POST", action="/proveedores")
+              .form-group-proveed
+                div
+                    label CUIT: 
+                    input(type="text", name="cuit", required)
+                br
+              .form-group-proveed
+                div
+                    label CUIT: 
+                    input(type="text", name="cuit", required)
+                br
+              .form-group-proveed
+                div
+                    label Nombre: 
+                    input(type="text", name="nombre", required)
+                br
+              .form-group-proveed
+                div
+                    label Domicilio: 
+                    input(type="text", name="domicilio", required)
+                br
+              .form-group-proveed
+                div
+                    label Telofono: 
+                    input(type="text", name="telefono", required)
+                br
+              .form-group-proveed
+                div
+                    label Email: 
+                    input(type="email", name="email", required)
+                br
+              .form-group-proveed
+                div
+                    label Rubro: 
+                    input(type="text", name="rubro", required)
+                br
+              .form-group-proveed
+                div
+                    label Plazo de Entrega (dias): 
+                    input(type="number", name="plazoEntrega", required)
+                br
+              .form-group-proveed
+                div
+                    label Activo: 
+                    input(type="checkbox", name="activo", value="true", checked)
+                br
+              .form-group-proveed
+                div
+                    label Observaciones: 
+                    textarea(name="observaciones", rows="3")
+                br
+              .form-actions
+                a.button(type="submit") Guardar   
+                a.button(href="/productos/vista") Volver

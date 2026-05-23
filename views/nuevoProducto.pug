@@ -1,46 +1,44 @@
-extends layout
+html 
+    head 
+        title Nuevo Producto
+        link(rel="stylesheet" href="/styles.css")
+    body
+        .login-container
+          .login-header
+              h1 Nuevo Producto
 
-block content
-  h2 Nuevo Producto
-
-  form(method="POST", action="/productos")
-
-    label Nombre: 
-    input(type="text", name="nombre", required)
-
-    br
-    br
-
-    label Marca: 
-    input(type="text", name="marca", required)
-
-    br
-    br
-
-    label Precio: 
-    input(type="number", name="precio", required)
-
-    br
-    br
-    
-    label Stock: 
-    input(type="number", name="stock", required)
-
-    br
-    br
-
-    label Proveedor: 
-    select(name="proveedorId", required)
-      option(value="") - Seleccionar Proveedor -
-      each proveedor in proveedores
-        option(value=proveedor.id)= proveedor.nombre
-
-    br
-    br
-
-    button(type="submit") Guardar   
+          form(method="POST", action="/productos")
+              .form-group-prod
+                div
+                    label Nombre: 
+                    input(type="text", name="nombre", required)
+                br
+              .form-group-prod
+                div
+                    label Marca: 
+                    input(type="text", name="marca", required)
+                br
+              .form-group-prod
+                div
+                    label Precio: 
+                    input(type="number", name="precio", required)
+                br
+              .form-group-prod
+                div
+                    label Stock: 
+                    input(type="number", name="stock", required)
+                br
+              .form-group-prod
+                div
+                    label Proveedor: 
+                    select(name="proveedorId", required)
+                      option(value="") - Seleccionar Proveedor -
+                      each proveedor in proveedores
+                        option(value=proveedor.id)= proveedor.nombre
+                br
+              .form-actions
+                a.button(type="submit") Guardar   
+                a.button(href="/productos/vista") Volver
 
     |
     |     
-
-    a(href="/productos/vista") Volver

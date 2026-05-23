@@ -1,21 +1,164 @@
-html,
+/*html,
 button,
 input,
 select,
 textarea {
   color: #222;
   font-family: sans-serif;
+  text-align: center;
 }
 
 html {
   font-size: 1em;
   line-height: 1.4;
 }
+*/
+:root {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --glass-bg: rgba(255, 255, 255, 0.95);
+  --text-color: #1f2937;
+  --text-muted: #6b7280;
+  --input-border: #d1d5db;
+  --input-focus: #4f46e5;
+}
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-gradient);
+  overflow: hidden;
+}
+.login-container {
+  background: var(--glass-bg);
+  padding: 2.5rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 400px;
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.15);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.login-header h1 {
+  color: var(--text-color);
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.login-header p {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s, ring 0.2s;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.form-actions label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.form-actions a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-actions a:hover {
+  text-decoration: underline;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.submit-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.login-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
 
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
+  text-align: center;
 }
 
 h2 {
@@ -83,4 +226,280 @@ fieldset {
 
 textarea {
   resize: vertical;
+}
+nav{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.button,
+button.button,
+a.button {
+  border: none;
+  outline: none;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background-color: aliceblue;
+  color: rgb(54, 54, 59);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.button:hover,
+button.button:hover,
+a.button:hover {
+  background-color: #b3b2eb;
+  transform: translateY(-2px);
+}
+.button:active,
+button.button:active,
+a.button:active {
+  transform: translateY(0);
+}
+
+/* CONTENEDOR DE LA TABLA */
+.table-container {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 1000px;
+  overflow-x: auto; /* Permite scroll horizontal en celulares */
+}
+
+h2 {
+  color: #ffffff; /* Blanco para resaltar sobre el fondo degradado */
+  margin-bottom: 24px;
+  font-size: 32px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  width: 100%;
+  max-width: 1000px;
+}
+/* ESTILOS DE LA TABLA */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Elimina los bordes dobles feos */
+  text-align: left;
+}
+
+/* ENCABEZADO */
+th {
+  background-color: #667eea;
+  color: #ffffff;
+  padding: 14px 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+/* FILAS Y CELDAS */
+td {
+  padding: 14px 16px;
+  color: #333333;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 15px;
+}
+
+/* Filas alternas (Efecto cebra) */
+tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+/* Efecto hover al pasar el mouse */
+tr:hover td {
+  background-color: #f1f3ff;
+}
+
+/* BOTÓN DE ACCIÓN (Ver) */
+.btn-action {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #764ba2;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.btn-action:hover {
+  background-color: #5a3782;
+  transform: translateY(-1px);
+}
+
+.btn-action:active {
+  transform: translateY(0);
+}
+/* space between consecutive action buttons in table cells */
+.btn-action + .btn-action {
+  margin-left: 8px;
+}
+/*NUEVO*/
+/* CONTENEDOR PRINCIPAL SUPERIOR */
+body.listas{
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column; /* Todo se alinea hacia abajo */
+  align-items: center;    /* Centra el bloque entero en la pantalla */
+  gap: 20px;   
+}
+.header-top {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column; /* H2 arriba, botones abajo */
+  gap: 15px; /* Espacio fijo entre el h2 y la fila de botones */
+}
+
+/* Barra superior tipo toolbar: título a la izquierda, acciones a la derecha */
+.toolbar {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* Ensure the title and button share the same line and the button matches other buttons */
+.toolbar h2 {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0; /* allow flex children to shrink */
+}
+
+.toolbar .button {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #ffffff;
+  color: #764ba2;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  white-space: nowrap; /* prevent wrapping */
+}
+
+.toolbar .button:hover {
+  background-color: #f1f3ff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* EL TÍTULO H2 */
+.header-top h2 {
+  color: #ffffff;
+  font-size: 32px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* FILA DE BOTONES (AHORA ARRIBA DE LA TABLA) */
+.actions-group {
+  display: flex;
+  flex-direction: row; /* Fuerza a que vayan uno al lado del otro */
+  gap: 12px;           /* Espacio entre cada botón */
+  flex-wrap: wrap; 
+}
+
+/* ESTILO DE LOS BOTONES */
+.actions-group .button {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #ffffff;
+  color: #764ba2;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.actions-group .button:hover {
+  background-color: #f1f3ff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.table-container {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 1500px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+th {
+  background-color: #667eea;
+  color: #ffffff;
+  padding: 14px 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+td {
+  padding: 14px 16px;
+  color: #333333;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 15px;
+}
+tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+tr:hover td {
+  background-color: #f1f3ff;
+}
+
+.btn-action {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #764ba2;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* Toolbar and button for clientes view */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75em;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.45em 0.75em;
+  border-radius: 4px;
+  border: 1px solid #5d5d5e;
+  background: #8b8b8b;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn:hover {
+  opacity: 0.9;
 }

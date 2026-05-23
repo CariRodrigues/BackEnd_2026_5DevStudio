@@ -18,7 +18,12 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-conectarDB();
+try {
+    await conectarDB();
+} catch(error) {
+    console.error("Error al iniciar:", error);
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -29,6 +34,7 @@ app.use(express.static("public"));
 
 app.use("/productos", productosRoutes);
 app.use("/proveedores", proveedoresRoutes);
+app.use("/clientes", clientesRoutes);
 app.use("/usuarios", usuariosRoutes);
 app.use("/lotes", lotesRoutes);
 app.use("/movimientos", movimientosRoutes);
@@ -37,11 +43,9 @@ app.use("/compras", comprasRoutes);
 app.use("/ventas", ventasRoutes);
 
 app.use((req, res) => {
-  if (req.accepts("html")) {
-    return res.status(404).render("404", { url: req.originalUrl });
-  }
-  res.status(404).json({ success: false, message: "Endpoint no encontrado" });
+  res.redirect("/usuarios/login");
 });
+
 
 app.listen(PORT, () => {
   console.log("Servidor corriendo en puerto " + PORT);

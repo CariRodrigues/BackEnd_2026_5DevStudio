@@ -1,26 +1,27 @@
-extends layout
+extends ./layout
 
 block content
-  h2 Detalle del Producto
+    .header-top
+        h2 Detalle del Producto
 
-  p
-    strong ID:
-    | #{producto.id}
+        p
+          strong Nombre:
+          | #{producto.nombre}
 
-  p
-    strong Nombre:
-    | #{producto.nombre}
+        p
+          strong Marca:
+          | #{producto.marca}
 
-  p
-    strong Marca:
-    | #{producto.marca}
+        p
+          strong Precio:
+          | #{producto.precio}
 
-  p
-    strong Precio:
-    | #{producto.precio}
+        p
+          strong Stock:
+          | #{producto.stock}
 
-  p
-    strong Proveedor:
-    | #{producto.proveedorId ? producto.proveedorId.nombre : "-"}
-
-  a(href="/productos/vista") Volver
+        p
+          strong Proveedor:
+          | #{nombreProveedor}
+        .form-actions
+          a.button(href="/productos/vista") Volver

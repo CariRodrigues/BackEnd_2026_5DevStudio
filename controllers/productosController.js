@@ -47,10 +47,8 @@ async function crearProducto(req, res) {
     proveedorId
   });
 
-  res.status(201).json({
-    mensaje: "Producto creado correctamente",
-    producto: nuevoProducto,
-  });
+
+  res.redirect("/productos/vista");
 }
 
 async function eliminarProducto(req, res) {
@@ -81,6 +79,11 @@ async function actualizarProducto(req, res) {
         mensaje: "Producto inexistente",
       });
     }
+
+    if (req.method === "POST" && req.originalUrl.includes("/editar")) {
+      return res.redirect(`/productos/vista?mensaje=Producto actualizado correctamente`);
+    }
+
     res.status(200).json(productoActualizado);
   }catch(error){
     res.status(500).json({mensaje: "Error al actualizar producto", error});
@@ -88,10 +91,10 @@ async function actualizarProducto(req, res) {
 }
 
 async function vistaProductos(req,res) {
-  
   try{
     const productos = await Producto.find().populate('proveedorId');    
-    res.render("indexProductos", { productos });
+    const mensaje = req.query.mensaje;
+    res.render("indexProductos", { productos, mensaje });
   }catch(error){
     res.status(500).json({
       error: "Error al buscar productos"
@@ -106,7 +109,8 @@ async function vistaProducto(req,res) {
     if(!producto){
       return res.status(404).json({mensaje: "Producto no encontrado"})
     };
-    res.render("detailProducto", { producto: producto });
+    const nombreProveedor = producto.proveedorId ? producto.proveedorId.nombre : "Proveedor no encontrado";
+    res.render("detailProducto", { producto: producto, nombreProveedor });
   }catch(error){
     res.status(500).json({
       error: "Error al buscar producto"
@@ -142,5 +146,6 @@ export {
   actualizarProducto,
   vistaProductos,
   vistaProducto,
-  formularioNuevoProducto
+  formularioNuevoProducto,
+  formularioEditarProducto
 };

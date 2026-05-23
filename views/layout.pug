@@ -6,28 +6,20 @@ html(lang="es")
     title 5DevStudio | TodoStock S.A.
     link(rel="stylesheet", href="/styles.css")
 
-  body
-    header
-      h1 Sistema "TodoStock S.A."
-      nav
-        a(href="/proveedores/vista") Listado proveedores
-        |  |  
-        a(href="/productos/vista") Listado productos
-        |  |  
-        a(href="/clientes/vista") Listado clientes
-        |  |  
-        a(href="/lotes/vista") Listado lotes
-        |  |  
-        a(href="/movimientos/vista") Movimientos
-        |  |  
-        a(href="/compras/vista") Compras
-        |  |  
-        a(href="/ventas/vista") Ventas
-        |  | 
+  body.listas
+  header
+      h1 "TodoStock S.A."
+      nav.actions-group
+        a.button(href="/productos/vista") PRODUCTOS
 
-    hr
+        a.button(href="/proveedores/vista") PROVEEDORES
 
-    block content
+        a.button(href="/clientes/vista") CLIENTES
+
+        a.button(href="/usuarios/login") CERRAR SESIÓN
+
+
+  block content
 
 
     br

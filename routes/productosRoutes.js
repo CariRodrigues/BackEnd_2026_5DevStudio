@@ -9,6 +9,7 @@ router.get("/editar/:id", productosController.formularioEditarProducto);
 router.get("/", productosController.getProductos);
 router.get("/:id", productosController.verProducto);
 router.post("/", productosController.crearProducto);
+router.post("/:id/editar", productosController.actualizarProducto);
 router.put("/:id", productosController.actualizarProducto);
 router.delete("/:id", productosController.eliminarProducto);
 

@@ -19,7 +19,7 @@ const proveedorSchema = new mongoose.Schema({
     plazoEntrega: Number,
     activo: Boolean,
     observaciones: String
-});
+}, { collection: "proveedores" });
 
 const Proveedor = mongoose.model("Proveedor", proveedorSchema);
 

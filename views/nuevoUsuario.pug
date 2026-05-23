@@ -1,0 +1,31 @@
+html 
+    head 
+        title Nuevo Usuario
+        link(rel="stylesheet" href="/styles.css")
+    body
+        .login-container
+          .login-header
+              h1 Nuevo Usuario
+
+          form(method="POST", action="/usuarios")
+              .form-group-prod
+                div
+                  label Usuario: 
+                  input(type="text", name="username", required)
+                br
+              .form-group-prod
+                div
+                  label Password: 
+                  input(type="password", name="password", required)
+                br
+              .form-group-prod
+                div
+                  label Rol: 
+                    select#rol(name="rol" required) 
+                        option(value='') Selecciona una opción 
+                        option(value='admin') Administrador 
+                        option(value='user') Usuario
+                br
+              .form-actions
+                a.button(type="submit") Guardar   
+                a.button(href="/usuarios/admin") Volver

@@ -1,45 +1,39 @@
-extends layout
+extends ./layout
 
 block content
+  .toolbar
+    h2 Lista de Productos
+    a.button(href="/productos/nuevo") Agregar Producto
 
-  h2 Lista de productos
+  if mensaje
+    script.
+      (function () {
+        alert(!{JSON.stringify(mensaje)});
+        var url = new URL(window.location);
+        url.searchParams.delete('mensaje');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      })();
 
-  a(href="/productos/nuevo") Nuevo Producto
-
-  table(border="1")
-    tr
-      th ID
-      th Nombre
-      th Marca
-      th Precio
-      th Proveedor
-      th Acciones
-
-    each producto in productos
+  .table-container
+    table
       tr
-        td= producto.id
-        td= producto.nombre
-        td= producto.marca
-        td= producto.precio
-        td= producto.proveedorId ? producto.proveedorId.nombre : "-"
-        td
-          a(href=`/productos/vista/${producto.id}`) Ver
-          |  
-          a(href=`/productos/editar/${producto.id}`) Editar
-          |  
-          button(type="button" class="btn-delete" data-id=producto.id) Eliminar
+        th Nombre
+        th Marca
+        th Precio
+        th Stock
+        th Proveedor
+        th Acciones
 
-  script.
-    document.querySelectorAll('.btn-delete').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        const id = btn.dataset.id;
-        if (!confirm('¿Eliminar este producto?')) return;
-        const response = await fetch(`/productos/${id}`, { method: 'DELETE' });
-        if (response.ok) {
-          window.location.reload();
-        } else {
-          const errorData = await response.json().catch(() => ({}));
-          alert(errorData.message || 'Error al eliminar producto');
-        }
-      });
-    });
+      each producto in productos
+        tr
+          td= producto.nombre
+          td= producto.marca
+          td= producto.precio
+          td= producto.stock
+          td= producto.proveedorId ? producto.proveedorId.nombre : "Proveedor no encontrado"
+          td
+            a.btn-action(href=`/productos/vista/${producto.id}`) Ver
+            |
+            a.btn-action(href=`/productos/editar/${producto.id}`) Editar
+
+  

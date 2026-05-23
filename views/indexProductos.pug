@@ -4,6 +4,15 @@ block content
 
   h2 Lista de productos
 
+  if mensaje
+    script.
+      (function () {
+        alert(!{JSON.stringify(mensaje)});
+        var url = new URL(window.location);
+        url.searchParams.delete('mensaje');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      })();
+
   table(border="1")
     tr
       th ID
@@ -13,6 +22,7 @@ block content
       th Stock
       th Proveedor
       th Acciones
+      th Editar
 
     each producto in productos
       tr
@@ -21,6 +31,8 @@ block content
         td= producto.marca
         td= producto.precio
         td= producto.stock
-        td= producto.proveedorId.nombre
+        td= producto.proveedorId ? producto.proveedorId.nombre : "Proveedor no encontrado"
         td
           a(href=`/productos/vista/${producto.id}`) Ver
+        td
+          a(href=`/productos/editar/${producto.id}`) Editar

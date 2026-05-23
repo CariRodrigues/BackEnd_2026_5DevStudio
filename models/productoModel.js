@@ -19,6 +19,11 @@ const productoSchema = new mongoose.Schema({
         ref: "Proveedor",
         required:true
     }
+    ,
+    eliminado: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const Producto = mongoose.model("Producto", productoSchema);

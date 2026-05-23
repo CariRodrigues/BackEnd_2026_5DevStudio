@@ -62,6 +62,37 @@ Una vez que el servidor esté en funcionamiento, se puede acceder a las siguient
 - **Tabla de Productos**: `http://localhost:3000/productos/vista`
 - **Tabla de Proveedores**: `http://localhost:3000/proveedores/vista`
 
+<<<<<<< HEAD
+### Productos
+- `GET /productos` — devuelve todos los productos en JSON
+- `GET /productos/:id` — devuelve un producto por ID en JSON
+- `GET /productos/vista` — renderiza la tabla de productos
+- `GET /productos/nuevo` — formulario para crear un producto
+- `GET /productos/editar/:id` — formulario para editar un producto existente
+- `POST /productos` — crea un nuevo producto
+- `POST /productos/:id/editar` — actualiza un producto desde el formulario de edición
+
+
+### Proveedores
+- `GET /proveedores` — devuelve todos los proveedores en JSON
+- `GET /proveedores/:id` — devuelve un proveedor por ID en JSON
+- `GET /proveedores/vista` — renderiza la tabla de proveedores
+- `GET /proveedores/nuevo` — formulario para crear un proveedor
+- `GET /proveedores/editar/:id` — formulario para editar un proveedor existente
+- `POST /proveedores` — crea un nuevo proveedor
+- `POST /proveedores/:id/editar` — actualiza un proveedor desde el formulario de edición
+
+
+### Comportamiento de edición
+- Las tablas de productos y proveedores ahora tienen una columna `Editar` para abrir el formulario de edición.
+- Al guardar los cambios desde los formularios de edición, el usuario es redirigido a la lista correspondiente.
+- El mensaje de confirmación de actualización se muestra como un popup temporal en la vista.
+
+### TODO
+- Implementar rutas `PUT` para actualización de productos y proveedores.
+- Agregar `delete` lógico en lugar de borrado físico para productos y proveedores.
+=======
+>>>>>>> f234d1b66e6ef3b1db557268f192410ec5c79859
 
 ## Dependencias
 

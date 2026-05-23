@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h2 Detalle producto
+  h2 Detalle del Producto
 
   p
     strong ID:
@@ -12,12 +12,19 @@ block content
     | #{producto.nombre}
 
   p
+    strong Marca:
+    | #{producto.marca}
+
+  p
     strong Precio:
     | #{producto.precio}
 
-    
   p
     strong Stock:
     | #{producto.stock}
+
+  p
+    strong Proveedor:
+    | #{nombreProveedor}
 
   a(href="/productos/vista") Volver

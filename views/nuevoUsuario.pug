@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  h2 Nuevo Usuario
+
+  form(method="POST", action="/usuarios")
+
+    label Usuario: 
+    input(type="text", name="username", required)
+
+    br
+    br
+
+    label Password: 
+    input(type="password", name="password", required)
+
+    br
+    br
+
+    label Rol: 
+    select#rol(name="rol" required) 
+        option(value='') Selecciona una opción 
+        option(value='admin') Administrador 
+        option(value='user') Usuario
+
+    br
+
+    button(type="submit") Guardar   
+
+    |
+    |     
+
+    a(href="/usuarios/login") Volver

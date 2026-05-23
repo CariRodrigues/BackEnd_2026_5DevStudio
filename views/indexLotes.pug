@@ -1,31 +1,42 @@
 extends layout
 
 block content
-  h2 Lista de lotes
+  .toolbar
+    h2 Lista de Lotes
 
-  table(border="1")
-    tr
-      th ID
-      th Código
-      th Producto
-      th Proveedor
-      th Fecha ingreso
-      th Fecha vencimiento
-      th Disponible
-      th Inicial
-      th Estado
-      th Acciones
-
-    each lote in lotes
+  .table-container
+    table
       tr
-        td= lote.id
-        td= lote.codigoLote
-        td= lote.producto ? lote.producto.nombre : ""
-        td= lote.proveedor ? lote.proveedor.nombre : ""
-        td= new Date(lote.fechaIngreso).toLocaleDateString()
-        td= new Date(lote.fechaVencimiento).toLocaleDateString()
-        td= lote.cantidadDisponible
-        td= lote.cantidadInicial
-        td= lote.estado
-        td
-          a(href=`/lotes/vista/${lote.id}`) Ver
+        th Código
+        th Producto
+        th Proveedor
+        th Fecha Ingreso
+        th Fecha Vencimiento
+        th Disponible
+        th Inicial
+        th Estado
+        th Acciones
+
+      each lote in lotes
+        tr
+          td= lote.codigoLote
+          td= lote.producto ? lote.producto.nombre : "-"
+          td= lote.proveedor ? lote.proveedor.nombre : "-"
+          td= new Date(lote.fechaIngreso).toLocaleDateString()
+          td= new Date(lote.fechaVencimiento).toLocaleDateString()
+          td= lote.cantidadDisponible
+          td= lote.cantidadInicial
+          td= lote.estado
+          td
+            a.btn-action(href=`/lotes/vista/${lote.id}`) Ver
+            button.btn-action.btn-danger(type="button", data-id=lote.id) Eliminar
+
+  script.
+    document.querySelectorAll('button[data-id]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('¿Eliminar este lote?')) return;
+        const response = await fetch(`/lotes/${btn.dataset.id}`, { method: 'DELETE' });
+        if (response.ok) window.location.reload();
+        else alert('Error al eliminar lote');
+      });
+    });

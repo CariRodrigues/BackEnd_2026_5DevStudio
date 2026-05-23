@@ -12,6 +12,7 @@ router.get("/", clientesController.getClientes);
 router.get("/:id/movimientos", clientesController.getMovimientosCliente);
 router.get("/:id", clientesController.getCliente);
 router.post("/", clientesController.crearCliente);
+router.post("/:id/editar", clientesController.actualizarCliente);
 router.put("/:id", clientesController.actualizarCliente);
 router.delete("/:id", clientesController.eliminarCliente);
 

@@ -1,56 +1,47 @@
 extends ./layout
 
 block content
-        .login-container
-          .login-header
-              h1 Nuevo Proveedor
+  .card-container
+    .card-header
+      h1 Nuevo Proveedor
 
-          form(method="POST", action="/proveedores")
-              .form-group-proveed
-                div
-                    label CUIT: 
-                    input(type="text", name="cuit", required)
-                br
-              .form-group-proveed
-                div
-                    label Nombre: 
-                    input(type="text", name="nombre", required)
-                br
-              .form-group-proveed
-                div
-                    label Domicilio: 
-                    input(type="text", name="domicilio", required)
-                br
-              .form-group-proveed
-                div
-                    label Teléfono: 
-                    input(type="text", name="telefono", required)
-                br
-              .form-group-proveed
-                div
-                    label Email: 
-                    input(type="email", name="email", required)
-                br
-              .form-group-proveed
-                div
-                    label Rubro: 
-                    input(type="text", name="rubro", required)
-                br
-              .form-group-proveed
-                div
-                    label Plazo de Entrega (dias): 
-                    input(type="number", name="plazoEntrega", required)
-                br
-              .form-group-proveed
-                div
-                    label Activo: 
-                    input(type="checkbox", name="activo", value="true", checked)
-                br
-              .form-group-proveed
-                div
-                    label Observaciones: 
-                    textarea(name="observaciones", rows="3")
-                br
-              .form-actions
-                button.button(type="submit") Guardar   
-                a.button(href="/proveedores/vista") Volver
+    form(method="POST", action="/proveedores")
+      .form-group
+        div
+          label CUIT:
+          input(type="text", name="cuit", required)
+      .form-group
+        div
+          label Nombre:
+          input(type="text", name="nombre", required)
+      .form-group
+        div
+          label Domicilio:
+          input(type="text", name="domicilio", required)
+      .form-group
+        div
+          label Teléfono:
+          input(type="text", name="telefono", required)
+      .form-group
+        div
+          label Email:
+          input(type="email", name="email", required)
+      .form-group
+        div
+          label Categoría:
+          input(type="text", name="categoria", required)
+      .form-group
+        div
+          label Plazo de Entrega (días):
+          input(type="number", name="plazoEntrega", required)
+      .form-group
+        div
+          label Activo:
+          input(type="checkbox", name="activo", value="true", checked)
+      .form-group
+        div
+          label Observaciones:
+          textarea(name="observaciones", rows="2")
+      .form-actions
+        button.button.btn-success(type="submit") Guardar
+        a.button(href="/proveedores/vista") Volver

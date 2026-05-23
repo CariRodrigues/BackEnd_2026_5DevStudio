@@ -1,29 +1,19 @@
-extends ./layout
+extends layout
 
 block content
   .toolbar
     h2 Lista de Proveedores
-    a.button(href="/proveedores/nuevo") Agregar Proveedor
-
-  if mensaje
-    script.
-      (function () {
-        var msg = !{JSON.stringify(mensaje)};
-        alert(msg);
-        var url = new URL(window.location);
-        url.searchParams.delete('mensaje');
-        window.history.replaceState({}, document.title, url.pathname + url.search);
-      })();
+    a.button.btn-success(href="/proveedores/nuevo") Nuevo Proveedor
 
   .table-container
     table
       tr
         th CUIT
         th Nombre
+        th Categoría
         th Domicilio
-        th Telofono
+        th Teléfono
         th Email
-        th Rubro
         th Plazo Entrega
         th Activo
         th Acciones
@@ -32,13 +22,23 @@ block content
         tr
           td= proveedor.cuit
           td= proveedor.nombre
+          td= proveedor.categoria
           td= proveedor.domicilio
           td= proveedor.telefono
           td= proveedor.email
-          td= proveedor.rubro
-          td= proveedor.plazoEntrega + ' dias'
-          td= proveedor.activo ? 'Si' : 'No'
+          td= proveedor.plazoEntrega + ' días'
+          td= proveedor.activo ? 'Sí' : 'No'
           td
             a.btn-action(href=`/proveedores/vista/${proveedor.id}`) Ver
-            |
             a.btn-action(href=`/proveedores/editar/${proveedor.id}`) Editar
+            button.btn-action.btn-danger(type="button", data-id=proveedor.id) Eliminar
+
+  script.
+    document.querySelectorAll('button[data-id]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('¿Eliminar este proveedor?')) return;
+        const response = await fetch(`/proveedores/${btn.dataset.id}`, { method: 'DELETE' });
+        if (response.ok) window.location.reload();
+        else alert('Error al eliminar proveedor');
+      });
+    });

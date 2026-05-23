@@ -1,96 +1,47 @@
-extends layout
+extends ./layout
 
 block content
-  h2 Editar Proveedor
+  .card-container
+    .card-header
+      h1 Editar Proveedor
 
-  form(method="POST", action=`/proveedores/${proveedor.id}/editar`)
-
-    label CUIT:
-    input(type="text", name="cuit", value=proveedor.cuit, required)
-
-    br
-    br
-
-    label Nombre:
-    input(type="text", name="nombre", value=proveedor.nombre, required)
-
-    br
-    br
-
-    label Domicilio:
-    input(type="text", name="domicilio", value=proveedor.domicilio)
-
-    br
-    br
-
-    label Teléfono:
-    input(type="text", name="telefono", value=proveedor.telefono)
-
-    br
-    br
-
-    label Email:
-    input(type="email", name="email", value=proveedor.email)
-
-    br
-    br
-
-    label Rubro:
-    input(type="text", name="rubro", value=proveedor.rubro)
-
-    br
-    br
-
-    label Plazo Entrega (días):
-    input(type="number", name="plazoEntrega", value=proveedor.plazoEntrega)
-
-    br
-    br
-
-    label Activo:
-    input(type="checkbox", name="activo", checked=proveedor.activo)
-
-    br
-    br
-
-    label Observaciones:
-    textarea(name="observaciones")= proveedor.observaciones
-
-    br
-    br
-
-    button(type="submit") Guardar cambios
-    |
-    |
-    a(href="/proveedores/vista") Volver
-
-  script.
-    const proveedorId = "#{proveedor.id}";
-    const form = document.getElementById('editProveedorForm');
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const data = {
-        cuit: form.cuit.value,
-        nombre: form.nombre.value,
-        domicilio: form.domicilio.value,
-        telefono: form.telefono.value,
-        email: form.email.value,
-        categoria: form.categoria.value,
-        plazoEntrega: Number(form.plazoEntrega.value),
-        activo: form.activo.checked,
-        observaciones: form.observaciones.value,
-      };
-
-      const response = await fetch(`/proveedores/${proveedorId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        window.location.href = '/proveedores/vista';
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        alert(errorData.message || 'Error al actualizar proveedor');
-      }
-    });
+    form(method="POST", action=`/proveedores/${proveedor.id}/editar`)
+      .form-group
+        div
+          label CUIT:
+          input(type="text", name="cuit", value=proveedor.cuit, required)
+      .form-group
+        div
+          label Nombre:
+          input(type="text", name="nombre", value=proveedor.nombre, required)
+      .form-group
+        div
+          label Domicilio:
+          input(type="text", name="domicilio", value=proveedor.domicilio)
+      .form-group
+        div
+          label Teléfono:
+          input(type="text", name="telefono", value=proveedor.telefono)
+      .form-group
+        div
+          label Email:
+          input(type="email", name="email", value=proveedor.email)
+      .form-group
+        div
+          label Categoría:
+          input(type="text", name="categoria", value=proveedor.categoria)
+      .form-group
+        div
+          label Plazo de Entrega (días):
+          input(type="number", name="plazoEntrega", value=proveedor.plazoEntrega)
+      .form-group
+        div
+          label Activo:
+          input(type="checkbox", name="activo", checked=proveedor.activo)
+      .form-group
+        div
+          label Observaciones:
+          textarea(name="observaciones", rows="2")= proveedor.observaciones
+      .form-actions
+        button.button.btn-success(type="submit") Guardar cambios
+        a.button(href="/proveedores/vista") Volver

@@ -1,39 +1,34 @@
 extends ./layout
 
 block content
-        .login-container
-          .login-header
-              h1 Nuevo Producto
+  .card-container
+    .card-header
+      h1 Nuevo Producto
 
-          form(method="POST", action="/productos")
-              .form-group-prod
-                div
-                    label Nombre: 
-                    input(type="text", name="nombre", required)
-                br
-              .form-group-prod
-                div
-                    label Marca: 
-                    input(type="text", name="marca", required)
-                br
-              .form-group-prod
-                div
-                    label Precio: 
-                    input(type="number", name="precio", required)
-                br
-              .form-group-prod
-                div
-                    label Stock: 
-                    input(type="number", name="stock", required)
-                br
-              .form-group-prod
-                div
-                    label Proveedor: 
-                    select(name="proveedorId", required)
-                      option(value="") - Seleccionar Proveedor -
-                      each proveedor in proveedores
-                        option(value=proveedor.id)= proveedor.nombre
-                br
-              .form-actions
-                button.button(type="submit") Guardar   
-                a.button(href="/productos/vista") Volver
+    form(method="POST", action="/productos")
+      .form-group
+        div
+          label Nombre:
+          input(type="text", name="nombre", required)
+      .form-group
+        div
+          label Descripción:
+          textarea(name="descripcion", rows="2")
+      .form-group
+        div
+          label Marca:
+          input(type="text", name="marca", required)
+      .form-group
+        div
+          label Precio:
+          input(type="number", name="precio", required, min="0.01", step="0.01")
+      .form-group
+        div
+          label Proveedor:
+          select(name="proveedorId", required)
+            option(value="") - Seleccionar Proveedor -
+            each proveedor in proveedores
+              option(value=proveedor.id)= proveedor.nombre
+      .form-actions
+        button.button.btn-success(type="submit") Guardar
+        a.button(href="/productos/vista") Volver

@@ -1,26 +1,25 @@
 extends layout
 
 block content
-  h2 Ventas registradas
+  .toolbar
+    h2 Ventas Registradas
+    a.button.btn-success(href="/ventas/nuevo") Nueva Venta
 
-  a(href="/ventas/nuevo") Nueva venta
-
-  table(border="1")
-    tr
-      th ID
-      th Cliente
-      th Producto
-      th Cantidad
-      th Precio venta
-      th Fecha
-      th Observación
-
-    each venta in ventas
+  .table-container
+    table
       tr
-        td= venta.id
-        td= venta.cliente ? venta.cliente.nombre : "-"
-        td= venta.producto ? venta.producto.nombre : "-"
-        td= venta.cantidad
-        td= venta.precioVenta
-        td= venta.fecha ? new Date(venta.fecha).toLocaleDateString() : "-"
-        td= venta.observacion || "-"
+        th Cliente
+        th Producto
+        th Cantidad
+        th Precio Venta
+        th Fecha
+        th Observación
+
+      each venta in ventas
+        tr
+          td= venta.cliente ? venta.cliente.nombre : "-"
+          td= venta.producto ? venta.producto.nombre : "-"
+          td= venta.cantidad
+          td= venta.precioVenta
+          td= venta.fecha ? new Date(venta.fecha).toLocaleDateString() : "-"
+          td= venta.observacion || "-"

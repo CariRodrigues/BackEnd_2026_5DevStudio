@@ -1,45 +1,38 @@
 extends ./layout
 
 block content
-    .header-top
+  .card-container
+    .card-header
+      h1 Detalle del Proveedor
 
-        h2 Detalle del Proveedor
+    .form-group
+      strong CUIT:
+      |  #{proveedor.cuit}
+    .form-group
+      strong Nombre:
+      |  #{proveedor.nombre}
+    .form-group
+      strong Categoría:
+      |  #{proveedor.categoria}
+    .form-group
+      strong Domicilio:
+      |  #{proveedor.domicilio || "-"}
+    .form-group
+      strong Teléfono:
+      |  #{proveedor.telefono || "-"}
+    .form-group
+      strong Email:
+      |  #{proveedor.email || "-"}
+    .form-group
+      strong Plazo de Entrega:
+      |  #{proveedor.plazoEntrega} días
+    .form-group
+      strong Activo:
+      |  #{proveedor.activo ? "Sí" : "No"}
+    .form-group
+      strong Observaciones:
+      |  #{proveedor.observaciones || "-"}
 
-        p
-          strong CUIT: 
-          = proveedor.cuit
-
-        p
-          strong Nombre: 
-          = proveedor.nombre
-
-        p
-          strong Domicilio: 
-          = proveedor.domicilio
-
-        p
-          strong Telofono: 
-          = proveedor.telefono
-
-        p
-          strong Email: 
-          = proveedor.email
-
-        p
-          strong Rubro: 
-          = proveedor.rubro
-
-  p
-    strong Categoría: 
-    = proveedor.categoria
-
-        p
-          strong Activo: 
-          = proveedor.activo ? "Si" : "No"
-
-        p
-          strong Observaciones: 
-          = proveedor.observaciones || "Sin observaciones"
-
-        .form-actions
-            a.button(href="/proveedores/vista") Volver al listado
+    .form-actions
+      a.button(href=`/proveedores/editar/${proveedor.id}`) Editar
+      a.button(href="/proveedores/vista") Volver

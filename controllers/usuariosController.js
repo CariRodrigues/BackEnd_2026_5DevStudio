@@ -44,10 +44,10 @@ function formularioLogin(req, res){
     res.render("login");
 }
 function vistaAdmin(req, res){
-    res.render("adminDashboard")
+    res.render("indexProveedores", {})
 }
 function formularioNuevoUsuario(req,res){
-    res.render("nuevoUsuario")
+    res.render("nuevoProveedor")
 }
 
 export {

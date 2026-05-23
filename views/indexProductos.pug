@@ -1,18 +1,9 @@
-extends ./layout
+extends layout
 
 block content
   .toolbar
     h2 Lista de Productos
-    a.button(href="/productos/nuevo") Agregar Producto
-
-  if mensaje
-    script.
-      (function () {
-        alert(!{JSON.stringify(mensaje)});
-        var url = new URL(window.location);
-        url.searchParams.delete('mensaje');
-        window.history.replaceState({}, document.title, url.pathname + url.search);
-      })();
+    a.button.btn-success(href="/productos/nuevo") Nuevo Producto
 
   .table-container
     table
@@ -20,7 +11,6 @@ block content
         th Nombre
         th Marca
         th Precio
-        th Stock
         th Proveedor
         th Acciones
 
@@ -29,11 +19,18 @@ block content
           td= producto.nombre
           td= producto.marca
           td= producto.precio
-          td= producto.stock
-          td= producto.proveedorId ? producto.proveedorId.nombre : "Proveedor no encontrado"
+          td= producto.proveedorId ? producto.proveedorId.nombre : "-"
           td
             a.btn-action(href=`/productos/vista/${producto.id}`) Ver
-            |
             a.btn-action(href=`/productos/editar/${producto.id}`) Editar
+            button.btn-action.btn-danger(type="button", data-id=producto.id) Eliminar
 
-  
+  script.
+    document.querySelectorAll('button[data-id]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('¿Eliminar este producto?')) return;
+        const response = await fetch(`/productos/${btn.dataset.id}`, { method: 'DELETE' });
+        if (response.ok) window.location.reload();
+        else alert('Error al eliminar producto');
+      });
+    });

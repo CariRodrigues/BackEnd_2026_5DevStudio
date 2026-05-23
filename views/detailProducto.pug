@@ -1,27 +1,26 @@
 extends ./layout
 
 block content
-    .header-top
-        h2 Detalle del Producto
+  .card-container
+    .card-header
+      h1 Detalle del Producto
 
-        p
-          strong Nombre:
-          | #{producto.nombre}
+    .form-group
+      strong Nombre:
+      |  #{producto.nombre}
+    .form-group
+      strong Descripción:
+      |  #{producto.descripcion || "-"}
+    .form-group
+      strong Marca:
+      |  #{producto.marca}
+    .form-group
+      strong Precio:
+      |  $#{producto.precio}
+    .form-group
+      strong Proveedor:
+      |  #{producto.proveedorId ? producto.proveedorId.nombre : "-"}
 
-        p
-          strong Marca:
-          | #{producto.marca}
-
-        p
-          strong Precio:
-          | #{producto.precio}
-
-        p
-          strong Stock:
-          | #{producto.stock}
-
-        p
-          strong Proveedor:
-          | #{nombreProveedor}
-        .form-actions
-          a.button(href="/productos/vista") Volver
+    .form-actions
+      a.button(href=`/productos/editar/${producto.id}`) Editar
+      a.button(href="/productos/vista") Volver

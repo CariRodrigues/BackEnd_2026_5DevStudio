@@ -13,10 +13,7 @@ async function getProductos(req, res) {
   }
 }
 
-async function getProducto(id) {
-  return await Producto.findById(id);
-}
- 
+
 async function verProducto(req, res) {
   const id = req.params.id;
   try{
@@ -147,5 +144,4 @@ export {
   vistaProductos,
   vistaProducto,
   formularioNuevoProducto,
-  formularioEditarProducto
 };

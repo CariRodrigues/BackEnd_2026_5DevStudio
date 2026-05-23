@@ -1,74 +1,35 @@
-extends layout
+extends ./layout
 
 block content
-  h2 Editar cliente
+  .card-container
+    .card-header
+      h1 Editar Cliente
 
-  form(id="editClienteForm")
-    label Nombre: 
-    input(type="text" name="nombre" id="nombre" required value=cliente.nombre)
-
-    br
-    br
-
-    label Email: 
-    input(type="email" name="email" id="email" required value=cliente.email)
-
-    br
-    br
-
-    label Teléfono: 
-    input(type="text" name="telefono" id="telefono" value=cliente.telefono)
-
-    br
-    br
-
-    label Dirección: 
-    input(type="text" name="direccion" id="direccion" value=cliente.direccion)
-
-    br
-    br
-
-    label Activo: 
-    input(type="checkbox" name="activo" id="activo" checked=cliente.activo)
-
-    br
-    br
-
-    label Notas: 
-    textarea(name="notas" id="notas")= cliente.notas
-
-    br
-    br
-
-    button(type="submit") Guardar cambios
-    |
-    |
-    a(href=`/clientes/vista/`) Volver
-
-  script.
-    const clienteId = "#{cliente.id}";
-    const form = document.getElementById('editClienteForm');
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const data = {
-        nombre: form.nombre.value,
-        email: form.email.value,
-        telefono: form.telefono.value,
-        direccion: form.direccion.value,
-        activo: form.activo.checked,
-        notas: form.notas.value,
-      };
-
-      const response = await fetch(`/clientes/${clienteId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        window.location.href = `/clientes/vista/${clienteId}`;
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        alert(errorData.message || 'Error al actualizar cliente');
-      }
-    });
+    form(method="POST", action=`/clientes/${cliente.id}/editar`)
+      .form-group
+        div
+          label Nombre:
+          input(type="text", name="nombre", value=cliente.nombre, required)
+      .form-group
+        div
+          label Email:
+          input(type="email", name="email", value=cliente.email, required)
+      .form-group
+        div
+          label Teléfono:
+          input(type="text", name="telefono", value=cliente.telefono)
+      .form-group
+        div
+          label Dirección:
+          input(type="text", name="direccion", value=cliente.direccion)
+      .form-group
+        div
+          label Activo:
+          input(type="checkbox", name="activo", checked=cliente.activo)
+      .form-group
+        div
+          label Notas:
+          textarea(name="notas", rows="2")= cliente.notas
+      .form-actions
+        button.button.btn-success(type="submit") Guardar cambios
+        a.button(href="/clientes/vista") Volver

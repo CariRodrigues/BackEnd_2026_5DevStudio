@@ -13,14 +13,14 @@ html(lang="es")
           a.button(href="/proveedores/vista") Ver proveedores
           a.button(href="/productos/nuevo") Nuevo producto
           a.button(href="/proveedores/nuevo") Nuevo proveedor
-  if mensaje
-    script.
-      (function () {
-        alert(!{JSON.stringify(mensaje)});
-        var url = new URL(window.location);
-        url.searchParams.delete('mensaje');
-        window.history.replaceState({}, document.title, url.pathname + url.search);
-      })();
+      if mensaje
+        script.
+          (function () {
+            alert(!{JSON.stringify(mensaje)});
+            var url = new URL(window.location);
+            url.searchParams.delete('mensaje');
+            window.history.replaceState({}, document.title, url.pathname + url.search);
+          })();
 
       .table-container
         table
@@ -33,7 +33,7 @@ html(lang="es")
             th Stock
             th Proveedor
             th Acciones
-      th Editar
+            th Editar
 
           each producto in productos
             tr
@@ -45,8 +45,9 @@ html(lang="es")
               td= producto.proveedorId ? producto.proveedorId.nombre : "Proveedor no encontrado"
               td
                 a.btn-action(href=`/productos/vista/${producto.id}`) Ver
-  actions-group
-          a.button(href="/usuarios/login") Cerrar Sesión
   
-        td
-          a(href=`/productos/editar/${producto.id}`) Editar
+              td
+                a(href=`/productos/editar/${producto.id}`) Editar
+  actions-group
+    a.button(href="/usuarios/login") Cerrar Sesión
+  

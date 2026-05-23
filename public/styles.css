@@ -227,7 +227,6 @@ fieldset {
 textarea {
   resize: vertical;
 }
-<<<<<<< HEAD
 nav{
   display: flex;
   justify-content: center;
@@ -423,7 +422,7 @@ tr:hover td {
   border-radius: 4px;
   font-size: 13px;
   font-weight: bold;
-=======
+}
 
 /* Toolbar and button for clientes view */
 .toolbar {
@@ -445,5 +444,4 @@ tr:hover td {
 
 .btn:hover {
   opacity: 0.9;
->>>>>>> 84a9f8725cea6f366c2a47f6da69c6ca5049a7d7
 }

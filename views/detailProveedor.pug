@@ -1,24 +1,9 @@
-doctype html
-html(lang="es")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Dettale del Producto
-    link(rel="stylesheet", href="/styles.css")
-  body
+extends ./layout
+
+block content
     .header-top
-        h1 Todo Stock
-        .actions-group
-          a.button(href="/productos/vista") Ver productos
-          a.button(href="/proveedores/vista") Ver proveedores
-          a.button(href="/productos/nuevo") Nuevo producto
-          a.button(href="/proveedores/nuevo") Nuevo proveedor
 
         h2 Detalle del Proveedor
-
-        p
-          strong ID: 
-          = proveedor.id
 
         p
           strong CUIT: 

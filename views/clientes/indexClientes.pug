@@ -1,33 +1,45 @@
 extends ../layout
 
 block content
-
   .toolbar
-    h2 Lista de clientes
-    a.btn(href="/clientes/nuevo") Agregar Nuevo Cliente
+    h2 Lista de Clientes
+    a.button(href="/clientes/nuevo") Agregar Cliente
 
-  table(border='1')
-    tr
-      th CUIT
-      th Nombre
-      th Apellido
-      th Domicilio
-      th Teléfono
-      th Email
-      th Condición IVA
-      th Observaciones
-      th Acciones
+  if mensaje
+    script.
+      (function () {
+        var msg = !{JSON.stringify(mensaje)};
+        alert(msg);
+        var url = new URL(window.location);
+        url.searchParams.delete('mensaje');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      })();
 
-    each cliente in clientes
+  .table-container
+    table
       tr
-        td= cliente.cuit
-        td= cliente.nombre
-        td= cliente.apellido
-        td= cliente.domicilio
-        td= cliente.telefono
-        td= cliente.email
-        td= cliente.condicionIVA
-        td= cliente.observaciones
-        td
-          a(href=`/clientes/vista/${cliente.id}`) Ver
+        th CUIT
+        th Nombre
+        th Apellido
+        th Domicilio
+        th Teléfono
+        th Email
+        th Condición IVA
+        th Observaciones
+        th Acciones
+
+      each cliente in clientes
+        tr
+          td= cliente.cuit
+          td= cliente.nombre
+          td= cliente.apellido
+          td= cliente.domicilio
+          td= cliente.telefono
+          td= cliente.email
+          td= cliente.condicionIVA
+          td= cliente.observaciones
+          td
+            a.btn-action(href=`/clientes/vista/${cliente.id}`) Ver
+            |
+            a.btn-action(href=`/clientes/editar/${cliente.id}`) Editar
 

@@ -232,20 +232,36 @@ nav{
   justify-content: center;
   gap: 15px;
 }
-a.button{
+.button,
+button.button,
+a.button {
+  border: none;
+  outline: none;
   text-decoration: none;
   padding: 12px 24px;
   border-radius: 8px;
   background-color: aliceblue;
   color: rgb(54, 54, 59);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
-a.button:hover{
-  background-color: #b3b2eb; 
-  transform: translateY(-2px); 
+.button:hover,
+button.button:hover,
+a.button:hover {
+  background-color: #b3b2eb;
+  transform: translateY(-2px);
 }
+.button:active,
+button.button:active,
 a.button:active {
-  transform: translateY(0); 
+  transform: translateY(0);
 }
 
 /* CONTENEDOR DE LA TABLA */
@@ -322,6 +338,10 @@ tr:hover td {
 .btn-action:active {
   transform: translateY(0);
 }
+/* space between consecutive action buttons in table cells */
+.btn-action + .btn-action {
+  margin-left: 8px;
+}
 /*NUEVO*/
 /* CONTENEDOR PRINCIPAL SUPERIOR */
 body.listas{
@@ -339,6 +359,44 @@ body.listas{
   display: flex;
   flex-direction: column; /* H2 arriba, botones abajo */
   gap: 15px; /* Espacio fijo entre el h2 y la fila de botones */
+}
+
+/* Barra superior tipo toolbar: título a la izquierda, acciones a la derecha */
+.toolbar {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* Ensure the title and button share the same line and the button matches other buttons */
+.toolbar h2 {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0; /* allow flex children to shrink */
+}
+
+.toolbar .button {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #ffffff;
+  color: #764ba2;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  white-space: nowrap; /* prevent wrapping */
+}
+
+.toolbar .button:hover {
+  background-color: #f1f3ff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* EL TÍTULO H2 */

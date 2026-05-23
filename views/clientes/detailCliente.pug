@@ -1,45 +1,42 @@
 extends ../layout
 
 block content
+    .header-top
 
-  h2 Detalle del Cliente
+        h2 Detalle del Cliente
 
-  p
-    strong ID: 
-    = cliente.id
+        p
+            strong CUIT: 
+            = cliente.cuit
 
-  p
-    strong CUIT: 
-    = cliente.cuit
+        p
+            strong Condición IVA: 
+            = cliente.condicionIVA
 
-  p
-    strong Condición IVA: 
-    = cliente.condicionIVA
+        p
+            strong Nombre: 
+            = cliente.nombre
 
-  p
-    strong Nombre: 
-    = cliente.nombre
+        p
+            strong Apellido: 
+            = cliente.apellido
 
-  p
-    strong Apellido: 
-    = cliente.apellido
+        p
+            strong Domicilio: 
+            = cliente.domicilio
 
-  p
-    strong Domicilio: 
-    = cliente.domicilio
+        p
+            strong Teléfono: 
+            = cliente.telefono
 
-  p
-    strong Teléfono: 
-    = cliente.telefono
+        p
+            strong Email: 
+            = cliente.email
 
-  p
-    strong Email: 
-    = cliente.email
+        p
+            strong Observaciones: 
+            = cliente.observaciones || "Sin observaciones"
 
-  p
-    strong Observaciones: 
-    = cliente.observaciones || "Sin observaciones"
+        br
 
-  br
-
-  a(href="/clientes/vista") Volver al listado
+        a(href="/clientes/vista") Volver al listado

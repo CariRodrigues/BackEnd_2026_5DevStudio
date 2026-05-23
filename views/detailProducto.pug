@@ -20,11 +20,7 @@ block content
     | #{producto.precio}
 
   p
-    strong Stock:
-    | #{producto.stock}
-
-  p
     strong Proveedor:
-    | #{nombreProveedor}
+    | #{producto.proveedorId ? producto.proveedorId.nombre : "-"}
 
   a(href="/productos/vista") Volver

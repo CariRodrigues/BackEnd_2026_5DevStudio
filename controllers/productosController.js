@@ -1,6 +1,5 @@
 import Producto from "../models/productoModel.js";
 import Proveedor from "../models/proveedorModel.js";
-import * as proveedores from "../controllers/proveedoresController.js";
 
 
 async function getProductos(req, res) {
@@ -34,16 +33,16 @@ async function verProducto(req, res) {
 }
 
 async function crearProducto(req, res) {
-  const { nombre, precio, stock, marca, proveedorId } = req.body;
+  const { nombre, descripcion, precio, marca, proveedorId } = req.body;
 
-  if (!nombre || !precio || !stock || !marca || !proveedorId) {
+  if (!nombre || !precio || !marca || !proveedorId) {
     return res.json({ error: "Faltan datos" });
   }
 
   const nuevoProducto = await Producto.create({
     nombre,
+    descripcion,
     precio,
-    stock,
     marca,
     proveedorId
   });
@@ -120,10 +119,25 @@ async function formularioNuevoProducto(req, res) {
   res.render("nuevoProducto", { proveedores: listaProveedores });
 }
 
+async function formularioEditarProducto(req, res, next) {
+  try {
+    const producto = await Producto.findById(req.params.id);
+    if (!producto) {
+      return res.status(404).render("404", { url: req.originalUrl });
+    }
+    const listaProveedores = await Proveedor.find();
+    const proveedorSeleccionado = producto.proveedorId ? producto.proveedorId.toString() : "";
+    res.render("editarProducto", { producto, proveedores: listaProveedores, proveedorSeleccionado });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export {
   getProductos,
   verProducto,
   crearProducto,
+  formularioEditarProducto,
   eliminarProducto,
   actualizarProducto,
   vistaProductos,

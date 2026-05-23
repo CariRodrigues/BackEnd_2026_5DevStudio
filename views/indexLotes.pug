@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h2 Lista de lotes
+
+  table(border="1")
+    tr
+      th ID
+      th Código
+      th Producto
+      th Proveedor
+      th Fecha ingreso
+      th Fecha vencimiento
+      th Disponible
+      th Inicial
+      th Estado
+      th Acciones
+
+    each lote in lotes
+      tr
+        td= lote.id
+        td= lote.codigoLote
+        td= lote.producto ? lote.producto.nombre : ""
+        td= lote.proveedor ? lote.proveedor.nombre : ""
+        td= new Date(lote.fechaIngreso).toLocaleDateString()
+        td= new Date(lote.fechaVencimiento).toLocaleDateString()
+        td= lote.cantidadDisponible
+        td= lote.cantidadInicial
+        td= lote.estado
+        td
+          a(href=`/lotes/vista/${lote.id}`) Ver

@@ -7,6 +7,7 @@ router.get("/", proveedoresController.getProveedores);
 router.get("/vista", proveedoresController.vistaProveedores);
 router.get("/vista/:id", proveedoresController.vistaProveedor);
 router.get("/nuevo", proveedoresController.formularioNuevoProveedor);
+router.get("/editar/:id", proveedoresController.formularioEditarProveedor);
 router.get("/:id", proveedoresController.verProveedor);
 router.post("/", proveedoresController.crearProveedor);
 router.put("/:id", proveedoresController.actualizarProveedor);

@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  h2 Detalle del cliente
+
+  p
+    strong ID:
+    | #{cliente.id}
+  p
+    strong Nombre:
+    | #{cliente.nombre}
+  p
+    strong Email:
+    | #{cliente.email}
+  p
+    strong Teléfono:
+    | #{cliente.telefono}
+  p
+    strong Dirección:
+    | #{cliente.direccion}
+  p
+    strong Activo:
+    | #{cliente.activo ? "Sí" : "No"}
+  p
+    strong Fecha de registro:
+    | #{new Date(cliente.fechaRegistro).toLocaleDateString()}
+  p
+    strong Última compra:
+    | #{cliente.ultimaCompra ? new Date(cliente.ultimaCompra).toLocaleDateString() : "Sin compras"}
+  p
+    strong Deuda actual:
+    | $#{cliente.deudaActual.toFixed(2)}
+  p
+    strong Notas:
+    | #{cliente.notas}
+
+
+  br
+  br
+  a(href="/clientes/vista") Volver al listado de clientes

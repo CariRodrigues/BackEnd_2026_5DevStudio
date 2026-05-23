@@ -1,12 +1,3 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const rutaArchivo = path.join(__dirname, "../data/proveedores.json");
 import Proveedor from "../models/proveedorModel.js";
 
 async function getProveedores(req, res) {
@@ -41,18 +32,18 @@ async function verProveedor(req, res) {
 }
 
 async function crearProveedor(req, res) {
-  const { cuit, nombre, domicilio, telefono, email, rubro, plazoEntrega, activo, observaciones } = req.body;
+  const { cuit, nombre, domicilio, telefono, email, categoria, plazoEntrega, activo, observaciones } = req.body;
 
-  if (!cuit || !nombre || !domicilio || !telefono || !email || !rubro || !plazoEntrega || activo === undefined) {
+  if (!cuit || !nombre || !domicilio || !telefono || !email || !categoria || !plazoEntrega || activo === undefined) {
     return res.json({ error: "Faltan datos" });
   }
   const nuevoProveedor = await Proveedor.create({
     cuit,
     nombre,
+    categoria,
     domicilio,
     telefono,
     email,
-    rubro,
     plazoEntrega,
     activo,
     observaciones
@@ -125,6 +116,18 @@ function formularioNuevoProveedor(req, res) {
   res.render("nuevoProveedor");
 }
 
+async function formularioEditarProveedor(req, res, next) {
+  try {
+    const proveedor = await Proveedor.findById(req.params.id);
+    if (!proveedor) {
+      return res.status(404).render("404", { url: req.originalUrl });
+    }
+    res.render("editarProveedor", { proveedor });
+  } catch (error) {
+    next(error);
+  }
+}
+
 export {
   getProveedores,
   verProveedor,
@@ -134,4 +137,5 @@ export {
   vistaProveedores,
   vistaProveedor,
   formularioNuevoProveedor,
+  formularioEditarProveedor,
 };

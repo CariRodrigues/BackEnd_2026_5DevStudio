@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  h2 Lista de clientes
+
+  a(href="/clientes/nuevo") Nuevo Cliente
+  
+  table(border="1")
+    tr
+      th ID
+      th Nombre
+      th Email
+      th Teléfono
+      th Activo
+      th Saldo Cuenta Corriente
+      th Acciones
+
+    each cliente in clientes
+      tr
+        td= cliente.id
+        td= cliente.nombre
+        td= cliente.email
+        td= cliente.telefono
+        td= cliente.activo ? "Sí" : "No"
+        td $#{cliente.saldoCuentaCorriente.toFixed(2)}
+        td
+          a(href=`/clientes/vista/${cliente.id}`) Ver
+          |  
+          a(href=`/clientes/editar/${cliente.id}`) Editar
+          |  
+          a(href=`/clientes/vista/${cliente.id}/movimientos`) Movimientos
+          |  
+          button(type="button" class="btn-delete" data-id=cliente.id) Eliminar
+
+  script.
+    document.querySelectorAll('.btn-delete').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        if (!confirm('¿Eliminar este cliente?')) return;
+        const response = await fetch(`/clientes/${id}`, { method: 'DELETE' });
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          const errorData = await response.json().catch(() => ({}));
+          alert(errorData.message || 'Error al eliminar cliente');
+        }
+      });
+    });

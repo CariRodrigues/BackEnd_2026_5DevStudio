@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h2 Compras registradas
+
+  a(href="/compras/nuevo") Nueva compra
+
+  table(border="1")
+    tr
+      th ID
+      th Proveedor
+      th Producto
+      th Lote
+      th Cantidad
+      th Precio compra
+      th Fecha
+      th Observación
+
+    each compra in compras
+      tr
+        td= compra.id
+        td= compra.proveedor ? compra.proveedor.nombre : "-"
+        td= compra.producto ? compra.producto.nombre : "-"
+        td= compra.lote ? compra.lote.codigoLote : "-"
+        td= compra.cantidad
+        td= compra.precioCompra
+        td= compra.fecha ? new Date(compra.fecha).toLocaleDateString() : "-"
+        td= compra.observacion || "-"

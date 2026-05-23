@@ -2,14 +2,23 @@ import mongoose from "mongoose";
 
 const clienteSchema = new mongoose.Schema(
   {
-    id: {
+    _id: {
       type: mongoose.Schema.Types.UUID,
-      default: mongoose.Types.UUID,
-      unique: true,
+      default: () => new mongoose.Types.UUID(),
     },
     cuit: {
       type: String,
       required: true,
+    },
+    condicionIVA: {
+      type: String,
+      enum: [
+        "Consumidor Final",
+        "Responsable Inscripto",
+        "Monotributista",
+        "Exento",
+      ],
+      default: "Consumidor Final",
     },
     nombre: {
       type: String,
@@ -22,6 +31,7 @@ const clienteSchema = new mongoose.Schema(
     domicilio: String,
     telefono: String,
     email: String,
+    condicionIVA: String,
     observaciones: String,
   },
   {

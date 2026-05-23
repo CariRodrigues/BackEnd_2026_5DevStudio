@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 
 block content
   h2 Nuevo cliente
@@ -17,6 +17,12 @@ block content
     br
     br
 
+    label Apellido: 
+    input(type="text", name="apellido", required)
+
+    br
+    br
+
     label Domicilio: 
     input(type="text", name="domicilio", required)
 
@@ -31,6 +37,16 @@ block content
 
     label Email: 
     input(type="email", name="email", required)
+
+    br
+    br
+
+    label Condición IVA:
+    select(name="condicionIVA")
+      option(value="Consumidor Final", selected) Consumidor Final
+      option(value="Responsable Inscripto") Responsable Inscripto
+      option(value="Monotributista") Monotributista
+      option(value="Exento") Exento
 
     br
     br

@@ -7,7 +7,8 @@ import { conectarDB } from "./config/db.js";
 
 import productosRoutes from "./routes/productosRoutes.js";
 import proveedoresRoutes from "./routes/proveedoresRoutes.js";
-import usuariosRoutes from "./routes/usuariosRoutes.js"
+import usuariosRoutes from "./routes/usuariosRoutes.js";
+import clientesRoutes from "./routes/clientesRoutes.js";
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(express.static("public"));
 
 app.use("/productos", productosRoutes);
 app.use("/proveedores", proveedoresRoutes);
+app.use("/clientes", clientesRoutes);
 app.use("/usuarios", usuariosRoutes);
 
 app.use((req, res) => {

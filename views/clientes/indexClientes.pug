@@ -1,26 +1,33 @@
-extends layout
+extends ../layout
 
 block content
 
-  h2 Lista de clientes
+  .toolbar
+    h2 Lista de clientes
+    a.btn(href="/clientes/nuevo") Agregar Nuevo Cliente
 
   table(border='1')
     tr
-      th ID
       th CUIT
       th Nombre
+      th Apellido
       th Domicilio
       th Teléfono
       th Email
+      th Condición IVA
+      th Observaciones
       th Acciones
 
     each cliente in clientes
       tr
-        td= cliente.id
         td= cliente.cuit
         td= cliente.nombre
+        td= cliente.apellido
         td= cliente.domicilio
         td= cliente.telefono
         td= cliente.email
+        td= cliente.condicionIVA
+        td= cliente.observaciones
         td
           a(href=`/clientes/vista/${cliente.id}`) Ver
+

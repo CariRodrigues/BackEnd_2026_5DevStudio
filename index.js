@@ -13,7 +13,12 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-conectarDB();
+try {
+    await conectarDB();
+} catch(error) {
+    console.error("Error al iniciar:", error);
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -29,7 +34,6 @@ app.use("/usuarios", usuariosRoutes);
 app.use((req, res) => {
   res.redirect("/productos/vista");
 });
-
 app.listen(PORT, () => {
   console.log("Servidor corriendo en puerto " + PORT);
 });

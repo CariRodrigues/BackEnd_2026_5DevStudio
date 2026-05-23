@@ -1,0 +1,26 @@
+extends layout
+
+block content
+
+  h2 Lista de clientes
+
+  table(border='1')
+    tr
+      th ID
+      th CUIT
+      th Nombre
+      th Domicilio
+      th Teléfono
+      th Email
+      th Acciones
+
+    each cliente in clientes
+      tr
+        td= cliente.id
+        td= cliente.cuit
+        td= cliente.nombre
+        td= cliente.domicilio
+        td= cliente.telefono
+        td= cliente.email
+        td
+          a(href=`/clientes/vista/${cliente.id}`) Ver

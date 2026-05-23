@@ -227,6 +227,7 @@ fieldset {
 textarea {
   resize: vertical;
 }
+<<<<<<< HEAD
 nav{
   display: flex;
   justify-content: center;
@@ -422,4 +423,27 @@ tr:hover td {
   border-radius: 4px;
   font-size: 13px;
   font-weight: bold;
+=======
+
+/* Toolbar and button for clientes view */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75em;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.45em 0.75em;
+  border-radius: 4px;
+  border: 1px solid #5d5d5e;
+  background: #8b8b8b;
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn:hover {
+  opacity: 0.9;
+>>>>>>> 84a9f8725cea6f366c2a47f6da69c6ca5049a7d7
 }

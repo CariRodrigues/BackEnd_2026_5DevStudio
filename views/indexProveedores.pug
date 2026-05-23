@@ -27,6 +27,7 @@ html(lang="es")
           th Activo
           th Acciones
 
+<<<<<<< HEAD
         each proveedor in proveedores
           tr
             td= proveedor.id
@@ -42,3 +43,48 @@ html(lang="es")
               a.btn-action(href=`/proveedores/vista/${proveedor.id}`) Ver
     .actions-group
           a.button(href="/usuarios/login") Cerrar Sesión
+=======
+block content
+
+  h2 Lista de proveedores
+
+  if mensaje
+    script.
+      (function () {
+        var msg = !{JSON.stringify(mensaje)};
+        alert(msg);
+        var url = new URL(window.location);
+        url.searchParams.delete('mensaje');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      })();
+
+  table(border='1')
+    tr
+      th ID
+      th CUIT
+      th Nombre
+      th Domicilio
+      th Telofono
+      th Email
+      th Rubro
+      th Plazo Entrega
+      th Activo
+      th Acciones
+      th Editar
+
+    each proveedor in proveedores
+      tr
+        td= proveedor.id
+        td= proveedor.cuit
+        td= proveedor.nombre
+        td= proveedor.domicilio
+        td= proveedor.telefono
+        td= proveedor.email
+        td= proveedor.rubro
+        td= proveedor.plazoEntrega + ' dias'
+        td= proveedor.activo ? 'Si' : 'No'
+        td
+          a(href=`/proveedores/vista/${proveedor.id}`) Ver
+        td
+          a(href=`/proveedores/editar/${proveedor.id}`) Editar
+>>>>>>> 84a9f8725cea6f366c2a47f6da69c6ca5049a7d7

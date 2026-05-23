@@ -1,12 +1,3 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const rutaArchivo = path.join(__dirname, "../data/proveedores.json");
 import Proveedor from "../models/proveedorModel.js";
 
 async function getProveedores(req, res) {
@@ -42,6 +33,7 @@ async function verProveedor(req, res) {
 
 async function crearProveedor(req, res) {
   const { cuit, nombre, domicilio, telefono, email, rubro, plazoEntrega, activo, observaciones } = req.body;
+  const activoBool = activo === "on" || activo === true || activo === "true";
 
   if (!cuit || !nombre || !domicilio || !telefono || !email || !rubro || !plazoEntrega || activo === undefined) {
     return res.json({ error: "Faltan datos" });
@@ -54,7 +46,7 @@ async function crearProveedor(req, res) {
     email,
     rubro,
     plazoEntrega,
-    activo,
+    activo: activoBool,
     observaciones
   });
   
@@ -83,6 +75,19 @@ async function actualizarProveedor(req, res) {
   try{
     const {id} = req.params;
     const nuevosDatos = req.body;
+    // Si estamos actualizando desde el formulario de edición, el checkbox "activo"
+    // se envía solo cuando está marcado. Si no viene en el body, significa que el
+    // usuario lo desmarcó y debemos guardar `activo: false`.
+    if (req.method === "POST" && req.originalUrl.includes("/editar")) {
+      if (!Object.prototype.hasOwnProperty.call(req.body, "activo")) {
+        nuevosDatos.activo = false;
+      } else {
+        nuevosDatos.activo = nuevosDatos.activo === "on" || nuevosDatos.activo === true || nuevosDatos.activo === "true";
+      }
+    } else if (nuevosDatos.activo !== undefined) {
+      // En otras actualizaciones vía API convertimos el valor a booleano.
+      nuevosDatos.activo = nuevosDatos.activo === "on" || nuevosDatos.activo === true || nuevosDatos.activo === "true";
+    }
     
     const proveedorActualizado = await Proveedor.findByIdAndUpdate(
       id,
@@ -94,31 +99,52 @@ async function actualizarProveedor(req, res) {
         mensaje: "Proveedor inexistente",
       });
     }
+
+    if (req.method === "POST" && req.originalUrl.includes("/editar")) {
+      return res.redirect(`/proveedores/vista?mensaje=Proveedor actualizado correctamente`);
+    }
+
     res.status(200).json(proveedorActualizado);
   } catch (error) {
     res.status(500).json({mensaje: "Error al actualizar", error});
   }
-} 
+}  
 
 
 async function vistaProveedores(req, res) {
   const proveedores = await Proveedor.find()
-  res.render("indexProveedores", { proveedores });
+  const mensaje = req.query.mensaje;
+  res.render("indexProveedores", { proveedores, mensaje });
 }
 
 async function vistaProveedor(req, res) {
   const id = req.params.id;
-  try{
+  try {
     const proveedor = await Proveedor.findById(id);
     if (!proveedor) {
       return res.status(404).json({ error: "Proveedor no encontrado" });
     }
-    res.render("detailProveedor", { proveedor: proveedor });
+    res.render("detailProveedor", { proveedor });
   } catch (error) {
     res.status(500).json({
       error: "Error al buscar proveedor"
     });
-  }   
+  }
+}
+
+async function formularioEditarProveedor(req, res) {
+  const id = req.params.id;
+  try {
+    const proveedor = await Proveedor.findById(id);
+    if (!proveedor) {
+      return res.status(404).json({ mensaje: "Proveedor no encontrado" });
+    }
+    res.render("editarProveedor", { proveedor });
+  } catch (error) {
+    res.status(500).json({
+      error: "Error al cargar formulario de edición"
+    });
+  }
 }
 
 function formularioNuevoProveedor(req, res) {
@@ -134,4 +160,5 @@ export {
   vistaProveedores,
   vistaProveedor,
   formularioNuevoProveedor,
+  formularioEditarProveedor,
 };

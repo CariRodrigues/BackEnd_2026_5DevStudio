@@ -1,0 +1,65 @@
+extends ../layout
+
+block content
+  h2 Nuevo cliente
+
+  form(method="POST", action="/clientes")
+
+    label CUIT: 
+    input(type="text", name="cuit", required)
+
+    br
+    br
+
+    label Nombre: 
+    input(type="text", name="nombre", required)
+
+    br
+    br
+
+    label Apellido: 
+    input(type="text", name="apellido", required)
+
+    br
+    br
+
+    label Domicilio: 
+    input(type="text", name="domicilio", required)
+
+    br
+    br
+
+    label Teléfono: 
+    input(type="text", name="telefono", required)
+
+    br
+    br
+
+    label Email: 
+    input(type="email", name="email", required)
+
+    br
+    br
+
+    label Condición IVA:
+    select(name="condicionIVA")
+      option(value="Consumidor Final", selected) Consumidor Final
+      option(value="Responsable Inscripto") Responsable Inscripto
+      option(value="Monotributista") Monotributista
+      option(value="Exento") Exento
+
+    br
+    br
+
+    label Observaciones: 
+    textarea(name="observaciones", rows="3")
+
+    br
+    br
+
+    button(type="submit") Guardar   
+
+    |
+    |     
+
+    a(href="/clientes/vista") Volver

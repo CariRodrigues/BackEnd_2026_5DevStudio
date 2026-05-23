@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  h2 Editar Producto
+
+  form(method="POST", action=`/productos/${producto.id}/editar`)
+
+    label Nombre:
+    input(type="text", name="nombre", value=producto.nombre, required)
+
+    br
+    br
+
+    label Marca:
+    input(type="text", name="marca", value=producto.marca, required)
+
+    br
+    br
+
+    label Precio:
+    input(type="number", name="precio", value=producto.precio, required)
+
+    br
+    br
+
+    label Stock:
+    input(type="number", name="stock", value=producto.stock, required)
+
+    br
+    br
+
+    label Proveedor:
+    select(name="proveedorId", required)
+      option(value="") - Seleccionar Proveedor -
+      each proveedor in proveedores
+        if proveedor.id == producto.proveedorId.toString()
+          option(value=proveedor.id, selected)= proveedor.nombre
+        else
+          option(value=proveedor.id)= proveedor.nombre
+
+    br
+    br
+
+    button(type="submit") Guardar cambios
+
+    |
+    |
+
+    a(href="/productos/vista") Volver al listado

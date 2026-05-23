@@ -88,9 +88,6 @@ Una vez que el servidor esté en funcionamiento, se puede acceder a las siguient
 - Al guardar los cambios desde los formularios de edición, el usuario es redirigido a la lista correspondiente.
 - El mensaje de confirmación de actualización se muestra como un popup temporal en la vista.
 
-### TODO
-- Implementar rutas `PUT` para actualización de productos y proveedores.
-- Agregar `delete` lógico en lugar de borrado físico para productos y proveedores.
 
 ## Dependencias
 

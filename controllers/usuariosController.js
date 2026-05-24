@@ -1,4 +1,5 @@
 import Usuario from "../models/usuarioModel.js";
+import Proveedor from "../models/proveedorModel.js";
 
 async function crearUsuario(req, res) {
     const {username, password, rol} = req.body;
@@ -43,9 +44,16 @@ async function buscarUsuario(req, res) {
 function formularioLogin(req, res){
     res.render("login");
 }
-function vistaAdmin(req, res){
-    res.render("indexProveedores", {})
+
+async function vistaAdmin(req, res){
+    try {
+        const proveedores = await Proveedor.find();
+        res.render("indexProveedores", { proveedores });
+    } catch (error) {
+        res.status(500).json({ error: "Error al cargar la vista de administración" });
+    }
 }
+
 function formularioNuevoUsuario(req,res){
     res.render("nuevoProveedor")
 }

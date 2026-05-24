@@ -35,13 +35,32 @@ El proyecto forma parte de un trabajo práctico para la materia de Desarrollo We
 
 ## Configuración
 
-La aplicación utiliza variables de entorno. Crea un archivo `.env` en la raíz del proyecto si deseas configurar el puerto:
+La aplicación utiliza variables de entorno a través de `dotenv`.
+
+Crea un archivo `.env` en la raíz del proyecto con al menos estas variables:
 
 ```
 PORT=3000
+MONGO_URI=mongodb://localhost:27017/nombre_de_tu_base
 ```
 
-Si no se especifica, la aplicación usará el puerto 3000 por defecto.
+- `PORT` define el puerto en el que se ejecuta el servidor.
+- `MONGO_URI` es la conexión a MongoDB.
+
+Si no se especifica `PORT`, la aplicación usa `3000` por defecto.
+
+## MongoDB
+
+El proyecto usa MongoDB como base de datos. La conexión se gestiona en `config/db.js` mediante Mongoose:
+
+- `process.env.MONGO_URI` se lee desde `.env`
+- Si la conexión falla, la aplicación muestra un error y finaliza
+
+Ejemplo de URI local:
+
+```
+MONGO_URI=mongodb://127.0.0.1:27017/distribuidora
+```
 
 ## Ejecución
 
@@ -49,9 +68,9 @@ Si no se especifica, la aplicación usará el puerto 3000 por defecto.
 node index.js
 ```
 
-O si agregas un script de inicio en `package.json`:
+O usando el script de desarrollo definido en `package.json`:
 ```
-npm start
+npm run dev
 ```
 
 ## Rutas Disponibles

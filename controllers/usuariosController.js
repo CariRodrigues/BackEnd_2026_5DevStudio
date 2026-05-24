@@ -32,7 +32,7 @@ async function buscarUsuario(req, res) {
         }if(usuario.rol === 'admin'){
                 return res.redirect('/usuarios/admin'); 
         }if(usuario.rol === 'user'){
-                return res.redirect('/productos/vista'); //queda pendiente cambiar URL según el rol, en este caso no quiero entrar a login
+                return res.redirect('/usuarios/user'); 
         }
     }catch(error){
         res.status(500).json({
@@ -44,18 +44,15 @@ async function buscarUsuario(req, res) {
 function formularioLogin(req, res){
     res.render("login");
 }
-
-async function vistaAdmin(req, res){
-    try {
-        const proveedores = await Proveedor.find();
-        res.render("indexProveedores", { proveedores });
-    } catch (error) {
-        res.status(500).json({ error: "Error al cargar la vista de administración" });
-    }
+function vistaAdmin(req, res){
+    res.render("adminDashboard", {esAdmin : true});
+}
+function vistaUsuario(req, res){
+    res.render("userDashboard", {esAdmin: false});
 }
 
 function formularioNuevoUsuario(req,res){
-    res.render("nuevoProveedor")
+    res.render("nuevoUsuario")
 }
 
 export {
@@ -63,5 +60,6 @@ export {
     buscarUsuario, 
     formularioLogin,
     formularioNuevoUsuario,
-    vistaAdmin
+    vistaAdmin,
+    vistaUsuario
 }

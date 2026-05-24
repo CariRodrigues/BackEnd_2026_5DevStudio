@@ -25,7 +25,7 @@ async function crearCliente(req, res) {
   if (!nombre || !email) return res.json({ error: "Faltan datos" });
   try {
     const cliente = await Cliente.create({ nombre, email, telefono, direccion, notas, saldoCuentaCorriente: 0 });
-    res.status(201).json({ mensaje: "Cliente creado correctamente", cliente });
+    res.redirect("/clientes/vista");
   } catch (error) {
     res.status(500).json({ error: "Error al crear cliente" });
   }
@@ -33,13 +33,22 @@ async function crearCliente(req, res) {
 
 async function actualizarCliente(req, res) {
   try {
+    const id = req.params.id;
+    const nuevosDatos = req.body;
+    if (nuevosDatos.activo === "on") {
+      nuevosDatos.activo = true;
+    } else {
+      nuevosDatos.activo = false;
+    }
+    console.log("datos");
+    console.log(nuevosDatos);
     const cliente = await Cliente.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
+      id,
+      { $set: nuevosDatos },
       { new: true, runValidators: true }
     );
     if (!cliente) return res.status(404).json({ error: "Cliente no encontrado" });
-    res.json(cliente);
+    res.redirect("/clientes/vista");
   } catch (error) {
     res.status(500).json({ error: "Error al actualizar cliente" });
   }

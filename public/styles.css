@@ -33,6 +33,7 @@ html {
 body {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: var(--bg-gradient);
@@ -402,10 +403,10 @@ body.listas{
 /* Barra superior tipo toolbar: título a la izquierda, acciones a la derecha */
 .toolbar {
   width: 100%;
-  max-width: 100%;
+  max-width: 1500px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center;  
   gap: 12px;
   margin-bottom: 12px;
 }
@@ -524,8 +525,10 @@ tr:hover td {
 .toolbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center;  
   margin-bottom: 0.75em;
+  margin: 0 auto;
+  max-width: 1500px;
 }
 
 .btn {

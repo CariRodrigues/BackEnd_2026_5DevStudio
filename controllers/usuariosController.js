@@ -1,4 +1,5 @@
 import Usuario from "../models/usuarioModel.js";
+import Proveedor from "../models/proveedorModel.js";
 
 async function crearUsuario(req, res) {
     const {username, password, rol} = req.body;
@@ -52,6 +53,7 @@ function vistaAdmin(req, res){
 function vistaUsuario(req, res){
     res.render("userDashboard", {esAdmin: false});
 }
+
 function formularioNuevoUsuario(req,res){
     res.render("nuevoUsuario")
 }

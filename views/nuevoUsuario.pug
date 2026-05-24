@@ -6,7 +6,8 @@ html
         .login-container
           .login-header
               h1 Nuevo Usuario
-
+          if mensaje
+            p.success= mensaje
           form(method="POST", action="/usuarios")
               .form-group-prod
                 div
@@ -27,5 +28,5 @@ html
                         option(value='user') Usuario
                 br
               .form-actions
-                a.button(type="submit") Guardar   
+                button.button(type="submit") Guardar 
                 a.button(href="/usuarios/admin") Volver

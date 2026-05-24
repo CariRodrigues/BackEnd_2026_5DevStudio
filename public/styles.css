@@ -571,3 +571,7 @@ button.button.btn-danger:hover {
   background-color: #b91c1c;
   color: #ffffff;
 }
+.success{
+   color: green;
+   font-weight: bold;
+}

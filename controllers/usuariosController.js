@@ -3,20 +3,23 @@ import Usuario from "../models/usuarioModel.js";
 async function crearUsuario(req, res) {
     const {username, password, rol} = req.body;
     if(!username || !password || !rol){
-        return res.json({error: "Faltan datos"});
+        return res.render("nuevoUsuario", {
+            mensaje: "Faltan datos"
+        });
     }
     try{
-        const nuevoUsuario = await Usuario.create({
+        await Usuario.create({
             username,
             password,
             rol
         });
-        res.status(201).json({
-            mensaje: "Usuario creado correctamente",
-            usuario: nuevoUsuario,
+        res.render("nuevoUsuario", {
+            mensaje: "Usuario creado correctamente"
         });
     }catch(error){
-        res.status(500).json({mensaje: "error el crear usuario", error});
+        res.render("nuevoUsuario", {
+            mensaje: "Error al crear usuario"
+        });
     }
 }
 

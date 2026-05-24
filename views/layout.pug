@@ -17,7 +17,10 @@ html(lang="es")
         a.button(href="/movimientos/vista") MOVIMIENTOS
         a.button(href="/compras/vista") COMPRAS
         a.button(href="/ventas/vista") VENTAS
+        if esAdmin
+          a.button(href="/usuarios/nuevo") NUEVO USUARIO
         a.button(href="/usuarios/login") CERRAR SESIÓN
+        
 
     block content
 

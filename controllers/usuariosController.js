@@ -31,7 +31,7 @@ async function buscarUsuario(req, res) {
         }if(usuario.rol === 'admin'){
                 return res.redirect('/usuarios/admin'); 
         }if(usuario.rol === 'user'){
-                return res.redirect('/productos/vista'); //queda pendiente cambiar URL según el rol, en este caso no quiero entrar a login
+                return res.redirect('/usuarios/user'); 
         }
     }catch(error){
         res.status(500).json({
@@ -44,10 +44,13 @@ function formularioLogin(req, res){
     res.render("login");
 }
 function vistaAdmin(req, res){
-    res.render("indexProveedores", {})
+    res.render("adminDashboard", {esAdmin : true});
+}
+function vistaUsuario(req, res){
+    res.render("userDashboard", {esAdmin: false});
 }
 function formularioNuevoUsuario(req,res){
-    res.render("nuevoProveedor")
+    res.render("nuevoUsuario")
 }
 
 export {
@@ -55,5 +58,6 @@ export {
     buscarUsuario, 
     formularioLogin,
     formularioNuevoUsuario,
-    vistaAdmin
+    vistaAdmin,
+    vistaUsuario
 }

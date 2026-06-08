@@ -1,18 +1,23 @@
 html 
     head 
-        title Login 
+        title Registro
         link(rel="stylesheet" href="/styles.css")
         
     body 
         .login-container
             .login-header
-                h1 ¡Bienvenido a TodoStock!
+                h1 Registro de Usuario
                 p Por favor, ingresa tus datos para continuar.
             
             if error
-                p(style="color: red") #{error}
+                p.error= error
 
-            form(action="/auth/login" method="POST") 
+            form(action="/auth/registro" method="POST") 
+                .form-group
+                    div 
+                        label(for="nombre") Nombre: 
+                        input(type="text" name="nombre" required)
+                    br
                 .form-group
                     div 
                         label(for="email") Email: 
@@ -24,8 +29,8 @@ html
                         input(type="password" name="password" required)
                     br
                 .form-actions
-                    button.submit-btn(type="submit") Ingresar 
+                    button.submit-btn(type="submit") Crear Usuario 
 
             .login-footer
-            p No tenes usuario?
-              a(href="/auth/registro")  Registrate
+            p Ya tenes usuario?
+              a(href="/auth/login") Inicia Sesión

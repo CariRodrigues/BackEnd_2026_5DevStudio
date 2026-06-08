@@ -23,7 +23,7 @@ async function crearUsuario(req, res) {
         });
     }
 }
-
+/* APARENTEMENTE SIN USO
 async function buscarUsuario(req, res) {
     const {username, password} = req.body;
     try{
@@ -46,7 +46,7 @@ async function buscarUsuario(req, res) {
 
 function formularioLogin(req, res){
     res.render("login");
-}
+}*/
 function vistaAdmin(req, res){
     res.render("adminDashboard", {esAdmin : true});
 }
@@ -60,8 +60,8 @@ function formularioNuevoUsuario(req,res){
 
 export {
     crearUsuario,
-    buscarUsuario, 
-    formularioLogin,
+   // buscarUsuario, 
+   // formularioLogin,
     formularioNuevoUsuario,
     vistaAdmin,
     vistaUsuario

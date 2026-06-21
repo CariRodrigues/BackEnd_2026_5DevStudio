@@ -3,15 +3,19 @@ import {
     iniciarSesion,
     mostrarLogin,
     mostrarRegistro,
-    registrarUsuario
+    registrarUsuario,
+    cerrarSesion
 } from "../controllers/authController.js";
+import {protegerRuta, soloAdmin} from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 router.get("/login", mostrarLogin);
 router.post("/login", iniciarSesion);
 
-router.get("/registro", mostrarRegistro);
-router.post("/registro", registrarUsuario);
+router.get("/registro", protegerRuta, soloAdmin, mostrarRegistro);
+router.post("/registro", protegerRuta, soloAdmin, registrarUsuario);
+
+router.post("/logout", protegerRuta, cerrarSesion);
 
 export default router;

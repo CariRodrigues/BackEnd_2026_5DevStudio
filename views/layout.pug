@@ -9,6 +9,9 @@ html(lang="es")
   body.listas
     header
       h1 TodoStock S.A.
+        if usuario
+          p Bienvenido #{usuario.nombre}
+          p Rol: #{usuario.rol}
       nav.actions-group
         a.button(href="/productos/vista") PRODUCTOS
         a.button(href="/proveedores/vista") PROVEEDORES
@@ -17,9 +20,9 @@ html(lang="es")
         a.button(href="/movimientos/vista") MOVIMIENTOS
         a.button(href="/compras/vista") COMPRAS
         a.button(href="/ventas/vista") VENTAS
-        if esAdmin
-          a.button(href="/usuarios/nuevo") NUEVO USUARIO
-        a.button(href="/auth/login") CERRAR SESIÓN
+        if usuario && usuario.rol === "admin"
+          a.button(href="/auth/registro") NUEVO USUARIO
+        a.button(href="/auth/logout") CERRAR SESIÓN
         
 
     block content

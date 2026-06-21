@@ -20,7 +20,15 @@ const usuarioSchema = new mongoose.Schema({
     salt: {
         type:String,
         required: true
-    }
+    },
+    rol: {
+        type: String,
+        default: "user"
+    },
+    sesionToken: {
+        type:String,
+        default: null
+    },
 }, {
     timestamps: true
 });

@@ -10,7 +10,7 @@ html
                 p Por favor, ingresa tus datos para continuar.
             
             if error
-                p.error= error
+                p(style="color: red") #{error}
 
             form(action="/auth/registro" method="POST") 
                 .form-group
@@ -30,7 +30,8 @@ html
                     br
                 .form-actions
                     button.submit-btn(type="submit") Crear Usuario 
+                    a.button(href="/productos/vista") Volver
 
             .login-footer
             p Ya tenes usuario?
-              a(href="/auth/login") Inicia Sesión
+              a(href="/auth/login")  Inicia Sesión

@@ -46,9 +46,12 @@ app.use((req, res) => {
   res.redirect("/usuarios/login");
 });
 
+const handler = serverless(app);
 
-app.listen(PORT, () => {
-  console.log("Servidor corriendo en puerto " + PORT);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log("Servidor corriendo en puerto " + PORT);
+  });
+}
 
-export default serverless(app);
+export default handler;

@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
+import serverless from "serverless-http";
 
 import { conectarDB } from "./config/db.js";
 
@@ -49,3 +50,5 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log("Servidor corriendo en puerto " + PORT);
 });
+
+export default serverless(app);

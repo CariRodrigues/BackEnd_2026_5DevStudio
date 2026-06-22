@@ -14,15 +14,14 @@ import comprasRoutes from "./routes/comprasRoutes.js";
 import ventasRoutes from "./routes/ventasRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 
-
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
 try {
-    await conectarDB();
+  await conectarDB();
 } catch(error) {
-    console.error("Error al iniciar:", error);
+  console.error("Error al iniciar:", error);
 }
 
 app.use(express.json());
@@ -47,5 +46,5 @@ app.use((req, res) => {
 });
 
   app.listen(PORT, () => {
-    console.log("Servidor corriendo en puerto " + PORT);
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
   });

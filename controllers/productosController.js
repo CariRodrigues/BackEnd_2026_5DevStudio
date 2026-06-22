@@ -49,7 +49,7 @@ async function crearProducto(req, res) {
 }
 
 async function eliminarProducto(req, res) {
-  try{
+  try{ 
     const id = req.params.id;
     const productoEliminado = await Producto.findByIdAndDelete(id);
     if(!productoEliminado){

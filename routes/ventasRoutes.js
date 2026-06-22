@@ -1,12 +1,13 @@
 import express from "express";
 import * as ventasController from "../controllers/ventasController.js";
+import { protegerRuta, soloAdmin } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/vista", ventasController.vistaVentas);
-router.get("/nuevo", ventasController.formularioNuevaVenta);
-router.get("/", ventasController.getVentas);
-router.get("/:id", ventasController.getVenta);
-router.post("/", ventasController.crearVenta);
+router.get("/vista", protegerRuta, ventasController.vistaVentas);
+router.get("/nuevo", protegerRuta, ventasController.formularioNuevaVenta);
+router.get("/", protegerRuta, ventasController.getVentas);
+router.get("/:id", protegerRuta, ventasController.getVenta);
+router.post("/", protegerRuta, ventasController.crearVenta);
 
 export default router;

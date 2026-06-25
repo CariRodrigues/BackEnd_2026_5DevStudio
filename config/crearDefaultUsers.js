@@ -8,7 +8,7 @@ async function crearDefaultUsers() {
       email: "admin@todostock.com"
     });
 
-    console.log("Admin encontrado:", admin.email);
+    console.log("Admin encontrado:", admin ? admin.email : "no existe");
 
     if (!admin) {
       const { salt, passwordHash } = Usuario.crearPasswordSeguro("admin123");
@@ -27,7 +27,7 @@ async function crearDefaultUsers() {
       email: "user@todostock.com",
     });
 
-    console.log("User encontrado:", user.email);
+    console.log("User encontrado:", user ? user.email : "no existe");
 
     if (!user) {
       const { salt, passwordHash } = Usuario.crearPasswordSeguro("user123");

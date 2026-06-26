@@ -20,12 +20,31 @@ html(lang="es")
         a.button(href="/movimientos/vista") MOVIMIENTOS
         a.button(href="/compras/vista") COMPRAS
         a.button(href="/ventas/vista") VENTAS
+        if usuario
+          button.button(type="button" onclick="toggleChat()") CHAT
         if usuario && usuario.rol === "admin"
           a.button(href="/auth/registro") NUEVO USUARIO
-        a.button(href="/auth/logout") CERRAR SESIÓN
-        
+        form(action="/auth/logout" method="POST" style="display:inline")
+          button.button(type="submit" onclick="clearChatStorage()") CERRAR SESIÓN
 
     block content
 
+    .chat-overlay#chatOverlay.hidden
+      .chat-card
+        .chat-card-header
+          h2 Mensajes
+          button.chat-close(type="button" onclick="toggleChat()") ×
+        ul#mensajes.chat-messages
+        .chat-footer
+          input(type="text" id="mensaje" placeholder="Escriba un mensaje")
+          button(type="button" onclick="enviar()") Enviar
+
+    hr
+
     footer
       p Realizado por 5DevStudio
+
+    script(src="/socket.io/socket.io.js")
+    script.
+      const usuarioLogueado = !{JSON.stringify(usuario ? usuario.nombre : 'Anónimo')};
+    script(src="/js/chat.js")

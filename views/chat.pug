@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h2 Mensajes
+  ul#mensajes
+  .chat-input
+    input(type="text" id="mensaje" placeholder="Escriba un mensaje")
+    button(type="button" onclick="enviar()") Enviar
+

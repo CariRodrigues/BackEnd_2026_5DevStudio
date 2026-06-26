@@ -3,7 +3,7 @@ import crearDefaultUsers from "./crearDefaultUsers.js";
 
 export const conectarDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URL);
 
     console.log("MongoDB conectado");
 

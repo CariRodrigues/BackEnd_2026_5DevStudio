@@ -15,6 +15,7 @@ import clientesRoutes from "./routes/clientesRoutes.js";
 import comprasRoutes from "./routes/comprasRoutes.js";
 import ventasRoutes from "./routes/ventasRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import crearDefaultUsers from "./config/crearDefaultUsers.js";
 import { protegerRuta } from "./middlewares/authMiddleware.js";
 
 const app = express();
@@ -25,8 +26,9 @@ const io = new Server(server); // Socket.IO se conecta al mismo servidor HTTP.
 const PORT = process.env.PORT || 3000;
 
 try {
-  await conectarDB();
-} catch (error) {
+    await conectarDB();
+    await crearDefaultUsers();
+} catch(error) {
   console.error("Error al iniciar:", error);
 }
 

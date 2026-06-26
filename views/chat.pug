@@ -1,32 +1,9 @@
 extends layout
 
 block content
-  h2 Chat Institucional
+  h2 Mensajes
   ul#mensajes
   .chat-input
     input(type="text" id="mensaje" placeholder="Escriba un mensaje")
     button(type="button" onclick="enviar()") Enviar
 
-  script(src="/socket.io/socket.io.js")
-  script.
-    const socket = io();
-    const lista = document.getElementById('mensajes');
-    const input = document.getElementById('mensaje');
-
-    function agregarMensaje(texto) {
-      const item = document.createElement('li');
-      item.textContent = texto;
-      lista.appendChild(item);
-      lista.scrollTop = lista.scrollHeight;
-    }
-
-    function enviar() {
-      const texto = input.value.trim();
-      if (!texto) return;
-      socket.emit('mensaje', texto);
-      input.value = '';
-    }
-
-    socket.on('mensaje', (mensaje) => {
-      agregarMensaje(mensaje);
-    });

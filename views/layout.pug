@@ -26,14 +26,13 @@ html(lang="es")
           a.button(href="/auth/registro") NUEVO USUARIO
         form(action="/auth/logout" method="POST" style="display:inline")
           button.button(type="submit" onclick="clearChatStorage()") CERRAR SESIÓN
-        
 
     block content
 
     .chat-overlay#chatOverlay.hidden
       .chat-card
         .chat-card-header
-          h2 Chat Institucional
+          h2 Mensajes
           button.chat-close(type="button" onclick="toggleChat()") ×
         ul#mensajes.chat-messages
         .chat-footer
@@ -47,104 +46,5 @@ html(lang="es")
 
     script(src="/socket.io/socket.io.js")
     script.
-      const chatOverlay = document.getElementById('chatOverlay');
-      const mensajesList = document.getElementById('mensajes');
-      const mensajeInput = document.getElementById('mensaje');
       const usuarioLogueado = !{JSON.stringify(usuario ? usuario.nombre : 'Anónimo')};
-      const CHAT_STORAGE_KEY = 'todostock-chat-mensajes';
-      const CHAT_OPEN_KEY = 'todostock-chat-abierto';
-      let mensajesCache = [];
-
-      function guardarMensajes() {
-        try {
-          localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(mensajesCache));
-        } catch (error) {
-          console.warn('No se pudo guardar el chat:', error);
-        }
-      }
-
-      function cargarMensajes() {
-        try {
-          const raw = localStorage.getItem(CHAT_STORAGE_KEY);
-          return raw ? JSON.parse(raw) : [];
-        } catch (error) {
-          console.warn('No se pudo cargar el chat:', error);
-          return [];
-        }
-      }
-
-      function setChatOpen(abierto) {
-        if (!chatOverlay) return;
-        chatOverlay.classList.toggle('hidden', !abierto);
-        if (abierto && mensajeInput) {
-          mensajeInput.focus();
-        }
-        try {
-          localStorage.setItem(CHAT_OPEN_KEY, abierto ? '1' : '0');
-        } catch (error) {
-          console.warn('No se pudo guardar estado del chat:', error);
-        }
-      }
-
-      function clearChatStorage() {
-        try {
-          localStorage.removeItem(CHAT_STORAGE_KEY);
-          localStorage.removeItem(CHAT_OPEN_KEY);
-          mensajesCache = [];
-          if (mensajesList) {
-            mensajesList.innerHTML = '';
-          }
-        } catch (error) {
-          console.warn('No se pudo limpiar el chat:', error);
-        }
-      }
-
-      function toggleChat() {
-        if (!chatOverlay) return;
-        const estaAbierto = !chatOverlay.classList.contains('hidden');
-        setChatOpen(!estaAbierto);
-      }
-
-      function renderMensaje(mensaje) {
-        if (!mensajesList) return;
-        const item = document.createElement('li');
-        item.innerHTML = `<strong>${mensaje.usuario}</strong>: ${mensaje.texto}`;
-        mensajesList.appendChild(item);
-      }
-
-      function agregarMensaje(mensaje) {
-        if (!mensaje || !mensaje.texto) return;
-        mensajesCache.push(mensaje);
-        guardarMensajes();
-        renderMensaje(mensaje);
-        if (mensajesList) {
-          mensajesList.scrollTop = mensajesList.scrollHeight;
-        }
-      }
-
-      function cargarMensajesGuardados() {
-        mensajesCache = cargarMensajes();
-        mensajesCache.forEach(renderMensaje);
-        const chatAbierto = localStorage.getItem(CHAT_OPEN_KEY) === '1';
-        setChatOpen(chatAbierto);
-      }
-
-      function enviar() {
-        if (!mensajeInput) return;
-        const texto = mensajeInput.value.trim();
-        if (!texto) return;
-        const mensaje = { usuario: usuarioLogueado, texto };
-        socket.emit('mensaje', mensaje);
-        mensajeInput.value = '';
-      }
-
-      const socket = io();
-      socket.on('mensaje', (mensaje) => {
-        if (typeof mensaje === 'string') {
-          agregarMensaje({ usuario: usuarioLogueado, texto: mensaje });
-        } else {
-          agregarMensaje(mensaje);
-        }
-      });
-
-      cargarMensajesGuardados();
+    script(src="/js/chat.js")

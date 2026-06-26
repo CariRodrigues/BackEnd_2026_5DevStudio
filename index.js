@@ -26,7 +26,7 @@ const PORT = process.env.PORT || 3000;
 
 try {
   await conectarDB();
-} catch(error) {
+} catch (error) {
   console.error("Error al iniciar:", error);
 }
 
@@ -65,10 +65,18 @@ app.use((req, res) => {
 // Se ejecuta cada vez que un cliente se conecta mediante Socket.IO.
 io.on("connection", (socket) => {
   console.log("Usuario conectado");
-// Escucha eventos llamados "mensaje" enviados desde el navegador.
+  // Escucha eventos llamados "mensaje" enviados desde el navegador.
   socket.on("mensaje", (mensaje) => {
-    console.log("Mensaje recibido:", mensaje);
-    // Envía el mensaje a todos los usuarios conectados.
+    // console.log("Mensaje recibido:", mensaje);
+    if (
+      !mensaje ||
+      typeof mensaje.texto !== "string" ||
+      mensaje.texto.trim() === "" ||
+      mensaje.texto.trim().length > 500
+    ) {
+      return;
+    }
+    // Envía el mensaje a todos los demás usuarios conectados.
     io.emit("mensaje", mensaje);
   });
   // Se ejecuta cuando el usuario cierra la conexión.
@@ -76,10 +84,6 @@ io.on("connection", (socket) => {
     console.log("Usuario desconectado");
   });
 });
-
-
-
-
 
 server.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);

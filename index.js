@@ -13,13 +13,16 @@ import clientesRoutes from "./routes/clientesRoutes.js";
 import comprasRoutes from "./routes/comprasRoutes.js";
 import ventasRoutes from "./routes/ventasRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import crearDefaultUsers from "./config/crearDefaultUsers.js";
+
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
 try {
-  await conectarDB();
+    await conectarDB();
+    await crearDefaultUsers();
 } catch(error) {
   console.error("Error al iniciar:", error);
 }

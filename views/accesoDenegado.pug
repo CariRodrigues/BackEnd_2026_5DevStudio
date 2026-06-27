@@ -2,11 +2,19 @@ extends layout
 
 block content
 
-    h2 403 - Acceso denegado
-    p No tenés permisos para acceder a esta sección.
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
 
+    script.
+      Swal.fire({
+        icon: 'error',
+        title: 'Acceso denegado',
+        text: 'No tenés permisos para acceder a esta sección',
+        confirmButtonText: 'Volver'
+      }).then(() => {
+        window.location.href = "/productos/vista";
+      });
+
+   
     if usuario
         p Usuario: #{usuario.nombre}
         p Rol: #{usuario.rol}
-
-    a.button(href="/productos/vista") Volver al sistema

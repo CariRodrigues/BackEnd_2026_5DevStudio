@@ -15,9 +15,10 @@ import clientesRoutes from "./routes/clientesRoutes.js";
 import comprasRoutes from "./routes/comprasRoutes.js";
 import ventasRoutes from "./routes/ventasRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
-import crearDefaultUsers from "./config/crearDefaultUsers.js";
 import { protegerRuta } from "./middlewares/authMiddleware.js";
+import dns from "node:dns";
 
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 const app = express();
 
 const server = http.createServer(app); // Se crea el servidor HTTP utilizando Express.
@@ -27,7 +28,6 @@ const PORT = process.env.PORT || 3000;
 
 try {
     await conectarDB();
-    await crearDefaultUsers();
 } catch(error) {
   console.error("Error al iniciar:", error);
 }

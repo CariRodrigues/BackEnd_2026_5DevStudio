@@ -1,6 +1,8 @@
 import crypto from "crypto";
 import { render } from "pug";
 import Usuario from "../models/usuarioModel.js";
+import jwt from "jsonwebtoken";
+import { generarToken } from "../utils/jwt.js";
 
 const mostrarLogin = (req, res) => {
     res.render("login", {
@@ -59,18 +61,12 @@ const iniciarSesion = async (req, res) => {
             });
         }
 
-        const sesionToken = crypto.randomBytes(32).toString("hex");
-        usuario.sesionToken = sesionToken; // asocia el token al usuario
-        await Usuario.findByIdAndUpdate(
-            usuario._id,
-            { sesionToken }
-        );
-        const actualizado = await Usuario.findById(usuario._id);
-        console.log("DB REAL:", actualizado);
-        res.cookie("sesion", sesionToken, {
+        const token = generarToken(usuario);
+        
+        res.cookie("token", token, {
             httpOnly: true,
             sameSite: "lax",
-            maxAge: 1000 * 60 * 60
+            maxAge: 1000 * 60 * 60,
         });
 
         return res.redirect("/productos/vista");
@@ -83,14 +79,9 @@ const iniciarSesion = async (req, res) => {
 };
 
 const cerrarSesion = async (req, res) => {
-  if (req.usuario) { // Verifica que exista un usuario autenticado.
 
-    req.usuario.sesionToken = null; // Invalida la sesión en la base de datos.
-    await req.usuario.save(); // Guarda el cambio.
-  }
-
-  res.clearCookie("sesion"); // Elimina la cookie del navegador.
-  res.redirect("/login"); // Redirige al formulario de login.
+  res.clearCookie("token"); // Elimina la cookie del navegador.
+  res.redirect("/auth/login"); // Redirige al formulario de login.
 };
 
 export {

@@ -25,10 +25,6 @@ const usuarioSchema = new mongoose.Schema({
         type: String,
         default: "user"
     },
-    sesionToken: {
-        type:String,
-        default: null
-    },
 }, {
     timestamps: true
 });

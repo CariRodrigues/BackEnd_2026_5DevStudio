@@ -1,4 +1,6 @@
 import Usuario from "../models/usuarioModel.js";
+import jwt from "jsonwebtoken";
+import { verificarToken } from "../utils/jwt.js";
 
 const leerCookies = (req) => {
     const header = req.headers.cookie; //obtiene todas las cookies enviadas por el navegador
@@ -16,18 +18,27 @@ const leerCookies = (req) => {
 };
 
 const protegerRuta = async (req, res, next) => { //middleware que protege rutas privadas
-    const cookies = leerCookies(req); //lee las cookies de la solicitud
-    const sesionToken = cookies.sesion; // obtiene el token de sesión
+    const cookies = leerCookies(req);
+    const token = cookies.token;
 
-    if(!sesionToken){
-        return res.redirect("/auth/login"); //si no hay sesión, redirige al login
+    if(!token){
+        return res.redirect("/auth/login"); //si no hay token, redirige al login
     }
 
-    const usuario = await Usuario.findOne( {sesionToken}); //busca el usuario asociado al token
+    let datosToken;
 
-    if(!usuario){
-        res.clearCookie("sesion"); //elimina la cookie invalida
-        return res.redirect("/auth/login"); //redirige al login si la sesión no existe
+    try {
+        datosToken = verificarToken(token);
+    } catch (error) {
+        res.clearCookie("token");
+        return res.redirect("/auth/login");
+    }
+
+    const usuario = await Usuario.findById(datosToken.id);
+
+    if (!usuario) {
+        res.clearCookie("token");
+        return res.redirect("/auth/login");
     }
 
     req.usuario = usuario; //guarda el usuario autenticado en la petición

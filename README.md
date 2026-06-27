@@ -1,128 +1,193 @@
-# Tecnicatura Superior en Desarrollo de Software
+# Backend Todostock
 
 ## Descripción
 
-Esta aplicación backend está desarrollada con Node.js y Express, siguiendo un patrón de arquitectura MVC (Modelo-Vista-Controlador) utilizando Pug como motor de plantillas para las vistas. 
-El proyecto forma parte de un trabajo práctico para la materia de Desarrollo Web Backend.
+Aplicación de gestión de stock, ventas y compras con autenticación y control de acceso. Está construido con Node.js, Express, Mongoose y Pug, usando una arquitectura MVC básica.
 
-## Estructura del Proyecto
+## Características principales
 
-- `controllers/` - Controladores para manejar la lógica de productos y proveedores
-- `data/` - Archivos JSON con datos de productos y proveedores
-- `models/` - Modelos de datos para productos y proveedores
-- `public/` - Archivos estáticos (CSS, imágenes, etc.)
-- `routes/` - Definición de rutas para productos y proveedores
-- `views/` - Plantillas Pug para las vistas
+- Autenticación con usuarios y token de sesión en cookie
+- Control de acceso con roles `admin` y `user`
+- Gestión de productos, proveedores, clientes, lotes, compras, movimientos y ventas
+- Vistas renderizadas con Pug
+- Chat en tiempo real con Socket.IO
+- Conexión a MongoDB Atlas mediante `MONGO_URI`
 
-## Prerrequisitos
+## Estructura del proyecto
 
-- Node.js (versión 18 o superior)
-- npm (viene incluido con Node.js)
-
-## Instalación
-
-1. Clona el repositorio o descarga los archivos del proyecto.
-
-2. Navega al directorio del proyecto:
-   ```
-   cd BackEnd_2026_5DevStudio
-   ```
-
-3. Instala las dependencias:
-   ```
-   npm install
-   ```
-
-## Configuración
-
-La aplicación utiliza variables de entorno a través de `dotenv`.
-
-Crea un archivo `.env` en la raíz del proyecto con al menos estas variables:
-
-```
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/nombre_de_tu_base
-```
-
-- `PORT` define el puerto en el que se ejecuta el servidor.
-- `MONGO_URI` es la conexión a MongoDB.
-
-Si no se especifica `PORT`, la aplicación usa `3000` por defecto.
-
-## MongoDB
-
-El proyecto usa MongoDB como base de datos. La conexión se gestiona en `config/db.js` mediante Mongoose:
-
-- `process.env.MONGO_URI` se lee desde `.env`
-- Si la conexión falla, la aplicación muestra un error y finaliza
-
-Ejemplo de URI local:
-
-```
-MONGO_URI=mongodb://127.0.0.1:27017/distribuidora
-```
-
-## Ejecución
-
-```
-node index.js
-```
-
-O usando el script de desarrollo definido en `package.json`:
-```
-npm run dev
-```
-
-## Rutas Disponibles
-
-Una vez que el servidor esté en funcionamiento, se puede acceder a las siguientes rutas:
-
-### Tablas de Datos
-- **Tabla de Productos**: `http://localhost:3000/productos/vista`
-- **Tabla de Proveedores**: `http://localhost:3000/proveedores/vista`
-
-
-### Productos
-- `GET /productos` — devuelve todos los productos en JSON
-- `GET /productos/:id` — devuelve un producto por ID en JSON
-- `GET /productos/vista` — renderiza la tabla de productos
-- `GET /productos/nuevo` — formulario para crear un producto
-- `GET /productos/editar/:id` — formulario para editar un producto existente
-- `POST /productos` — crea un nuevo producto
-- `POST /productos/:id/editar` — actualiza un producto desde el formulario de edición
-
-
-### Proveedores
-- `GET /proveedores` — devuelve todos los proveedores en JSON
-- `GET /proveedores/:id` — devuelve un proveedor por ID en JSON
-- `GET /proveedores/vista` — renderiza la tabla de proveedores
-- `GET /proveedores/nuevo` — formulario para crear un proveedor
-- `GET /proveedores/editar/:id` — formulario para editar un proveedor existente
-- `POST /proveedores` — crea un nuevo proveedor
-- `POST /proveedores/:id/editar` — actualiza un proveedor desde el formulario de edición
-
-
-### Comportamiento de edición
-- Las tablas de productos y proveedores ahora tienen una columna `Editar` para abrir el formulario de edición.
-- Al guardar los cambios desde los formularios de edición, el usuario es redirigido a la lista correspondiente.
-- El mensaje de confirmación de actualización se muestra como un popup temporal en la vista.
-
+- `config/` — configuración de la base de datos
+- `controllers/` — lógica de cada entidad y vistas
+- `models/` — esquemas y modelos de Mongoose
+- `middlewares/` — protección de rutas y control de acceso
+- `routes/` — definición de rutas de la aplicación
+- `public/` — recursos estáticos (CSS y JS)
+- `views/` — plantillas Pug
+- `index.js` — punto de entrada del servidor
 
 ## Dependencias
 
-- **express**: Framework web para Node.js
-- **pug**: Motor de plantillas
-- **dotenv**: Gestión de variables de entorno
+- `dotenv` — carga variables de entorno
+- `express` — servidor web
+- `mongoose` — ORM de MongoDB
+- `mongodb` — driver de MongoDB
+- `pug` — motor de plantillas
+- `socket.io` — comunicación en tiempo real
+- `jsonwebtoken` — token JWT disponible como dependencia
 
-## Dependencias de desarrollo
+Dev dependency:
 
-- **nodemon**: Herramienta para recarga automática durante desarrollo
+- `nodemon` — reinicio automático en desarrollo
 
-## Scripts disponibles
+## Requisitos
 
-- `npm test`: Ejecuta las pruebas (actualmente no implementadas)
+- Node.js 18+ (recomendado)
+- MongoDB Atlas o una base de datos MongoDB accesible
 
+## Instalación local
 
-## Licencia
+1. Clona el repositorio:
 
-Este proyecto está bajo la Licencia ISC.
+```bash
+git clone <url-del-repositorio>
+cd BackEnd_2026_5DevStudio
+```
+
+2. Instala las dependencias:
+
+```bash
+npm install
+```
+
+3. Crea un archivo `.env` en la raíz del proyecto con al menos estas variables:
+
+```env
+PORT=3000
+MONGO_URI=mongodb+srv://<usuario>:<password>@cluster0.uh00vio.mongodb.net/todostock?retryWrites=true&w=majority
+```
+
+4. Inicia la aplicación:
+
+```bash
+npm run dev
+```
+
+5. Abre el navegador en:
+
+```text
+http://localhost:3000
+```
+
+## Variables de entorno
+
+- `PORT` — puerto en el que corre la aplicación (por defecto `3000` si no se define)
+- `MONGO_URI` — URI de conexión a MongoDB Atlas
+
+## Uso y autenticación
+
+- La aplicación redirige a `/auth/login` desde `/`.
+- Solo usuarios autenticados pueden acceder a las rutas protegidas.
+- Solo el rol `admin` puede crear y editar productos, proveedores, lotes y compras.
+- La ruta de registro de usuarios (`/auth/registro`) está protegida y solo puede ser usada por un administrador existente.
+
+> Importante: si no existe un usuario administrador en la base de datos, el primer usuario deberá crearse directamente en MongoDB porque el registro está limitado a administradores.
+
+## Rutas principales
+
+### Autenticación
+- `GET /auth/login` — formulario de login
+- `POST /auth/login` — iniciar sesión
+- `GET /auth/registro` — formulario de registro de usuario (solo admin)
+- `POST /auth/registro` — crear usuario nuevo (solo admin)
+- `POST /auth/logout` — cerrar sesión
+
+### Productos
+- `GET /productos/vista`
+- `GET /productos/vista/:id`
+- `GET /productos/nuevo` — admin
+- `GET /productos/editar/:id` — admin
+- `GET /productos`
+- `GET /productos/:id`
+- `POST /productos` — admin
+- `POST /productos/:id/editar` — admin
+- `PUT /productos/:id` — admin
+- `DELETE /productos/:id` — admin
+
+### Proveedores
+- `GET /proveedores`
+- `GET /proveedores/vista`
+- `GET /proveedores/vista/:id`
+- `GET /proveedores/nuevo` — admin
+- `GET /proveedores/editar/:id` — admin
+- `GET /proveedores/:id`
+- `POST /proveedores` — admin
+- `POST /proveedores/:id/editar` — admin
+- `PUT /proveedores/:id` — admin
+- `DELETE /proveedores/:id` — admin
+
+### Clientes
+- `GET /clientes/vista`
+- `GET /clientes/vista/:id`
+- `GET /clientes/vista/:id/movimientos`
+- `GET /clientes/nuevo`
+- `GET /clientes/editar/:id`
+- `GET /clientes`
+- `GET /clientes/:id`
+- `GET /clientes/:id/movimientos`
+- `POST /clientes`
+- `POST /clientes/:id/editar`
+- `PUT /clientes/:id`
+- `DELETE /clientes/:id` — admin
+
+### Compras
+- `GET /compras/vista` — admin
+- `GET /compras/nuevo` — admin
+- `GET /compras` — admin
+- `GET /compras/:id` — admin
+- `POST /compras` — admin
+
+### Lotes
+- `GET /lotes/vista`
+- `GET /lotes/vista/:id`
+- `GET /lotes`
+- `GET /lotes/:id`
+- `POST /lotes` — admin
+- `PATCH /lotes/:id` — admin
+- `DELETE /lotes/:id` — admin
+
+### Movimientos
+- `GET /movimientos/vista`
+- `GET /movimientos`
+- `GET /movimientos/:id`
+
+### Ventas
+- `GET /ventas/vista`
+- `GET /ventas/nuevo`
+- `GET /ventas`
+- `GET /ventas/:id`
+- `POST /ventas`
+
+### Chat
+- `GET /chat` — requiere usuario autenticado
+
+## Notas adicionales
+
+- Las cookies se usan para conservar la sesión del usuario.
+- Si usas MongoDB Atlas, asegúrate de que tu IP local esté permitida o utiliza `0.0.0.0/0` sólo para pruebas.
+- La base de datos utiliza usuarios almacenados en MongoDB Atlas.
+
+## Credenciales de administrador
+
+Usa estas credenciales de administrador existentes para acceder al panel completo:
+
+- Email: `admin@todostock.com`
+- Contraseña: `admin123`
+
+## Comandos útiles
+
+- `npm install` — instala dependencias
+- `npm run dev` — inicia el servidor con `nodemon`
+
+## Despliegue
+
+Para desplegar, configura `MONGO_URI` en tu plataforma de hosting y establece `PORT` según el entorno. El servidor escuchará en el puerto definido o en `3000` si no se especifica.
+

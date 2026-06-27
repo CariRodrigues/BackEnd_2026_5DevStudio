@@ -27,7 +27,6 @@ const PORT = process.env.PORT || 3000;
 
 try {
     await conectarDB();
-    await crearDefaultUsers();
 } catch(error) {
   console.error("Error al iniciar:", error);
 }

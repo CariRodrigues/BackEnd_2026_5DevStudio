@@ -1,5 +1,6 @@
 import Usuario from "../models/usuarioModel.js";
 import jwt from "jsonwebtoken";
+import { verificarToken } from "../utils/jwt.js";
 
 const leerCookies = (req) => {
     const header = req.headers.cookie; //obtiene todas las cookies enviadas por el navegador
@@ -21,13 +22,13 @@ const protegerRuta = async (req, res, next) => { //middleware que protege rutas 
     const token = cookies.token;
 
     if(!token){
-        return res.redirect("/auth/login"); //si no hay sesión, redirige al login
+        return res.redirect("/auth/login"); //si no hay token, redirige al login
     }
 
     let datosToken;
 
     try {
-        datosToken = jwt.verify(token, process.env.JWT_SECRET);
+        datosToken = verificarToken(token);
     } catch (error) {
         res.clearCookie("token");
         return res.redirect("/auth/login");

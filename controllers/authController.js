@@ -2,6 +2,7 @@ import crypto from "crypto";
 import { render } from "pug";
 import Usuario from "../models/usuarioModel.js";
 import jwt from "jsonwebtoken";
+import { generarToken } from "../utils/jwt.js";
 
 const mostrarLogin = (req, res) => {
     res.render("login", {
@@ -60,23 +61,14 @@ const iniciarSesion = async (req, res) => {
             });
         }
 
-        const token = jwt.sign(
-            {
-                id: usuario._id,
-                email: usuario.email,
-                rol: usuario.rol,
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "1h",
-            }
-        );
+        const token = generarToken(usuario);
+        
         res.cookie("token", token, {
             httpOnly: true,
             sameSite: "lax",
             maxAge: 1000 * 60 * 60,
         });
-        
+
         return res.redirect("/productos/vista");
         
     } catch (error) {

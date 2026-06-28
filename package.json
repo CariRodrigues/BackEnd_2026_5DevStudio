@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "test:coverage": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage --runInBand",
+    "allure:show": "npm run allure:generate && npm run allure:open"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,9 @@
     "socket.io": "^4.8.3"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "allure-commandline": "^2.43.0",
+    "jest": "^30.4.2",
+    "jest-allure2-reporter": "^2.3.0"
   }
 }

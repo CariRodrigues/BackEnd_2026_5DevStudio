@@ -3,6 +3,7 @@ import { render } from "pug";
 import Usuario from "../models/usuarioModel.js";
 import jwt from "jsonwebtoken";
 import { generarToken } from "../utils/jwt.js";
+import { consultarIA } from "../services/geminiService.js";
 
 const mostrarLogin = (req, res) => {
     res.render("login", {
@@ -84,10 +85,18 @@ const cerrarSesion = async (req, res) => {
   res.redirect("/auth/login"); // Redirige al formulario de login.
 };
 
+const probarIA = async (req, res) => {
+  const respuesta = await consultarIA("Explica JWT en pocas palabras");
+
+  res.send(respuesta);
+};
+
+
 export {
     mostrarLogin,
     mostrarRegistro,
     registrarUsuario,
     iniciarSesion,
-    cerrarSesion
+    cerrarSesion,
+    probarIA
 };

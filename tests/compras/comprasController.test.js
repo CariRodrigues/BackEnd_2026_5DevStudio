@@ -93,7 +93,7 @@ describe("comprasController - crearCompra", () => {
 
   // Tests Negativos
   test("retorna error si faltan datos", async () => {
-    const req = { body: {} };
+    const req = { body: {} };    
     const json = jest.fn();
     const res = { json, status: jest.fn().mockReturnThis() };
 

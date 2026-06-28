@@ -17,6 +17,7 @@ import ventasRoutes from "./routes/ventasRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import { protegerRuta } from "./middlewares/authMiddleware.js";
 import dns from "node:dns";
+import { consultarIA } from "./services/geminiService.js";
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 const app = express();
@@ -67,9 +68,8 @@ app.use((req, res) => {
 // Se ejecuta cada vez que un cliente se conecta mediante Socket.IO.
 io.on("connection", (socket) => {
   console.log("Usuario conectado");
-  // Escucha eventos llamados "mensaje" enviados desde el navegador.
-  socket.on("mensaje", (mensaje) => {
-    // console.log("Mensaje recibido:", mensaje);
+
+  socket.on("mensaje", async (mensaje) => {
     if (
       !mensaje ||
       typeof mensaje.texto !== "string" ||
@@ -78,8 +78,17 @@ io.on("connection", (socket) => {
     ) {
       return;
     }
-    // Envía el mensaje a todos los demás usuarios conectados.
+
     io.emit("mensaje", mensaje);
+
+    const texto = mensaje.texto.trim();
+    if (texto.toLowerCase().startsWith("@gemini")) {
+      const respuesta = await consultarIA(texto);
+      io.emit("mensaje", {
+        usuario: "Gemini",
+        texto: respuesta,
+      });
+    }
   });
   // Se ejecuta cuando el usuario cierra la conexión.
   socket.on("disconnect", () => {

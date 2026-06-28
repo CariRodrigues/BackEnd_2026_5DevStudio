@@ -2,24 +2,26 @@
 
 ## Descripción
 
-Aplicación de gestión de stock, ventas y compras con autenticación y control de acceso. Está construido con Node.js, Express, Mongoose y Pug, usando una arquitectura MVC básica.
+Aplicación de gestión de inventario, clientes, proveedores, lotes, compras, movimientos y ventas con autenticación JWT, MVC y vistas Pug.
 
 ## Características principales
 
-- Autenticación con usuarios y token de sesión en cookie
-- Control de acceso con roles `admin` y `user`
+- Autenticación con JWT almacenado en cookie
+- Control de acceso por roles `admin` y `user`
 - Gestión de productos, proveedores, clientes, lotes, compras, movimientos y ventas
 - Vistas renderizadas con Pug
 - Chat en tiempo real con Socket.IO
-- Conexión a MongoDB Atlas mediante `MONGO_URI`
+- Integración opcional con Gemini IA usando `@google/generative-ai`
+- Conexión a MongoDB mediante `MONGO_URI`
 
 ## Estructura del proyecto
 
 - `config/` — configuración de la base de datos
-- `controllers/` — lógica de cada entidad y vistas
+- `controllers/` — lógica de negocio y renderizado de vistas
 - `models/` — esquemas y modelos de Mongoose
 - `middlewares/` — protección de rutas y control de acceso
 - `routes/` — definición de rutas de la aplicación
+- `services/` — integración con servicios externos (Gemini IA)
 - `public/` — recursos estáticos (CSS y JS)
 - `views/` — plantillas Pug
 - `index.js` — punto de entrada del servidor
@@ -29,19 +31,24 @@ Aplicación de gestión de stock, ventas y compras con autenticación y control 
 - `dotenv` — carga variables de entorno
 - `express` — servidor web
 - `mongoose` — ORM de MongoDB
-- `mongodb` — driver de MongoDB
+- `mongodb` — driver oficial de MongoDB
 - `pug` — motor de plantillas
 - `socket.io` — comunicación en tiempo real
-- `jsonwebtoken` — token JWT disponible como dependencia
+- `jsonwebtoken` — manejo de tokens JWT
+- `@google/generative-ai` — acceso a Gemini IA
 
-Dev dependency:
+Dev dependencies:
 
 - `nodemon` — reinicio automático en desarrollo
+- `jest` — framework de pruebas
+- `allure-commandline` — generación de reportes Allure
+- `jest-allure2-reporter` — reporteador de pruebas
 
 ## Requisitos
 
-- Node.js 18+ (recomendado)
-- MongoDB Atlas o una base de datos MongoDB accesible
+- Node.js 18+
+- MongoDB Atlas o instancia MongoDB accesible
+- Archivo `.env` con variables de entorno
 
 ## Instalación local
 
@@ -63,9 +70,10 @@ npm install
 ```env
 PORT=3000
 MONGO_URI=mongodb+srv://<usuario>:<password>@cluster0.uh00vio.mongodb.net/todostock?retryWrites=true&w=majority
+GEMINI_API_KEY=<tu_api_key_de_gemini>
 ```
 
-4. Inicia la aplicación:
+4. Inicia la aplicación en desarrollo:
 
 ```bash
 npm run dev
@@ -77,19 +85,28 @@ npm run dev
 http://localhost:3000
 ```
 
+## Scripts disponibles
+
+- `npm run dev` — inicia el servidor con `nodemon`
+- `npm test` — ejecuta las pruebas con Jest
+- `npm run test:coverage` — ejecuta pruebas con cobertura
+- `npm run allure:generate` — genera reportes Allure
+- `npm run allure:open` — abre el reporte Allure generado
+
 ## Variables de entorno
 
-- `PORT` — puerto en el que corre la aplicación (por defecto `3000` si no se define)
-- `MONGO_URI` — URI de conexión a MongoDB Atlas
+- `PORT` — puerto en el que corre la aplicación (por defecto `3000`)
+- `MONGO_URI` — URI de conexión a MongoDB
+- `GEMINI_API_KEY` — clave de API para Gemini IA (opcional, necesaria para el chat con `@gemini`)
 
 ## Uso y autenticación
 
-- La aplicación redirige a `/auth/login` desde `/`.
+- La aplicación redirige desde `/` a `/auth/login`.
 - Solo usuarios autenticados pueden acceder a las rutas protegidas.
 - Solo el rol `admin` puede crear y editar productos, proveedores, lotes y compras.
-- La ruta de registro de usuarios (`/auth/registro`) está protegida y solo puede ser usada por un administrador existente.
+- La ruta de registro de usuarios (`/auth/registro`) está protegida y solo puede ser usada por un administrador autenticado.
 
-> Importante: si no existe un usuario administrador en la base de datos, el primer usuario deberá crearse directamente en MongoDB porque el registro está limitado a administradores.
+> Importante: el proyecto no crea credenciales administradores automáticamente. Si no existe ningún admin, crea el primer usuario manualmente en la colección `usuarios` de MongoDB con rol `admin`.
 
 ## Rutas principales
 
@@ -113,12 +130,12 @@ http://localhost:3000
 - `DELETE /productos/:id` — admin
 
 ### Proveedores
-- `GET /proveedores`
 - `GET /proveedores/vista`
 - `GET /proveedores/vista/:id`
+- `GET /proveedores`
+- `GET /proveedores/:id`
 - `GET /proveedores/nuevo` — admin
 - `GET /proveedores/editar/:id` — admin
-- `GET /proveedores/:id`
 - `POST /proveedores` — admin
 - `POST /proveedores/:id/editar` — admin
 - `PUT /proveedores/:id` — admin
@@ -174,6 +191,8 @@ http://localhost:3000
 - Las cookies se usan para conservar la sesión del usuario.
 - Si usas MongoDB Atlas, asegúrate de que tu IP local esté permitida o utiliza `0.0.0.0/0` sólo para pruebas.
 - La base de datos utiliza usuarios almacenados en MongoDB Atlas.
+- El chat puede responder con Gemini IA si se envía un mensaje que comienza con `@gemini`.
+- Las rutas no encontradas redirigen al login.
 
 ## Credenciales de administrador
 
@@ -189,5 +208,5 @@ Usa estas credenciales de administrador existentes para acceder al panel complet
 
 ## Despliegue
 
-Para desplegar, configura `MONGO_URI` en tu plataforma de hosting y establece `PORT` según el entorno. El servidor escuchará en el puerto definido o en `3000` si no se especifica.
+Para desplegar, configura `MONGO_URI` y `GEMINI_API_KEY` en tu plataforma de hosting y ajusta `PORT` según el entorno. El servidor escuchará en el puerto definido o en `3000` si no se especifica.
 

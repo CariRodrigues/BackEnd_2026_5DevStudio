@@ -8,6 +8,8 @@
     "dev": "nodemon index.js",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
     "test:coverage": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage --runInBand",
+    "allure:generate": "allure generate allure-results --clean",
+    "allure:open": "allure open allure-report",
     "allure:show": "npm run allure:generate && npm run allure:open"
   },
   "keywords": [],
